@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.openntf.redomino.feature"
+      label="OpenNTF Project RED"
+      version="0.8.0.qualifier"
+      provider-name="Vladimir Kornienko">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipse.osgi.services"/>
+      <import plugin="com.ibm.notes.java.api"/>
+      <import plugin="com.ibm.xsp.domino" version="9.0.1" match="greaterOrEqual"/>
+      <import plugin="com.ibm.xsp.extlib" version="9.0.1" match="greaterOrEqual"/>
+      <import plugin="com.ibm.xsp.extsn" version="9.0.1" match="greaterOrEqual"/>
+      <import plugin="com.ibm.commons" version="9.0.0" match="greaterOrEqual"/>
+      <import plugin="com.ibm.designer.runtime" version="9.0.1" match="greaterOrEqual"/>
+      <import plugin="com.ibm.icu"/>
+      <import plugin="com.ibm.jscript"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="com.ibm.icu.base" version="3.8.1" match="greaterOrEqual"/>
+      <import plugin="org.openntf.domino"/>
+   </requires>
+
+   <plugin
+         id="org.openntf.redomino"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.openntf.redomino.jersey.wrapper"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
