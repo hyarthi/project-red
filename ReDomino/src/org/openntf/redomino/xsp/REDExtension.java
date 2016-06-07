@@ -24,14 +24,9 @@ public enum REDExtension {
 	public synchronized static void start() {
 		if (!isStarted()) {
 			isStarted_ = true;
-			// Here is all the init/term stuff done
-			//ODAPlatform.start();
-			//System.out.println("<><><> ODA platform started!");
 			Factory.startup();
-			System.out.println("<><><> RED Factory started!");
 			// Setup the named factories 4 XPages
 			Factory.setNamedFactories4XPages(new XPageNamedSessionFactory(false), new XPageNamedSessionFactory(true));
-			System.out.println("<><><> Set custom XPages session factories!");
 		} else {
 			System.out.println("<><><> RED Extension already started!");
 		}

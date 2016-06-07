@@ -95,18 +95,21 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		// call gc once before processing the queues
 		System.gc();
 		try {
-			//give the gc some ms (not too much, we do not want to delay HTTP-Requests!
+			// give the gc some ms (not too much, we do not want to delay
+			// HTTP-Requests!
 			Thread.sleep(1);
 		} catch (InterruptedException e) {
 			// and ignore this
-			//DominoUtils.handleException(e);
+			// DominoUtils.handleException(e);
 		}
 		// TODO: Recycle all?
-		//System.out.println("Online objects: " + Factory.getActiveObjectCount());
+		// System.out.println("Online objects: " +
+		// Factory.getActiveObjectCount());
 		DominoReferenceCache rc = referenceCache.get();
 		result = rc.processQueue(null, null);
 		result += rc.finishThreadSafes();
-		//System.out.println("Online objects: " + Factory.getActiveObjectCount());
+		// System.out.println("Online objects: " +
+		// Factory.getActiveObjectCount());
 		clearLWDCache();
 		return result;
 	}
@@ -114,20 +117,22 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 	/** The Constant log_. */
 	private static final Logger log_ = Logger.getLogger(WrapperFactory.class.getName());
 
-	//	/**
-	//	 * This function enqueus the reference and lotus, so that it will get recycled. This works by observing the life time of "reference" and
-	//	 * calling recycle it neccessary
-	//	 * 
-	//	 * @param reference
-	//	 * @param lotus
-	//	 * @return
-	//	 */
-	//	public void observe(final Object reference, final lotus.domino.Base lotus) {
-	//		if (reference != null && lotus != null) {
-	//			lotusObjects.put(0L, reference, lotus);
-	//			Factory.countLotus();
-	//		}
-	//	}
+	// /**
+	// * This function enqueus the reference and lotus, so that it will get
+	// recycled. This works by observing the life time of "reference" and
+	// * calling recycle it neccessary
+	// *
+	// * @param reference
+	// * @param lotus
+	// * @return
+	// */
+	// public void observe(final Object reference, final lotus.domino.Base
+	// lotus) {
+	// if (reference != null && lotus != null) {
+	// lotusObjects.put(0L, reference, lotus);
+	// Factory.countLotus();
+	// }
+	// }
 
 	// -- Factory methods
 	@Override
@@ -137,18 +142,18 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 
 		return fromLotus(lotus, schema, parent, null, referenceCache.get());
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public <T extends Base, D extends lotus.domino.Base, P extends Base> //
 	T fromCouch(final D couch, final FactorySchema<T, D, P> schema, final P parent) {
-		//System.out.println("<><><> From couch package...");
+		// System.out.println("<><><> From couch package...");
 		return fromCouch(couch, schema, parent, null, referenceCache.get());
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected <T extends Base, D extends lotus.domino.Base, P extends Base> //
-	T fromLotus(final D lotus, final FactorySchema<T, D, P> schema, P parent, final Collection<lotus.domino.Base> prevent_recycling,
-			final DominoReferenceCache referenceCache) {
+	T fromLotus(final D lotus, final FactorySchema<T, D, P> schema, P parent,
+			final Collection<lotus.domino.Base> prevent_recycling, final DominoReferenceCache referenceCache) {
 
 		if (lotus == null) {
 			return null;
@@ -160,7 +165,8 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		}
 
 		if (!(lotus instanceof NotesBase)) {
-			// RPr: what do we if we don't get a wrappable object at all. This is a programming error, so throw exception
+			// RPr: what do we if we don't get a wrappable object at all. This
+			// is a programming error, so throw exception
 			throw new UndefinedDelegateTypeException("Cannot wrap " + lotus.getClass().getName());
 		}
 
@@ -173,22 +179,23 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		}
 		if (parent == null)
 			throw new UndefinedDelegateTypeException("Cannot find parent for a " + lotus.getClass().getName());
-		// 1) These objects are not cached and returned immediately. Recycle is done inside
-		if (lotus instanceof lotus.domino.Name 					// These objects are encapsulated
-				|| lotus instanceof lotus.domino.DateRange 		// 
-				|| lotus instanceof lotus.domino.DateTime) { 	//
+		// 1) These objects are not cached and returned immediately. Recycle is
+		// done inside
+		if (lotus instanceof lotus.domino.Name // These objects are encapsulated
+				|| lotus instanceof lotus.domino.DateRange //
+				|| lotus instanceof lotus.domino.DateTime) { //
 			return (T) wrapLotusObject(lotus, parent);
 		}
 
 		return (T) fromLotusObject(lotus, parent, prevent_recycling, referenceCache);
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected <T extends Base, D extends lotus.domino.Base, P extends Base> //
-	T fromCouch(final D couch, final FactorySchema<T, D, P> schema, P parent, final Collection<lotus.domino.Base> prevent_recycling,
-			final DominoReferenceCache referenceCache) {
-		System.out.println("<><><> fromCouch() started...");
-		System.out.println("<><><> couch: " + couch);
+	T fromCouch(final D couch, final FactorySchema<T, D, P> schema, P parent,
+			final Collection<lotus.domino.Base> prevent_recycling, final DominoReferenceCache referenceCache) {
+		//System.out.println("<><><> fromCouch() started...");
+		//System.out.println("<><><> couch: " + couch);
 		if (couch == null) {
 			return null;
 		}
@@ -214,12 +221,14 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		/*
 		 * don't need that, i believe...
 		 */
-		// 1) These objects are not cached and returned immediately. Recycle is done inside
-		/*if (couch instanceof lotus.domino.Name 					// These objects are encapsulated
-				|| couch instanceof lotus.domino.DateRange 		// 
-				|| couch instanceof lotus.domino.DateTime) { 	//
-			return (T) wrapLotusObject(couch, parent);
-		}*/
+		// 1) These objects are not cached and returned immediately. Recycle is
+		// done inside
+		/*
+		 * if (couch instanceof lotus.domino.Name // These objects are
+		 * encapsulated || couch instanceof lotus.domino.DateRange // || couch
+		 * instanceof lotus.domino.DateTime) { // return (T)
+		 * wrapLotusObject(couch, parent); }
+		 */
 
 		return (T) fromLotusObject(couch, parent, prevent_recycling, referenceCache);
 	}
@@ -263,7 +272,8 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 	}
 
 	/**
-	 * Returns a collection that contains all lotus objects that should be wrapped in this task
+	 * Returns a collection that contains all lotus objects that should be
+	 * wrapped in this task
 	 * 
 	 * @param objects
 	 * @param obj
@@ -284,52 +294,62 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 
 	// --- others
 	/**
-	 * Wraps & caches all lotus object except Names, DateTimes, Sessions, Documents
+	 * Wraps & caches all lotus object except Names, DateTimes, Sessions,
+	 * Documents
 	 * 
 	 * @param lotus
 	 * @param prevent_recycling
-	 *            the cpp_ids that must not get recycled during this task. Attention. For performance reasons you should not use slot 0 and
-	 *            1 in the array
+	 *            the cpp_ids that must not get recycled during this task.
+	 *            Attention. For performance reasons you should not use slot 0
+	 *            and 1 in the array
 	 * @param parent
 	 * @return
 	 */
 	protected Base<?> fromLotusObject(final lotus.domino.Base lotus, final Base<?> parent,
 			final Collection<lotus.domino.Base> prevent_recycling, final DominoReferenceCache cache) {
-		System.out.println("<><> Starting fromLotusObject()...");
+		//System.out.println("<><> Starting fromLotusObject()...");
 		if (lotus == null) {
 			return null;
 		}
 
-		// RPr: Query the cache. The current lotus object might be enqued, so that it gets recycled in the next step
+		// RPr: Query the cache. The current lotus object might be enqued, so
+		// that it gets recycled in the next step
 		Base<?> result = cache.get(lotus);
 
 		if (result == null) {
-			// RPr: If the result is null, we can be sure, that there is no element in our cache map.
-			// this happens if no one holds a strong reference to the wrapper. As "get" does some cleanup
-			// action, we must ensure, that we do not recycle the CURRENT (and parent) element in the next step
+			// RPr: If the result is null, we can be sure, that there is no
+			// element in our cache map.
+			// this happens if no one holds a strong reference to the wrapper.
+			// As "get" does some cleanup
+			// action, we must ensure, that we do not recycle the CURRENT (and
+			// parent) element in the next step
 
-			System.out.println("<><> Started wrapping.");
+			//System.out.println("<><> Started wrapping.");
 			result = wrapLotusObject(lotus, parent);
-			System.out.println("<><> result is: " + result);
+			//System.out.println("<><> result is: " + result);
 			if (result == null && lotus != null) {
 				throw new IllegalStateException("Could not wrap an object of type" + lotus.getClass().getName());
 			}
 			if (result instanceof Document)
 				trackDoc((Document) result, "");
 
-			cache.processQueue(lotus, prevent_recycling); // recycle all elements but not the current ones
+			cache.processQueue(lotus, prevent_recycling); // recycle all
+															// elements but not
+															// the current ones
 
 			cache.put(lotus, result);
-			if (lotus instanceof lotus.domino.Session				//
+			if (lotus instanceof lotus.domino.Session //
 					|| lotus instanceof lotus.domino.AgentContext) {
-				// these are never recycled by default. If you create your own session, you have to recycle it after use
+				// these are never recycled by default. If you create your own
+				// session, you have to recycle it after use
 				// or setNoRecycle to "false"
 				cache.setNoRecycle(lotus, true);
-				//				System.out.println("DEBUG: Wrapping a new Session with object id: " + System.identityHashCode(lotus));
+				// System.out.println("DEBUG: Wrapping a new Session with object
+				// id: " + System.identityHashCode(lotus));
 			}
 		}
-		
-		System.out.println("<><> returning: " + result);
+
+		//System.out.println("<><> returning: " + result);
 		return result;
 	}
 
@@ -338,24 +358,29 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		if (wrapper instanceof Document)
 			trackDoc((Document) wrapper, "/recache");
 		DominoReferenceCache rc = referenceCache.get();
-		rc.processQueue(newLotus, null); // recycle all elements but not the current ones
+		rc.processQueue(newLotus, null); // recycle all elements but not the
+											// current ones
 
 		// RPr: What happens here:
 		// You recace the same lotus objects for different wrappers
-		// This is something that should not happen unless you use deferred objects. Assume you are retrieving
-		// 
+		// This is something that should not happen unless you use deferred
+		// objects. Assume you are retrieving
+		//
 		// Document doc1 = db.getDocumentByID(0xF376, true);
 		// Document doc2 = db.getDocumentByID(0xF376, true);
 		// so doc1 != doc2, but both are refering to the same delegate.
-		// Recycle of the delegate will occur if ONE of the two wrappers is gc'ed
+		// Recycle of the delegate will occur if ONE of the two wrappers is
+		// gc'ed
 
-		org.openntf.domino.impl.Base<?, ?, ?> oldWrapper = (org.openntf.domino.impl.Base<?, ?, ?>) rc.put(newLotus, wrapper);
+		org.openntf.domino.impl.Base<?, ?, ?> oldWrapper = (org.openntf.domino.impl.Base<?, ?, ?>) rc.put(newLotus,
+				wrapper);
 		if (oldWrapper != null && oldWrapper != wrapper) {
 			org.openntf.domino.impl.Base<?, ?, ?> implWrapper = (org.openntf.domino.impl.Base<?, ?, ?>) wrapper;
 			if ((org.openntf.domino.impl.ODAPincher.extractSiblingWrapper(implWrapper) == null)) {
-				// wrapper is new and not yet linked, so build a chain of all so that
+				// wrapper is new and not yet linked, so build a chain of all so
+				// that
 				// they are refering to each other
-				//implWrapper.linkToExisting(oldWrapper);
+				// implWrapper.linkToExisting(oldWrapper);
 				org.openntf.domino.impl.ODAPincher.linkToExisting(implWrapper, oldWrapper);
 			}
 		}
@@ -372,9 +397,13 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 	 * 
 	 * @param lotus
 	 * @param parent
-	 *            can be null, except for {@link DirectoryNavigator}, {@link MIMEEntity}, {@link MIMEHeader}, {@link NotesCalendarEntry},
-	 *            {@link NotesCalendarNotice}, {@link Replication}, {@link ReplicationEntry}, {@link RichTextDoclink},
-	 *            {@link RichTextNavigator}, {@link RichTextRange}, {@link RichTextSection}, {@link RichTextTab}, {@link RichTextTable}
+	 *            can be null, except for {@link DirectoryNavigator},
+	 *            {@link MIMEEntity}, {@link MIMEHeader},
+	 *            {@link NotesCalendarEntry}, {@link NotesCalendarNotice},
+	 *            {@link Replication}, {@link ReplicationEntry},
+	 *            {@link RichTextDoclink}, {@link RichTextNavigator},
+	 *            {@link RichTextRange}, {@link RichTextSection},
+	 *            {@link RichTextTab}, {@link RichTextTable}
 	 * @param cpp
 	 * @return
 	 * @throws NotesException
@@ -401,16 +430,19 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 			return new org.openntf.redomino.impl.ViewEntry((lotus.domino.ViewEntry) lotus, (View) parent);
 		}
 
-		if (lotus instanceof lotus.domino.RichTextItem) { // items & richtextitems are used very often.
+		if (lotus instanceof lotus.domino.RichTextItem) { // items &
+															// richtextitems are
+															// used very often.
 			return new org.openntf.redomino.impl.RichTextItem((lotus.domino.RichTextItem) lotus, (Document) parent);
 		}
 
-		if (lotus instanceof lotus.domino.Item) {  // check for Item must be behind RichtextItem
+		if (lotus instanceof lotus.domino.Item) { // check for Item must be
+													// behind RichtextItem
 			return new org.openntf.redomino.impl.Item((lotus.domino.Item) lotus, (Document) parent);
 		}
 
 		if (lotus instanceof lotus.domino.Document) {
-			//trackDoc((lotus.domino.Document) lotus, (Database) parent);
+			// trackDoc((lotus.domino.Document) lotus, (Database) parent);
 			return new org.openntf.redomino.impl.Document((lotus.domino.Document) lotus, (Database) parent);
 		}
 
@@ -423,7 +455,8 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		}
 
 		if (lotus instanceof lotus.domino.DocumentCollection) {
-			return new org.openntf.redomino.impl.DocumentCollection((lotus.domino.DocumentCollection) lotus, (Database) parent);
+			return new org.openntf.redomino.impl.DocumentCollection((lotus.domino.DocumentCollection) lotus,
+					(Database) parent);
 		}
 
 		// Standard objects
@@ -431,10 +464,12 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 			return new org.openntf.redomino.impl.ACL((lotus.domino.ACL) lotus, (Database) parent);
 		}
 		if (lotus instanceof lotus.domino.ACLEntry) {
-			return new org.openntf.redomino.impl.ACLEntry((lotus.domino.ACLEntry) lotus, (org.openntf.domino.ACL) parent);
+			return new org.openntf.redomino.impl.ACLEntry((lotus.domino.ACLEntry) lotus,
+					(org.openntf.domino.ACL) parent);
 		}
 		if (lotus instanceof lotus.domino.AdministrationProcess) {
-			return new org.openntf.redomino.impl.AdministrationProcess((lotus.domino.AdministrationProcess) lotus, (Session) parent);
+			return new org.openntf.redomino.impl.AdministrationProcess((lotus.domino.AdministrationProcess) lotus,
+					(Session) parent);
 		}
 		if (lotus instanceof lotus.domino.Agent) {
 			return new org.openntf.redomino.impl.Agent((lotus.domino.Agent) lotus, (Database) parent);
@@ -455,7 +490,8 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 			return new org.openntf.redomino.impl.Directory((lotus.domino.Directory) lotus, (Session) parent);
 		}
 		if (lotus instanceof lotus.domino.DirectoryNavigator) {
-			return new org.openntf.redomino.impl.DirectoryNavigator((lotus.domino.DirectoryNavigator) lotus, (Directory) parent);
+			return new org.openntf.redomino.impl.DirectoryNavigator((lotus.domino.DirectoryNavigator) lotus,
+					(Directory) parent);
 		}
 		if (lotus instanceof lotus.domino.DxlExporter) {
 			return new org.openntf.redomino.impl.DxlExporter((lotus.domino.DxlExporter) lotus, (Session) parent);
@@ -479,21 +515,23 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 			return new org.openntf.redomino.impl.Newsletter((lotus.domino.Newsletter) lotus, (Session) parent);
 		}
 		if (lotus instanceof lotus.domino.NoteCollection) {
-			return new org.openntf.redomino.impl.NoteCollection((lotus.domino.NoteCollection) lotus, (org.openntf.domino.Database) parent);
+			return new org.openntf.redomino.impl.NoteCollection((lotus.domino.NoteCollection) lotus,
+					(org.openntf.domino.Database) parent);
 		}
 		if (lotus instanceof lotus.domino.NotesCalendar) {
 			return new org.openntf.redomino.impl.NotesCalendar((lotus.domino.NotesCalendar) lotus, (Session) parent);
 		}
 		if (lotus instanceof lotus.domino.NotesCalendarEntry) {
-			return new org.openntf.redomino.impl.NotesCalendarEntry((lotus.domino.NotesCalendarEntry) lotus, (NotesCalendar) parent, this,
-					cpp);
+			return new org.openntf.redomino.impl.NotesCalendarEntry((lotus.domino.NotesCalendarEntry) lotus,
+					(NotesCalendar) parent, this, cpp);
 		}
 		if (lotus instanceof lotus.domino.NotesCalendarNotice) {
-			return new org.openntf.redomino.impl.NotesCalendarNotice((lotus.domino.NotesCalendarNotice) lotus, (NotesCalendar) parent, this,
-					cpp);
+			return new org.openntf.redomino.impl.NotesCalendarNotice((lotus.domino.NotesCalendarNotice) lotus,
+					(NotesCalendar) parent, this, cpp);
 		}
 		if (lotus instanceof lotus.domino.NotesProperty) {
-			return new org.openntf.redomino.impl.NotesProperty((lotus.domino.NotesProperty) lotus, (PropertyBroker) parent);
+			return new org.openntf.redomino.impl.NotesProperty((lotus.domino.NotesProperty) lotus,
+					(PropertyBroker) parent);
 		}
 		if (lotus instanceof lotus.domino.Outline) {
 			return new org.openntf.redomino.impl.Outline((lotus.domino.Outline) lotus, (Database) parent);
@@ -511,32 +549,39 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 			return new org.openntf.redomino.impl.Replication((lotus.domino.Replication) lotus, (Database) parent);
 		}
 		if (lotus instanceof lotus.domino.ReplicationEntry) {
-			return new org.openntf.redomino.impl.ReplicationEntry((lotus.domino.ReplicationEntry) lotus, (Replication) parent);
+			return new org.openntf.redomino.impl.ReplicationEntry((lotus.domino.ReplicationEntry) lotus,
+					(Replication) parent);
 		}
 		if (lotus instanceof lotus.domino.RichTextDoclink) {
-			return new org.openntf.redomino.impl.RichTextDoclink((lotus.domino.RichTextDoclink) lotus, (RichTextItem) parent);
+			return new org.openntf.redomino.impl.RichTextDoclink((lotus.domino.RichTextDoclink) lotus,
+					(RichTextItem) parent);
 		}
 		if (lotus instanceof lotus.domino.RichTextNavigator) {
-			return new org.openntf.redomino.impl.RichTextNavigator((lotus.domino.RichTextNavigator) lotus, (RichTextItem) parent);
+			return new org.openntf.redomino.impl.RichTextNavigator((lotus.domino.RichTextNavigator) lotus,
+					(RichTextItem) parent);
 		}
 		if (lotus instanceof lotus.domino.RichTextParagraphStyle) {
-			return new org.openntf.redomino.impl.RichTextParagraphStyle((lotus.domino.RichTextParagraphStyle) lotus, (Session) parent, this,
-					cpp);
+			return new org.openntf.redomino.impl.RichTextParagraphStyle((lotus.domino.RichTextParagraphStyle) lotus,
+					(Session) parent, this, cpp);
 		}
 		if (lotus instanceof lotus.domino.RichTextRange) {
-			return new org.openntf.redomino.impl.RichTextRange((lotus.domino.RichTextRange) lotus, (RichTextItem) parent);
+			return new org.openntf.redomino.impl.RichTextRange((lotus.domino.RichTextRange) lotus,
+					(RichTextItem) parent);
 		}
 		if (lotus instanceof lotus.domino.RichTextSection) {
-			return new org.openntf.redomino.impl.RichTextSection((lotus.domino.RichTextSection) lotus, (RichTextNavigator) parent);
+			return new org.openntf.redomino.impl.RichTextSection((lotus.domino.RichTextSection) lotus,
+					(RichTextNavigator) parent);
 		}
 		if (lotus instanceof lotus.domino.RichTextStyle) {
 			return new org.openntf.redomino.impl.RichTextStyle((lotus.domino.RichTextStyle) lotus, (Session) parent);
 		}
 		if (lotus instanceof lotus.domino.RichTextTab) {
-			return new org.openntf.redomino.impl.RichTextTab((lotus.domino.RichTextTab) lotus, (RichTextParagraphStyle) parent);
+			return new org.openntf.redomino.impl.RichTextTab((lotus.domino.RichTextTab) lotus,
+					(RichTextParagraphStyle) parent);
 		}
 		if (lotus instanceof lotus.domino.RichTextTable) {
-			return new org.openntf.redomino.impl.RichTextTable((lotus.domino.RichTextTable) lotus, (RichTextItem) parent);
+			return new org.openntf.redomino.impl.RichTextTable((lotus.domino.RichTextTable) lotus,
+					(RichTextItem) parent);
 		}
 		if (lotus instanceof lotus.domino.Stream) {
 			return new org.openntf.redomino.impl.Stream((lotus.domino.Stream) lotus, (Session) parent);
@@ -545,14 +590,16 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 			return new org.openntf.redomino.impl.View((lotus.domino.View) lotus, (org.openntf.domino.Database) parent);
 		}
 		if (lotus instanceof lotus.domino.ViewColumn) {
-			return new org.openntf.redomino.impl.ViewColumn((lotus.domino.ViewColumn) lotus, (org.openntf.domino.View) parent);
+			return new org.openntf.redomino.impl.ViewColumn((lotus.domino.ViewColumn) lotus,
+					(org.openntf.domino.View) parent);
 		}
 		if (lotus instanceof lotus.domino.ViewEntryCollection) {
 			return new org.openntf.redomino.impl.ViewEntryCollection((lotus.domino.ViewEntryCollection) lotus,
 					(org.openntf.domino.View) parent);
 		}
 		if (lotus instanceof lotus.domino.ViewNavigator) {
-			return new org.openntf.redomino.impl.ViewNavigator((lotus.domino.ViewNavigator) lotus, (org.openntf.domino.View) parent);
+			return new org.openntf.redomino.impl.ViewNavigator((lotus.domino.ViewNavigator) lotus,
+					(org.openntf.domino.View) parent);
 		}
 
 		if (lotus instanceof lotus.domino.Session) {
@@ -582,7 +629,8 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		}
 
 		if (lotus instanceof lotus.domino.ViewEntry) {
-			return fromLotus(org.openntf.redomino.impl.ViewEntry.getParentView((lotus.domino.ViewEntry) lotus), View.SCHEMA, null);
+			return fromLotus(org.openntf.redomino.impl.ViewEntry.getParentView((lotus.domino.ViewEntry) lotus),
+					View.SCHEMA, null);
 		}
 
 		if (lotus instanceof lotus.domino.RichTextItem) {
@@ -632,48 +680,62 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 			return fromLotus(org.openntf.domino.impl.ODAPincher.getSession(lotus), Session.SCHEMA, null);
 		}
 		// it is not possible to find the parent object of these objects
-		//		if (lotus instanceof lotus.domino.DirectoryNavigator) {
-		//			return fromLotus(((lotus.domino.DirectoryNavigator) lotus).getParent(), (Directory) parent, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.MIMEEntity) {
-		//			return fromLotus(((lotus.domino.MIMEEntity) lotus).getParent(), Document.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.MIMEHeader) {
-		//			return fromLotus(((lotus.domino.MIMEHeader) lotus).getParent(), MIMEEntity.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.NotesCalendarEntry) {
-		//			return fromLotus(((lotus.domino.NotesCalendarEntry) lotus).getParent(), NotesCalendar.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.NotesCalendarNotice) {
-		//			return fromLotus(((lotus.domino.NotesCalendarNotice) lotus).getParent(), NotesCalendar.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.NotesProperty) {
-		//			return fromLotus(((lotus.domino.NotesProperty) lotus).getParent(), PropertyBroker.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.Replication) {
-		//			return fromLotus(((lotus.domino.Replication) lotus).getParent(), Database.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.ReplicationEntry) {
-		//			return fromLotus(((lotus.domino.ReplicationEntry) lotus).getParent(), Replication.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.RichTextDoclink) {
-		//			return fromLotus(((lotus.domino.RichTextDoclink) lotus).getParent(), RichTextItem.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.RichTextNavigator) {
-		//			return fromLotus(((lotus.domino.RichTextNavigator) lotus).getParent(), RichTextItem.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.RichTextRange) {
-		//			return fromLotus(((lotus.domino.RichTextRange) lotus).getParent(), RichTextItem.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.RichTextSection) {
-		//			return fromLotus(((lotus.domino.RichTextSection) lotus).getParent(), RichTextNavigator.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.RichTextTab) {
-		//			return fromLotus(((lotus.domino.RichTextTab) lotus).getParent(), RichTextParagraphStyle.SCHEMA, null);
-		//		}
-		//		if (lotus instanceof lotus.domino.RichTextTable) {
-		//			return fromLotus(((lotus.domino.RichTextTable) lotus).getParent(), RichTextItem.SCHEMA, null);
-		//		}
+		// if (lotus instanceof lotus.domino.DirectoryNavigator) {
+		// return fromLotus(((lotus.domino.DirectoryNavigator)
+		// lotus).getParent(), (Directory) parent, null);
+		// }
+		// if (lotus instanceof lotus.domino.MIMEEntity) {
+		// return fromLotus(((lotus.domino.MIMEEntity) lotus).getParent(),
+		// Document.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.MIMEHeader) {
+		// return fromLotus(((lotus.domino.MIMEHeader) lotus).getParent(),
+		// MIMEEntity.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.NotesCalendarEntry) {
+		// return fromLotus(((lotus.domino.NotesCalendarEntry)
+		// lotus).getParent(), NotesCalendar.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.NotesCalendarNotice) {
+		// return fromLotus(((lotus.domino.NotesCalendarNotice)
+		// lotus).getParent(), NotesCalendar.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.NotesProperty) {
+		// return fromLotus(((lotus.domino.NotesProperty) lotus).getParent(),
+		// PropertyBroker.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.Replication) {
+		// return fromLotus(((lotus.domino.Replication) lotus).getParent(),
+		// Database.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.ReplicationEntry) {
+		// return fromLotus(((lotus.domino.ReplicationEntry) lotus).getParent(),
+		// Replication.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.RichTextDoclink) {
+		// return fromLotus(((lotus.domino.RichTextDoclink) lotus).getParent(),
+		// RichTextItem.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.RichTextNavigator) {
+		// return fromLotus(((lotus.domino.RichTextNavigator)
+		// lotus).getParent(), RichTextItem.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.RichTextRange) {
+		// return fromLotus(((lotus.domino.RichTextRange) lotus).getParent(),
+		// RichTextItem.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.RichTextSection) {
+		// return fromLotus(((lotus.domino.RichTextSection) lotus).getParent(),
+		// RichTextNavigator.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.RichTextTab) {
+		// return fromLotus(((lotus.domino.RichTextTab) lotus).getParent(),
+		// RichTextParagraphStyle.SCHEMA, null);
+		// }
+		// if (lotus instanceof lotus.domino.RichTextTable) {
+		// return fromLotus(((lotus.domino.RichTextTable) lotus).getParent(),
+		// RichTextItem.SCHEMA, null);
+		// }
 		if (lotus instanceof lotus.domino.DxlExporter) {
 			return fromLotus(org.openntf.domino.impl.ODAPincher.getSession(lotus), Session.SCHEMA, null);
 		}
@@ -739,7 +801,8 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 			return this;
 		}
 
-		throw new UnsupportedOperationException("You must specify a valid parent when creating a " + lotus.getClass().getName());
+		throw new UnsupportedOperationException(
+				"You must specify a valid parent when creating a " + lotus.getClass().getName());
 	}
 
 	@Override
@@ -755,10 +818,13 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		if (values instanceof Vector) {
 			for (Object val : values) {
 				if (!(val instanceof Number) && !(val instanceof String) && !(val instanceof Date)) {
-					return wrapColumnValues(values, session, getContainingNotesObjects(null, values), referenceCache.get());
+					return wrapColumnValues(values, session, getContainingNotesObjects(null, values),
+							referenceCache.get());
 				}
 			}
-			return (Vector<Object>) values; // values is a vector that contains only Number/String/Date-values. So it is safe
+			return (Vector<Object>) values; // values is a vector that contains
+											// only Number/String/Date-values.
+											// So it is safe
 		}
 		return wrapColumnValues(values, session, getContainingNotesObjects(null, values), referenceCache.get());
 	}
@@ -788,12 +854,20 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 			} else if (value instanceof lotus.domino.DateTime) {
 				Object wrapped = null;
 				try {
-					wrapped = fromLotus((lotus.domino.DateTime) value, DateTime.SCHEMA, session, prevent_recycling, referenceCache);
+					if (value instanceof CouchBase) {
+						// Couch object
+						wrapped = fromCouch((org.openntf.redomino.couch.DateTime) value, DateTime.SCHEMA, session,
+								prevent_recycling, referenceCache);
+					} else {
+						// Lotus object - follow ODA
+						wrapped = fromLotus((lotus.domino.DateTime) value, DateTime.SCHEMA, session, prevent_recycling,
+								referenceCache);
+					}
 				} catch (Throwable t) {
 					if (t instanceof NotesException) {
 						String text = ((NotesException) t).text;
-						System.out.println("Unable to wrap a DateTime found in Vector member " + i + " of " + values.size() + " because "
-								+ text);
+						System.out.println("Unable to wrap a DateTime found in Vector member " + i + " of "
+								+ values.size() + " because " + text);
 						try {
 							lotus.domino.DateTime dt = (lotus.domino.DateTime) value;
 							String gmttime = dt.getGMTTime();
@@ -810,7 +884,12 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 					result.add(wrapped);
 				}
 			} else if (value instanceof lotus.domino.DateRange) {
-				result.add(fromLotus((lotus.domino.DateRange) value, (FactorySchema) null, session, prevent_recycling, referenceCache));
+				if (value instanceof CouchBase) {
+					result.add(fromCouch((org.openntf.redomino.couch.DateRange) value, (FactorySchema) null, session,
+							prevent_recycling, referenceCache));
+				} else
+					result.add(fromLotus((lotus.domino.DateRange) value, (FactorySchema) null, session,
+							prevent_recycling, referenceCache));
 			} else if (value instanceof Collection) {
 				result.add(wrapColumnValues((Collection<?>) value, session, prevent_recycling, referenceCache));
 			} else {
@@ -826,20 +905,24 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		return org.openntf.domino.impl.ODAPincher.toLotus(base);
 	}
 
-	//----------- create
+	// ----------- create
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public <T extends Base, P extends Base> T create(final FactorySchema<T, ?, P> schema, final P parent, final Object metaData) {
+	public <T extends Base, P extends Base> T create(final FactorySchema<T, ?, P> schema, final P parent,
+			final Object metaData) {
 		if (schema == Item.SCHEMA) {
-			return (T) new org.openntf.redomino.impl.Item((Document) parent, (String) metaData); // item name
+			return (T) new org.openntf.redomino.impl.Item((Document) parent, (String) metaData); // item
+																									// name
 		}
 
 		if (schema == DateTime.SCHEMA) {
-			return (T) new org.openntf.redomino.impl.DateTime((Session) parent); // no metadata
+			return (T) new org.openntf.redomino.impl.DateTime((Session) parent); // no
+																					// metadata
 		}
 
 		if (schema == DateRange.SCHEMA) {
-			return (T) new org.openntf.redomino.impl.DateRange((Session) parent); // no metadata
+			return (T) new org.openntf.redomino.impl.DateRange((Session) parent); // no
+																					// metadata
 		}
 
 		if (schema == Name.SCHEMA) {
@@ -862,7 +945,10 @@ public class WrapperFactory extends BaseImpl<lotus.domino.Base> implements org.o
 		}
 
 		if (schema == Database.SCHEMA) {
-			return (T) new org.openntf.redomino.impl.Database((Session) parent, (DatabaseMetaData) metaData); // DB-Metadata for closed DBs
+			return (T) new org.openntf.redomino.impl.Database((Session) parent, (DatabaseMetaData) metaData); // DB-Metadata
+																												// for
+																												// closed
+																												// DBs
 		}
 		throw new IllegalArgumentException("Cannot create object by " + schema.getClass());
 	}

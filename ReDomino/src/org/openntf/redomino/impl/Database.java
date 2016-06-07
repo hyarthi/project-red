@@ -31,6 +31,7 @@ import org.openntf.domino.design.DatabaseDesign;
 import org.openntf.domino.events.EnumEvent;
 import org.openntf.domino.events.IDominoEvent;
 import org.openntf.domino.events.IDominoEventFactory;
+import org.openntf.domino.ext.Session.Fixes;
 import org.openntf.domino.helpers.DatabaseMetaData;
 import org.openntf.domino.schema.IDatabaseSchema;
 import org.openntf.domino.transactions.DatabaseTransaction;
@@ -47,7 +48,7 @@ import lotus.notes.addins.DominoServer;
  */
 public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.domino.Database, Session>
 		implements org.openntf.domino.Database {
-	
+
 	private String server_;
 	private DatabaseMetaData shadowedMetaData_;
 	private String path_;
@@ -63,7 +64,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 		super(delegate, parent, NOTES_DATABASE);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	protected Database(final Session parent, final DatabaseMetaData metaData) {
 		super(null, parent, NOTES_DATABASE);
 		initialize(metaData);
@@ -85,7 +86,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void setEventFactory(IDominoEventFactory factory) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -121,13 +122,13 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void createFTIndex(Set<FTIndexOption> options, boolean recreate) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void fixup(Set<FixupOption> options) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -250,7 +251,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void setFTIndexFrequency(FTIndexFrequency frequency) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -262,7 +263,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void closeTransaction() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -304,7 +305,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void setTransaction(DatabaseTransaction txn) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -316,13 +317,13 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void refreshDesign() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void openMail() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -346,7 +347,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void setSchema(IDatabaseSchema schema) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -370,7 +371,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void setAutoMime(AutoMime autoMime) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -399,14 +400,14 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 
 	@Override
 	public Session getAncestorSession() {
-		System.out.println("<><><> Returning session: " + parent);
+		//System.out.println("<><><> Returning session: " + parent);
 		return parent;
 	}
 
 	@Override
 	public void fillExceptionDetails(List<Entry> result) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -472,7 +473,8 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 			// Couch object
 			// TODO consider ODA logic (listeners?)
 			try {
-				result = fromCouch(((org.openntf.redomino.couch.Database)beObject).createDocument(), Document.SCHEMA, this);
+				result = fromCouch(((org.openntf.redomino.couch.Database) beObject).createDocument(), Document.SCHEMA,
+						this);
 			} catch (NotesException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -509,7 +511,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void createFTIndex(int options, boolean recreate) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -589,19 +591,19 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void enableFolder(String folder) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void fixup() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void fixup(int options) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -732,7 +734,8 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 			try {
 				// TODO additional checks?
 				System.out.println("<><> Started wrapping...");
-				return fromCouch(((org.openntf.redomino.couch.Database)beObject).getDocumentByID(noteid), Document.SCHEMA, this);
+				return fromCouch(((org.openntf.redomino.couch.Database) beObject).getDocumentByID(noteid),
+						Document.SCHEMA, this);
 			} catch (NotesException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1004,8 +1007,30 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 
 	@Override
 	public View getView(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			if (null == beObject) {
+				// Lotus object - follow ODA
+				if (!getDelegate().isOpen()) {
+					getDelegate().open();
+				}
+				View result = fromLotus(getDelegate().getView(name), View.SCHEMA, this);
+				if (result != null) {
+					if (getAncestorSession().isFixEnabled(Fixes.VIEW_UPDATE_OFF)) {
+						result.setAutoUpdate(false);
+					}
+				}
+				return result;
+			} else {
+				// Couch Object
+				View result = fromCouch(((org.openntf.redomino.couch.Database) beObject).getView(name), View.SCHEMA,
+						this);
+				return result;
+			}
+		} catch (NotesException e) {
+			DominoUtils.handleException(e, this);
+			return null;
+
+		}
 	}
 
 	@Override
@@ -1017,13 +1042,13 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void grantAccess(String name, int level) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void grantAccess(String name, Level level) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -1143,7 +1168,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void markForDelete() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -1191,13 +1216,13 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void removeFTIndex() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -1209,7 +1234,7 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void revokeAccess(String name) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -1233,175 +1258,175 @@ public class Database extends BaseThreadSafe<org.openntf.domino.Database, lotus.
 	@Override
 	public void setAllowOpenSoftDeleted(boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setCategories(String categories) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setDelayUpdates(boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setDesignLockingEnabled(boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setDocumentLockingEnabled(boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setFolderReferencesEnabled(boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setFTIndexFrequency(int frequency) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setInMultiDbIndexing(boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setInService(boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setLimitRevisions(double revisions) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setLimitUpdatedBy(double updatedBys) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setListInDbCatalog(boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setOption(int optionName, boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setOption(DBOption optionName, boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setSizeQuota(int quota) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setSizeWarning(int warning) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setTitle(String title) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setUndeleteExpireTime(int hours) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void sign() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void sign(int documentType) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void sign(SignDocType documentType) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void sign(int documentType, boolean existingSigsOnly) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void sign(SignDocType documentType, boolean existingSigsOnly) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void sign(int documentType, boolean existingSigsOnly, String name) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void sign(SignDocType documentType, boolean existingSigsOnly, String name) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void sign(int documentType, boolean existingSigsOnly, String name, boolean nameIsNoteid) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void sign(SignDocType documentType, boolean existingSigsOnly, String name, boolean nameIsNoteid) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void updateFTIndex(boolean create) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void resurrect() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

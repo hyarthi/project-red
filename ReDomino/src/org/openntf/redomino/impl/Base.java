@@ -380,6 +380,8 @@ public abstract class Base<T extends org.openntf.domino.Base<D>, D extends lotus
 	 * @return true, if is recycled
 	 */
 	protected static boolean isInvalid(final lotus.domino.Base base) {
+		if (base instanceof CouchBase)
+			return true;
 		if (base == null)
 			return true;
 		try {
@@ -491,12 +493,12 @@ public abstract class Base<T extends org.openntf.domino.Base<D>, D extends lotus
 			final Collection<?> lotusColl, final FactorySchema<T1, D1, P1> schema, final P1 parent) {
 		return getFactory().fromLotusAsVector(lotusColl, schema, parent);
 	}
-	
+
 	@SuppressWarnings({ "rawtypes" })
 	protected <T1 extends org.openntf.domino.Base, D1 extends lotus.domino.Base, P1 extends org.openntf.domino.Base> T1 fromCouch(
 			final D1 lotus, final FactorySchema<T1, D1, P1> schema, final P1 parent) {
-		System.out.println("<><><> Getting wrapper factory...");
-		org.openntf.redomino.impl.WrapperFactory factory = (org.openntf.redomino.impl.WrapperFactory)getFactory();
+		// System.out.println("<><><> Getting wrapper factory...");
+		org.openntf.redomino.impl.WrapperFactory factory = (org.openntf.redomino.impl.WrapperFactory) getFactory();
 		return factory.fromCouch(lotus, schema, parent);
 	}
 
@@ -509,7 +511,6 @@ public abstract class Base<T extends org.openntf.domino.Base<D>, D extends lotus
 	protected Vector<Object> wrapColumnValues(final Collection<?> values, final org.openntf.domino.Session session) {
 		return getFactory().wrapColumnValues(values, session);
 	}
-	
 
 	/**
 	 * returns the WrapperFactory
@@ -527,13 +528,16 @@ public abstract class Base<T extends org.openntf.domino.Base<D>, D extends lotus
 	 */
 	@Override
 	public void recycle() {
-		D delegate = getDelegate_unchecked();
-		if (isDead(delegate))
-			return;
-		s_recycle(delegate); // RPr: we must recycle the delegate, not "this".
-								// Do not call getDelegate as it may
-								// reinstantiate it
-		Factory.countManualRecycle(delegate.getClass());
+		if (null == beObject) {
+			D delegate = getDelegate_unchecked();
+			if (isDead(delegate))
+				return;
+			s_recycle(delegate); // RPr: we must recycle the delegate, not
+									// "this".
+									// Do not call getDelegate as it may
+									// reinstantiate it
+			Factory.countManualRecycle(delegate.getClass());
+		}
 	}
 
 	// unwrap objects
@@ -882,7 +886,8 @@ public abstract class Base<T extends org.openntf.domino.Base<D>, D extends lotus
 	 */
 	protected static boolean s_recycle(final lotus.domino.Base base) {
 		// TODO needs expanded logic for couch objects
-		if (base instanceof CouchBase) return true;
+		if (base instanceof CouchBase)
+			return true;
 		if (base == null || base instanceof org.openntf.domino.Base) {
 			return false; // wrappers and null objects are not recycled!
 		}
@@ -1124,7 +1129,8 @@ public abstract class Base<T extends org.openntf.domino.Base<D>, D extends lotus
 	 */
 	@Override
 	public String toString() {
-		// TODO should probably collapse this construct into getDelegate() method...
+		// TODO should probably collapse this construct into getDelegate()
+		// method...
 		if (null != beObject)
 			return beObject.toString();
 		return getDelegate().toString();

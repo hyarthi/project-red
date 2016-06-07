@@ -20,43 +20,23 @@ import org.openntf.redomino.couch.Item.Type;
 
 import com.ibm.commons.util.io.json.JsonJavaObject;
 
-import lotus.domino.Base;
-import lotus.domino.Database;
-import lotus.domino.DateTime;
-//import lotus.domino.Document;
-import lotus.domino.DocumentCollection;
-import lotus.domino.EmbeddedObject;
-import lotus.domino.MIMEEntity;
 import lotus.domino.NotesException;
-import lotus.domino.RichTextItem;
-import lotus.domino.View;
 import lotus.domino.XSLTResultTarget;
 
 /**
  * @author Vladimir Kornienko
  *
  */
-public class Document<P extends Database&CouchBase> implements lotus.domino.Document, CouchBase {
+public class Document implements lotus.domino.Document, CouchBase {
 
 	private WebTarget target;
-	private P parent;
+	private Database parent;
 	/** Items that were changed */
 	private Map<String, Item> items;
 	private List<String> removedItems;
 	private JsonJavaObject raw;
 	private String id;
 	private String revision;
-
-	private static enum SysFields {
-		;
-		public static final String ID = "_id";
-		public static final String ID_REPONSE = "id";
-		public static final String REVISION = "_rev";
-		public static final String REVISION_RESPONSE = "rev";
-		public static final String RESPONSE = "$REF";
-		public static final String CONFLICT = "$Conflict";
-		public static final String CONFLICT_ID = "_conflictid";
-	}
 
 	/**
 	 * 
@@ -65,16 +45,16 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 		// TODO Auto-generated constructor stub
 	}
 
-	Document(WebTarget _target, P _parent, JsonJavaObject _items) {
+	Document(WebTarget _target, Database _parent, JsonJavaObject _items) {
 		target = _target;
 		parent = _parent;
 		raw = _items;
-		if (raw.containsKey(SysFields.ID))
-			id = raw.getAsString(SysFields.ID);
+		if (raw.containsKey(FieldNames.ID))
+			id = raw.getAsString(FieldNames.ID);
 		else
 			id = null;
-		if (raw.containsKey(SysFields.REVISION))
-			revision = raw.getAsString(SysFields.REVISION);
+		if (raw.containsKey(FieldNames.REVISION))
+			revision = raw.getAsString(FieldNames.REVISION);
 		else
 			revision = null;
 	}
@@ -159,7 +139,7 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 	 * @see lotus.domino.Document#attachVCard(lotus.domino.Base)
 	 */
 	@Override
-	public void attachVCard(Base arg0) throws NotesException {
+	public void attachVCard(lotus.domino.Base arg0) throws NotesException {
 		// TODO Auto-generated method stub
 
 	}
@@ -171,7 +151,7 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 	 * java.lang.String)
 	 */
 	@Override
-	public void attachVCard(Base arg0, String arg1) throws NotesException {
+	public void attachVCard(lotus.domino.Base arg0, String arg1) throws NotesException {
 		// TODO Auto-generated method stub
 
 	}
@@ -292,7 +272,7 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 	 * @see lotus.domino.Document#copyToDatabase(lotus.domino.Database)
 	 */
 	@Override
-	public lotus.domino.Document copyToDatabase(Database arg0) throws NotesException {
+	public lotus.domino.Document copyToDatabase(lotus.domino.Database arg0) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1249,7 +1229,7 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 				if (!revision.equals(((org.openntf.redomino.couch.Document) doc).getRevision()))
 					revision = ((org.openntf.redomino.couch.Document) doc).getRevision();
 				doc.recycle();
-				Response response = target.queryParam(SysFields.REVISION_RESPONSE, revision)
+				Response response = target.queryParam(FieldNames.REVISION_RESPONSE, revision)
 						.request(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON_TYPE).delete();
 				JsonJavaObject jobject = response.readEntity(JsonJavaObject.class);
 				System.out.println("<> Queried Couch for delete. Status: " + response.getStatus());
@@ -1275,7 +1255,7 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 	 * @see lotus.domino.Document#renderToRTItem(lotus.domino.RichTextItem)
 	 */
 	@Override
-	public boolean renderToRTItem(RichTextItem arg0) throws NotesException {
+	public boolean renderToRTItem(lotus.domino.RichTextItem arg0) throws NotesException {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -1286,7 +1266,6 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 	 * @see lotus.domino.Document#replaceItemValue(java.lang.String,
 	 * java.lang.Object)
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public lotus.domino.Item replaceItemValue(String name, Object value) throws NotesException {
 		Item item = null;
@@ -1391,7 +1370,6 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 	public boolean save(boolean force, boolean makeresponse, boolean markread) throws NotesException {
 		Document doc = (org.openntf.redomino.couch.Document) parent.getDocumentByID(id);
 		if (null != doc) {
-			System.out.println("<><><><><> It's an existing document!");
 			if (!revision.equals(doc.getRevision())) {
 				// conflict resolution
 				if (force) {
@@ -1399,34 +1377,34 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 					// takes it
 					// as a correct document version
 					revision = doc.getRevision();
-					raw.putString(SysFields.REVISION, revision);
+					raw.putString(FieldNames.REVISION, revision);
 				} else if (makeresponse) {
 					// make it a response - TODO investigate what would be the
 					// best
 					// way to implement this
-					items.put(SysFields.RESPONSE, new Item(SysFields.RESPONSE, this, id));
+					items.put(FieldNames.NOTES_RESPONSE, new Item(FieldNames.NOTES_RESPONSE, this, id));
 					id = null;
-					raw.remove(SysFields.ID);
+					raw.remove(FieldNames.ID);
 					revision = null;
-					raw.remove(SysFields.REVISION);
+					raw.remove(FieldNames.REVISION);
 				} else {
 					// save as a conflict - TODO investigate what would be the
 					// best
 					// way to implement this
-					items.put(SysFields.CONFLICT, new Item(SysFields.CONFLICT, this, "1"));
-					raw.putString(SysFields.CONFLICT_ID, id);
+					items.put(FieldNames.NOTES_CONFLICT, new Item(FieldNames.NOTES_CONFLICT, this, "1"));
+					raw.putString(FieldNames.CONFLICT_ID, id);
 					id = null;
-					raw.remove(SysFields.ID);
+					raw.remove(FieldNames.ID);
 					revision = null;
-					raw.remove(SysFields.REVISION);
+					raw.remove(FieldNames.REVISION);
 				}
 			}
 		} else {
 			// FIXME probably don't need that
 			id = null;
-			raw.remove(SysFields.ID);
+			raw.remove(FieldNames.ID);
 			revision = null;
-			raw.remove(SysFields.REVISION);
+			raw.remove(FieldNames.REVISION);
 		}
 		if (markread) {
 			// TODO need to investigate what can replace this in Couch
@@ -1443,11 +1421,11 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 			JsonJavaObject jobject = response.readEntity(JsonJavaObject.class);
 			if (response.getStatus() == Response.Status.CREATED.getStatusCode()) {
 				// doc created
-				id = jobject.getAsString(SysFields.ID_REPONSE);
+				id = jobject.getAsString(FieldNames.ID_REPONSE);
 				target = pTarget.path(id);
-				raw.putString(SysFields.ID, id);
-				revision = jobject.getAsString(SysFields.REVISION_RESPONSE);
-				raw.putString(SysFields.REVISION, revision);
+				raw.putString(FieldNames.ID, id);
+				revision = jobject.getAsString(FieldNames.REVISION_RESPONSE);
+				raw.putString(FieldNames.REVISION, revision);
 				return true;
 			} else {
 				// failed to save - TODO throw exception
@@ -1455,18 +1433,13 @@ public class Document<P extends Database&CouchBase> implements lotus.domino.Docu
 			}
 		} else {
 			// save existing document
-			System.out.println("<><><><><> Saving an existing document!");
-			System.out.println("<><><><><> Submitting to: " + target.getUri().toString());
-			System.out.println("<><><><><> Data to submit: " + raw.toString());
 			Response response = target.request(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON_TYPE)
 					.put(Entity.entity(raw, MediaType.APPLICATION_JSON_TYPE));
 			JsonJavaObject jobject = response.readEntity(JsonJavaObject.class);
-			System.out.println("<><><><><> Queried CouchDB. Status: " + response.getStatus());
-			System.out.println("<><><><><> Queried CouchDB. Body: " + jobject.toString());
 			if (response.getStatus() == Response.Status.CREATED.getStatusCode()) {
 				// doc saved
-				revision = jobject.getAsString(SysFields.REVISION_RESPONSE);
-				raw.putString(SysFields.REVISION, revision);
+				revision = jobject.getAsString(FieldNames.REVISION_RESPONSE);
+				raw.putString(FieldNames.REVISION, revision);
 				return true;
 			} else {
 				// failed to save - TODO throw exception

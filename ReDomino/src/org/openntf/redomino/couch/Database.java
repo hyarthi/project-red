@@ -12,23 +12,13 @@ import javax.ws.rs.core.Response;
 
 import com.ibm.commons.util.io.json.JsonJavaObject;
 
-import lotus.domino.ACL;
-import lotus.domino.Agent;
-import lotus.domino.DateTime;
-import lotus.domino.DocumentCollection;
-import lotus.domino.Form;
-import lotus.domino.NoteCollection;
 import lotus.domino.NotesException;
-import lotus.domino.Outline;
-import lotus.domino.Replication;
-import lotus.domino.Session;
-import lotus.domino.View;
 
 /**
  * @author Vladimir Kornienko
  *
  */
-public class Database<P extends Session&CouchBase> implements lotus.domino.Database, CouchBase {
+public class Database implements lotus.domino.Database, CouchBase {
 
 	private static final Logger log_ = Logger.getLogger(Session.class.getName());
 
@@ -37,23 +27,15 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	private String dbFilePath;
 	private WebTarget target;
 	// not sure i need this. it's already implemented in impl wrapper
-	private P parent;
+	private Session parent;
 
 	/**
-	 * 
-	 */
-	public Database() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * NOTE: should probably hide it...
 	 * 
 	 * @param _serverPath
 	 * @param _dbFilePath
 	 * @param _target
 	 */
-	Database(String _serverPath, String _dbFilePath, WebTarget _target, P _parent) {
+	Database(String _serverPath, String _dbFilePath, WebTarget _target, Session _parent) {
 		serverPath = _serverPath;
 		dbFilePath = _dbFilePath;
 		target = _target;
@@ -318,7 +300,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * java.lang.String, lotus.domino.View)
 	 */
 	@Override
-	public View createQueryView(String arg0, String arg1, View arg2) throws NotesException {
+	public View createQueryView(String arg0, String arg1, lotus.domino.View arg2) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -330,7 +312,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * java.lang.String, lotus.domino.View, boolean)
 	 */
 	@Override
-	public View createQueryView(String arg0, String arg1, View arg2, boolean arg3) throws NotesException {
+	public View createQueryView(String arg0, String arg1, lotus.domino.View arg2, boolean arg3) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -387,7 +369,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * lotus.domino.View)
 	 */
 	@Override
-	public View createView(String arg0, String arg1, View arg2) throws NotesException {
+	public View createView(String arg0, String arg1, lotus.domino.View arg2) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -399,7 +381,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * lotus.domino.View, boolean)
 	 */
 	@Override
-	public View createView(String arg0, String arg1, View arg2, boolean arg3) throws NotesException {
+	public View createView(String arg0, String arg1, lotus.domino.View arg2, boolean arg3) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -601,13 +583,21 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 */
 	@Override
 	public lotus.domino.Document getDocumentByID(String id) throws NotesException {
-		// TODO Auto-generated method stub
-		// exception, maybe?
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see lotus.domino.Database#getDocumentByUNID(java.lang.String)
+	 */
+	@Override
+	public lotus.domino.Document getDocumentByUNID(String id) throws NotesException {
 		if (null == target)
 			return null;
 		if (null == id)
 			return null;
-		
+
 		WebTarget docTarget;
 		Response response;
 		JsonJavaObject body;
@@ -621,20 +611,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 		}
 		body = response.readEntity(JsonJavaObject.class);
 
-		System.out.println("<><> Got document: " + body.toString());
-
 		return new Document(docTarget, this, body);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see lotus.domino.Database#getDocumentByUNID(java.lang.String)
-	 */
-	@Override
-	public lotus.domino.Document getDocumentByUNID(String arg0) throws NotesException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/*
@@ -857,7 +834,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * @see lotus.domino.Database#getModifiedDocuments(lotus.domino.DateTime)
 	 */
 	@Override
-	public DocumentCollection getModifiedDocuments(DateTime arg0) throws NotesException {
+	public DocumentCollection getModifiedDocuments(lotus.domino.DateTime arg0) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -869,7 +846,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * int)
 	 */
 	@Override
-	public DocumentCollection getModifiedDocuments(DateTime arg0, int arg1) throws NotesException {
+	public DocumentCollection getModifiedDocuments(lotus.domino.DateTime arg0, int arg1) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1092,9 +1069,23 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * @see lotus.domino.Database#getView(java.lang.String)
 	 */
 	@Override
-	public View getView(String arg0) throws NotesException {
-		// TODO Auto-generated method stub
-		return null;
+	public View getView(String name) throws NotesException {
+		if (null == target || null == name || name.isEmpty())
+			return null;
+		
+		// TODO implement search by view human name
+		WebTarget vtarget = target.path(FieldNames.DESIGN).path(FieldNames.VIEW_PREFIX + name);
+		Response response = vtarget.request(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON_TYPE)
+				.get();
+		if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+			// document not there
+			response.close();
+			return null;
+		}
+		JsonJavaObject body = response.readEntity(JsonJavaObject.class);
+		response.close();
+
+		return new View(vtarget, this, name, body);
 	}
 
 	/*
@@ -1370,7 +1361,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * java.lang.String, lotus.domino.DateTime)
 	 */
 	@Override
-	public boolean openIfModified(String arg0, String arg1, DateTime arg2) throws NotesException {
+	public boolean openIfModified(String arg0, String arg1, lotus.domino.DateTime arg2) throws NotesException {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -1483,7 +1474,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * lotus.domino.DateTime)
 	 */
 	@Override
-	public DocumentCollection search(String arg0, DateTime arg1) throws NotesException {
+	public DocumentCollection search(String arg0, lotus.domino.DateTime arg1) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1495,7 +1486,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	 * lotus.domino.DateTime, int)
 	 */
 	@Override
-	public DocumentCollection search(String arg0, DateTime arg1, int arg2) throws NotesException {
+	public DocumentCollection search(String arg0, lotus.domino.DateTime arg1, int arg2) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1758,8 +1749,7 @@ public class Database<P extends Session&CouchBase> implements lotus.domino.Datab
 	}
 
 	@Override
-	public org.openntf.redomino.couch.Session getAncestorSession() {
-		// TODO Auto-generated method stub
+	public Session getAncestorSession() {
 		return parent.getAncestorSession();
 	}
 }

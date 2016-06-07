@@ -3,7 +3,9 @@
  */
 package org.openntf.redomino.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -19,6 +21,10 @@ import org.openntf.domino.ViewEntryCollection;
 import org.openntf.domino.ViewNavigator;
 import org.openntf.domino.WrapperFactory;
 import org.openntf.domino.ext.NoteCollection;
+import org.openntf.domino.impl.View.DominoColumnInfo;
+import org.openntf.domino.utils.DominoUtils;
+
+import lotus.domino.NotesException;
 
 /**
  * @author Vladimir Kornienko
@@ -26,6 +32,9 @@ import org.openntf.domino.ext.NoteCollection;
  */
 public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.View, Database>
 		implements org.openntf.domino.View {
+	private Vector<String> aliases_;
+	private String name_;
+	private String universalId_;
 
 	/**
 	 * @param delegate
@@ -34,6 +43,19 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 	protected View(lotus.domino.View delegate, Database parent) {
 		super(delegate, parent, NOTES_VIEW);
 		// TODO Auto-generated constructor stub
+		if (null == beObject)
+			initialize(delegate);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void initialize(final lotus.domino.View delegate) {
+		try {
+			aliases_ = delegate.getAliases();
+			name_ = delegate.getName();
+			universalId_ = delegate.getUniversalID();
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -144,12 +166,14 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getFirstDocumentByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getFirstDocumentByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
@@ -168,12 +192,14 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry getFirstEntryByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry getFirstEntryByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
@@ -224,14 +250,12 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 
 	@Override
 	public Database getAncestorDatabase() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent;
 	}
 
 	@Override
 	public Session getAncestorSession() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent.getAncestorSession();
 	}
 
 	@Override
@@ -506,24 +530,28 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 		return 0;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs, int column) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs, int column, boolean ascending, boolean exact, boolean variants,
 			boolean fuzzy) {
@@ -531,12 +559,14 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 		return 0;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs, String column) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs, String column, boolean ascending, boolean exact,
 			boolean variants, boolean fuzzy) {
@@ -562,12 +592,14 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public DocumentCollection getAllDocumentsByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public DocumentCollection getAllDocumentsByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
@@ -582,26 +614,50 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 
 	@Override
 	public ViewEntryCollection getAllEntriesByKey(Object key) {
-		// TODO Auto-generated method stub
-		return null;
+		return getAllEntriesByKey(key, false);
 	}
 
 	@Override
 	public ViewEntryCollection getAllEntriesByKey(Object key, boolean exact) {
-		// TODO Auto-generated method stub
+		List<lotus.domino.Base> recycleThis = new ArrayList<lotus.domino.Base>();
+		try {
+			if (null == beObject) {
+				// Lotus object - follow ODA
+				Object domKey = null;
+				if (key != null) {
+					domKey = toDominoFriendly(key, getAncestorSession(), recycleThis);
+				}
+				lotus.domino.ViewEntryCollection rawColl;
+				if (domKey instanceof java.util.Vector) {
+					rawColl = getDelegate().getAllEntriesByKey((Vector<?>) domKey, exact);
+				} else {
+					rawColl = getDelegate().getAllEntriesByKey(domKey, exact);
+				}
+				return fromLotus(rawColl, ViewEntryCollection.SCHEMA, this);
+			} else {
+				// Couch object
+				ViewEntryCollection result = fromCouch(
+						((org.openntf.redomino.couch.View) beObject).getAllEntriesByKey(key),
+						ViewEntryCollection.SCHEMA, this);
+				//System.out.println("<><> VEC wrapped: " + result);
+				return result;
+			}
+		} catch (NotesException e) {
+			DominoUtils.handleException(e);
+		}
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntryCollection getAllEntriesByKey(Vector keys) {
-		// TODO Auto-generated method stub
-		return null;
+		return getAllEntriesByKey((Object) keys, false);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntryCollection getAllEntriesByKey(Vector keys, boolean exact) {
-		// TODO Auto-generated method stub
-		return null;
+		return getAllEntriesByKey((Object) keys, exact);
 	}
 
 	@Override
@@ -688,12 +744,14 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getDocumentByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getDocumentByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
@@ -712,12 +770,14 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry getEntryByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry getEntryByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
@@ -976,12 +1036,14 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean lock(Vector names) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean lock(Vector names, boolean provisionalOk) {
 		// TODO Auto-generated method stub
@@ -1000,6 +1062,7 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean lockProvisional(Vector names) {
 		// TODO Auto-generated method stub
@@ -1084,6 +1147,7 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void setAliases(Vector aliases) {
 		// TODO Auto-generated method stub
@@ -1132,6 +1196,7 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void setReaders(Vector readers) {
 		// TODO Auto-generated method stub
@@ -1170,6 +1235,15 @@ public class View extends BaseThreadSafe<org.openntf.domino.View, lotus.domino.V
 
 	@Override
 	protected WrapperFactory getFactory() {
+		return parent.getAncestorSession().getFactory();
+	}
+
+	protected Map<String, DominoColumnInfo> getColumnInfoMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	protected List<DominoColumnInfo> getColumnInfos() {
 		// TODO Auto-generated method stub
 		return null;
 	}

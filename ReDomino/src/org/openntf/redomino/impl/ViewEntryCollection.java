@@ -11,8 +11,11 @@ import org.openntf.domino.Session;
 import org.openntf.domino.View;
 import org.openntf.domino.ViewEntry;
 import org.openntf.domino.WrapperFactory;
+import org.openntf.domino.iterators.ViewEntryIterator;
+import org.openntf.domino.utils.DominoUtils;
 
 import lotus.domino.Base;
+import lotus.domino.NotesException;
 
 /**
  * @author Vladimir Kornienko
@@ -28,7 +31,7 @@ public class ViewEntryCollection
 	 */
 	protected ViewEntryCollection(lotus.domino.ViewEntryCollection delegate, View parent) {
 		super(delegate, parent, NOTES_VECOLL);
-		// TODO Auto-generated constructor stub
+		// System.out.println("<><> ViewEntryCollection wrapper initialized.");
 	}
 
 	@Override
@@ -39,20 +42,18 @@ public class ViewEntryCollection
 
 	@Override
 	public Iterator<ViewEntry> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println("<><> Iterator called.");
+		return new ViewEntryIterator(this);
 	}
 
 	@Override
 	public Database getAncestorDatabase() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent.getAncestorDatabase();
 	}
 
 	@Override
 	public Session getAncestorSession() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent.getAncestorSession();
 	}
 
 	@Override
@@ -111,8 +112,17 @@ public class ViewEntryCollection
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+			if (null == beObject)
+				// Lotus object - follow ODA
+				return getDelegate().getCount();
+			else
+				// Couch object
+				return ((org.openntf.redomino.couch.ViewEntryCollection) beObject).getCount();
+		} catch (Throwable t) {
+			DominoUtils.handleException(t);
+			return 0;
+		}
 	}
 
 	@Override
@@ -123,50 +133,132 @@ public class ViewEntryCollection
 
 	@Override
 	public ViewEntry getFirstEntry() {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println("<><> getFirstEntry()");
+		try {
+			if (null == beObject)
+				// Lotus object - follow ODA
+				return fromLotus(getDelegate().getFirstEntry(), ViewEntry.SCHEMA, parent);
+			else
+				// Couch object
+				return fromCouch(((org.openntf.redomino.couch.ViewEntryCollection) beObject).getFirstEntry(),
+						ViewEntry.SCHEMA, parent);
+		} catch (NotesException e) {
+			DominoUtils.handleException(e);
+			return null;
+		}
 	}
 
 	@Override
 	public ViewEntry getLastEntry() {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println("<><> getLastEntry()");
+		try {
+			if (null == beObject)
+				// Lotus object - follow ODA
+				return fromLotus(getDelegate().getLastEntry(), ViewEntry.SCHEMA, parent);
+			else
+				// Couch object
+				return fromCouch(((org.openntf.redomino.couch.ViewEntryCollection) beObject).getLastEntry(),
+						ViewEntry.SCHEMA, parent);
+		} catch (NotesException e) {
+			DominoUtils.handleException(e);
+			return null;
+		}
 	}
 
 	@Override
 	public ViewEntry getNextEntry() {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println("<><> getNextEntry()");
+		try {
+			if (null == beObject)
+				// Lotus object - follow ODA
+				return fromLotus(getDelegate().getNextEntry(), ViewEntry.SCHEMA, parent);
+			else
+				// Couch object
+				return fromCouch(((org.openntf.redomino.couch.ViewEntryCollection) beObject).getNextEntry(),
+						ViewEntry.SCHEMA, parent);
+		} catch (NotesException e) {
+			DominoUtils.handleException(e);
+			return null;
+		}
 	}
 
 	@Override
 	public ViewEntry getNextEntry(lotus.domino.ViewEntry entry) {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println("<><> getNextEntry(...)");
+		try {
+			ViewEntry result;
+			if (null == beObject)
+				// Lotus object - follow ODA
+				result = fromLotus(getDelegate().getNextEntry(toLotus(entry)), ViewEntry.SCHEMA, parent);
+			else
+				// Couch object
+				result = fromCouch(((org.openntf.redomino.couch.ViewEntryCollection) beObject).getNextEntry(entry),
+						ViewEntry.SCHEMA, parent);
+			entry.recycle();
+			return result;
+		} catch (NotesException e) {
+			DominoUtils.handleException(e);
+			return null;
+		}
 	}
 
 	@Override
 	public ViewEntry getNthEntry(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println("<><> getNthEntry()");
+		try {
+			if (null == beObject)
+				// Lotus object - follow ODA
+				return fromLotus(getDelegate().getNthEntry(n), ViewEntry.SCHEMA, parent);
+			else
+				// Couch object
+				return fromCouch(((org.openntf.redomino.couch.ViewEntryCollection) beObject).getNthEntry(n),
+						ViewEntry.SCHEMA, parent);
+		} catch (NotesException e) {
+			DominoUtils.handleException(e);
+			return null;
+		}
 	}
 
 	@Override
 	public View getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent;
 	}
 
 	@Override
 	public ViewEntry getPrevEntry() {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println("<><> getPrevEntry()");
+		try {
+			if (null == beObject)
+				// Lotus object - follow ODA
+				return fromLotus(getDelegate().getPrevEntry(), ViewEntry.SCHEMA, parent);
+			else
+				// Couch object
+				return fromCouch(((org.openntf.redomino.couch.ViewEntryCollection) beObject).getPrevEntry(),
+						ViewEntry.SCHEMA, parent);
+		} catch (NotesException e) {
+			DominoUtils.handleException(e);
+			return null;
+		}
 	}
 
 	@Override
 	public ViewEntry getPrevEntry(lotus.domino.ViewEntry entry) {
-		// TODO Auto-generated method stub
-		return null;
+		//System.out.println("<><> getPrevEntry(...)");
+		try {
+			ViewEntry result;
+			if (null == beObject)
+				// Lotus object - follow ODA
+				result = fromLotus(getDelegate().getPrevEntry(toLotus(entry)), ViewEntry.SCHEMA, parent);
+			else
+				// Couch object
+				result = fromCouch(((org.openntf.redomino.couch.ViewEntryCollection) beObject).getPrevEntry(entry),
+						ViewEntry.SCHEMA, parent);
+			entry.recycle();
+			return result;
+		} catch (NotesException e) {
+			DominoUtils.handleException(e);
+			return null;
+		}
 	}
 
 	@Override
@@ -291,8 +383,7 @@ public class ViewEntryCollection
 
 	@Override
 	protected WrapperFactory getFactory() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent.getAncestorSession().getFactory();
 	}
 
 }

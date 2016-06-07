@@ -3,7 +3,7 @@
    <description name="Project RED">
       Project RED
    </description>
-   <feature url="features/org.openntf.redomino.feature_0.8.0.201605301625.jar" id="org.openntf.redomino.feature" version="0.8.0.201605301625">
+   <feature url="features/org.openntf.redomino.feature_0.8.0.201606071722.jar" id="org.openntf.redomino.feature" version="0.8.0.201606071722">
       <category name="OpenNTF Project RED"/>
    </feature>
    <category-def name="OpenNTF Project RED" label="OpenNTF RED"/>

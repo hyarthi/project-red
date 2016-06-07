@@ -12,6 +12,8 @@ import org.openntf.domino.exceptions.OpenNTFNotesException;
 import org.openntf.redomino.utils.Strings;
 import org.openntf.redomino.utils.TimeZones;
 
+import com.ibm.commons.util.io.json.JsonJavaObject;
+
 import lotus.domino.NotesException;
 //import lotus.domino.Session;
 
@@ -19,7 +21,7 @@ import lotus.domino.NotesException;
  * @author Vladimir Kornienko
  *
  */
-public class DateTime<P extends lotus.domino.Base & CouchBase> implements lotus.domino.DateTime, CouchBase {
+public class DateTime implements lotus.domino.DateTime, CouchBase {
 	private Calendar date, ztdate;
 	private TimeZones tz;
 	private Session parent;
@@ -33,18 +35,31 @@ public class DateTime<P extends lotus.domino.Base & CouchBase> implements lotus.
 	 * 
 	 */
 	DateTime(Session _parent) {
+		parent = _parent;
 		date = Calendar.getInstance();
 		tz = TimeZones.getByArea(date.getTimeZone().getID());
 		type = Type.DATETIME;
-		parent = _parent;
 	}
-	
+
 	DateTime(Session _parent, int _index, Type _type, String _internal_value) {
+		parent = _parent;
 		tz = TimeZones.get(_index);
 		type = _type;
 		date = Calendar.getInstance(TimeZone.getTimeZone(tz.getArea()));
 		castFromStorage(_internal_value);
+	}
+
+	DateTime(Session _parent, JsonJavaObject data) {
 		parent = _parent;
+		tz = TimeZones.get(data.getAsInt(FieldNames.ITEM_DATETIME_TZ));
+		if (data.getAsBoolean(FieldNames.ITEM_DATETIME_DATEONLY))
+			type = Type.DATEONLY;
+		else if (data.getAsBoolean(FieldNames.ITEM_DATETIME_TIMEONLY))
+			type = Type.TIMEONLY;
+		else
+			type = Type.DATETIME;
+		date = Calendar.getInstance(TimeZone.getTimeZone(tz.getArea()));
+		castFromStorage(data.getAsString(FieldNames.ITEM_VALUE));
 	}
 
 	/*
@@ -659,6 +674,10 @@ public class DateTime<P extends lotus.domino.Base & CouchBase> implements lotus.
 		if (type.equals(Type.DATEONLY))
 			throw new OpenNTFNotesException("Can not set any date for a DATEONLY type of DateTime.");
 		type = Type.TIMEONLY;
+
+		if (null != ztdate)
+			ztdate.set(9999, 11, 31);
+		date.set(9999, 11, 31);
 	}
 
 	/*
@@ -671,6 +690,18 @@ public class DateTime<P extends lotus.domino.Base & CouchBase> implements lotus.
 		if (type.equals(Type.TIMEONLY))
 			throw new OpenNTFNotesException("Can not set any time for a TIMEONLY type of DateTime.");
 		type = Type.DATEONLY;
+
+		if (null != ztdate) {
+			ztdate.set(Calendar.HOUR_OF_DAY, 0);
+			ztdate.set(Calendar.MINUTE, 0);
+			ztdate.set(Calendar.SECOND, 0);
+			ztdate.set(Calendar.MILLISECOND, 0);
+		}
+
+		date.set(Calendar.HOUR_OF_DAY, 0);
+		date.set(Calendar.MINUTE, 0);
+		date.set(Calendar.SECOND, 0);
+		date.set(Calendar.MILLISECOND, 0);
 	}
 
 	/*
@@ -815,7 +846,7 @@ public class DateTime<P extends lotus.domino.Base & CouchBase> implements lotus.
 	public boolean isTimeOnly() {
 		return type.equals(Type.TIMEONLY);
 	}
-	
+
 	protected void castFromStorage(String value) {
 		String[] values = value.split("-");
 		if (values.length != 7) {
@@ -837,4 +868,13 @@ public class DateTime<P extends lotus.domino.Base & CouchBase> implements lotus.
 		return parent;
 	}
 
+	protected String toUTCStorageString() {
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		if (null != ztdate)
+			cal.setTimeInMillis(ztdate.getTimeInMillis());
+		else
+			cal.setTimeInMillis(date.getTimeInMillis());
+
+		return String.format(Strings.FORMAT_DATETIME_STORAGE, cal);
+	}
 }

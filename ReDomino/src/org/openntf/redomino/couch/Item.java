@@ -11,15 +11,11 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.Vector;
 
-import org.openntf.redomino.couch.DateTime.Type;
 import org.xml.sax.InputSource;
 
 import com.ibm.commons.util.io.json.JsonJavaArray;
 import com.ibm.commons.util.io.json.JsonJavaObject;
 
-import lotus.domino.DateTime;
-import lotus.domino.Document;
-import lotus.domino.MIMEEntity;
 import lotus.domino.NotesException;
 import lotus.domino.XSLTResultTarget;
 
@@ -27,9 +23,9 @@ import lotus.domino.XSLTResultTarget;
  * @author Vladimir Kornienko
  *
  */
-public class Item<P extends Document & CouchBase> implements lotus.domino.Item, CouchBase {
+public class Item implements lotus.domino.Item, CouchBase {
 	/** Parent document */
-	private P parent;
+	private Document parent;
 	/** Item type (relates to original Notes item types) */
 	private int type;
 	/**
@@ -42,21 +38,6 @@ public class Item<P extends Document & CouchBase> implements lotus.domino.Item, 
 	private boolean multiValue;
 	private Set<Separators> separators;
 	private Separators viewSeparator;
-
-	protected static enum FieldNames {
-		;
-		public static final String ITEM_TYPE = "_type";
-		public static final String ITEM_VALUE = "_value";
-		public static final String ITEM_FLAGS = "_flags";
-		public static final String ITEM_MULTIVALUE = "_multiValue";
-		public static final String ITEM_SEPARATORS = "_separators";
-		public static final String ITEM_DATETIME_TZ = "_tz";
-		public static final String ITEM_DATETIME_DATEONLY = "_dtonly";
-		public static final String ITEM_DATETIME_TIMEONLY = "_tmonly";
-		public static final String ITEM_DATETIME_DATERANGE = "_range";
-		public static final String ITEM_DATETIME_DATERANGE_START = "_start";
-		public static final String ITEM_DATETIME_DATERANGE_END = "_end";
-	}
 
 	public static enum Type {
 		;
@@ -150,20 +131,20 @@ public class Item<P extends Document & CouchBase> implements lotus.domino.Item, 
 		// TODO Auto-generated constructor stub
 	}
 
-	Item(final String _name, final P _parent, final JsonJavaObject _value) {
+	Item(final String _name, final Document _parent, final JsonJavaObject _value) {
 		name = _name;
 		parent = _parent;
 		raw = _value;
 		initItem();
 	}
 
-	Item(final String _name, final P _parent, final int _type) {
+	Item(final String _name, final Document _parent, final int _type) {
 		name = _name;
 		parent = _parent;
 		initBlankItem();
 	}
 
-	Item(final String _name, final P _parent, final Object _value) {
+	Item(final String _name, final Document _parent, final Object _value) {
 		name = _name;
 		parent = _parent;
 		initItemWithValue(_value);
@@ -335,7 +316,7 @@ public class Item<P extends Document & CouchBase> implements lotus.domino.Item, 
 	 * @see lotus.domino.Item#copyItemToDocument(lotus.domino.Document)
 	 */
 	@Override
-	public lotus.domino.Item copyItemToDocument(Document arg0) throws NotesException {
+	public lotus.domino.Item copyItemToDocument(lotus.domino.Document arg0) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -347,7 +328,7 @@ public class Item<P extends Document & CouchBase> implements lotus.domino.Item, 
 	 * java.lang.String)
 	 */
 	@Override
-	public lotus.domino.Item copyItemToDocument(Document arg0, String arg1) throws NotesException {
+	public lotus.domino.Item copyItemToDocument(lotus.domino.Document arg0, String arg1) throws NotesException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -514,7 +495,7 @@ public class Item<P extends Document & CouchBase> implements lotus.domino.Item, 
 	 * 
 	 * @see lotus.domino.Item#getValueDateTimeArray()
 	 */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Vector getValueDateTimeArray() throws NotesException {
 		Vector result = new Vector(0);
@@ -623,7 +604,6 @@ public class Item<P extends Document & CouchBase> implements lotus.domino.Item, 
 		return result;
 	}
 
-	@SuppressWarnings("rawtypes")
 	private DateTime spawnDateTime(JsonJavaObject value) {
 		org.openntf.redomino.couch.DateTime dt = null;
 		org.openntf.redomino.couch.DateTime.Type type;
@@ -764,7 +744,7 @@ public class Item<P extends Document & CouchBase> implements lotus.domino.Item, 
 	 * @see lotus.domino.Item#setDateTimeValue(lotus.domino.DateTime)
 	 */
 	@Override
-	public void setDateTimeValue(DateTime value) throws NotesException {
+	public void setDateTimeValue(lotus.domino.DateTime value) throws NotesException {
 		// TODO Auto-generated method stub
 
 	}

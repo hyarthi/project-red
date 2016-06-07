@@ -1116,7 +1116,7 @@ public enum Factory {
 	public static void initThread(final ThreadConfig tc) { // RPr: Method was
 															// deliberately
 															// renamed
-		System.out.println("<><><> Initializing Factory thread...");
+		//System.out.println("<><><> Initializing Factory thread...");
 		if (!started) {
 			throw new IllegalStateException("Factory is not yet started");
 		}
@@ -1131,9 +1131,9 @@ public enum Factory {
 		// Throwable t = new Throwable();
 		// t.printStackTrace();
 		threadVariables_.set(new ThreadVariables(tc));
-		System.out.println("<><><> Factory thread initialized.");
-		System.out.println("<><><> ThreadConfig is: " + tc.toString());
-		System.out.println("<><><> ThreadVariables is: " + threadVariables_.toString());
+		//System.out.println("<><><> Factory thread initialized.");
+		//System.out.println("<><><> ThreadConfig is: " + tc.toString());
+		//System.out.println("<><><> ThreadVariables is: " + threadVariables_.toString());
 	}
 
 	/**
@@ -1209,7 +1209,7 @@ public enum Factory {
 					"Initialization must be done on the raw session! How did you get that session?");
 		}
 		if (started) {
-			Factory.println("OpenNTF ReDomino is already started. Cannot start it again");
+			Factory.println("OpenNTF RED is already started. Cannot start it again");
 		}
 		
 		File iniFile;
@@ -1222,7 +1222,7 @@ public enum Factory {
 			iniFile = getConfigFileFallback();
 		}
 
-		Factory.println("Starting the OpenNTF Domino API... Using notes.ini: " + iniFile);
+		Factory.println("Starting the OpenNTF RED API... Using notes.ini: " + iniFile);
 
 		try {
 			Scanner scanner = new Scanner(iniFile);
@@ -1410,7 +1410,7 @@ public enum Factory {
 	}
 
 	public static synchronized void shutdown() {
-		Factory.println("Shutting down the OpenNTF Domino API... ");
+		Factory.println("Shutting down the OpenNTF RED API... ");
 		Runnable[] copy = shutdownHooks.toArray(new Runnable[shutdownHooks.size()]);
 		for (Runnable term : copy) {
 			try {
@@ -1419,7 +1419,7 @@ public enum Factory {
 				t.printStackTrace();
 			}
 		}
-		Factory.println("OpenNTF Domino API shut down");
+		Factory.println("OpenNTF RED API shut down");
 		started = false;
 	}
 
@@ -1623,9 +1623,9 @@ public enum Factory {
 		String line;
 		try {
 			if (Strings.isBlankString(prefix)) {
-				prefix = "[ODA] ";
+				prefix = "[RED] ";
 			} else {
-				prefix = "[ODA::" + prefix + "] ";
+				prefix = "[RED::" + prefix + "] ";
 			}
 			while ((line = reader.readLine()) != null) {
 				if (line.length() > 0)
@@ -1665,12 +1665,12 @@ public enum Factory {
 	public static String getCouchServerUrl(final String name) {
 		if (null == couchServers)
 			throw new OpenNTFNotesException("CouchDB server list is not initialized.");
-		System.out.println("<><><><> Looking for server name: " + name);
-		System.out.println("<><><><> Server List size: " + couchServers.keySet().size());
-		System.out.println("<><><><> Server List: ");
-		for (String server : couchServers.keySet()) {
-			System.out.println("<><><><> " + server + " : " + couchServers.get(server));
-		}
+		//System.out.println("<><><><> Looking for server name: " + name);
+		//System.out.println("<><><><> Server List size: " + couchServers.keySet().size());
+		//System.out.println("<><><><> Server List: ");
+		//for (String server : couchServers.keySet()) {
+		//	System.out.println("<><><><> " + server + " : " + couchServers.get(server));
+		//}
 		if (couchServers.containsKey(name))
 			return couchServers.get(name);
 		return getCouchServerUrlByCN(name);
@@ -1690,7 +1690,7 @@ public enum Factory {
 
 	private static void initializeCouchServerList() {
 		String allstr = org.openntf.redomino.utils.Factory.getEnvironment(COUCH_INI_VARIABLE.toLowerCase());
-		System.out.println("<><><><><> Couch server list string: " + allstr);
+		//System.out.println("<><><><><> Couch server list string: " + allstr);
 		if (null != allstr) {
 			if (allstr.indexOf(";") < 0) {
 				if (allstr.indexOf("!!") > 0) {

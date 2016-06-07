@@ -6,7 +6,6 @@ package org.openntf.redomino.couch;
 import java.util.Set;
 import java.util.Vector;
 
-import org.openntf.redomino.couch.Item.FieldNames;
 import org.openntf.redomino.couch.Item.Separators;
 import org.openntf.redomino.couch.Item.Type;
 import org.openntf.redomino.utils.Strings;
@@ -93,7 +92,6 @@ public enum TypeCaster {
 		return jarray;
 	}
 
-	@SuppressWarnings("rawtypes")
 	protected static JsonJavaObject dateTimeToObject(lotus.domino.DateTime dt) {
 		JsonJavaObject jobject = new JsonJavaObject();
 
@@ -107,6 +105,10 @@ public enum TypeCaster {
 			return jobject;
 		}
 
+		return null;
+	}
+	
+	protected static Object objectToValue(JsonJavaObject jobject, Session sess, CouchBase parent) {
 		return null;
 	}
 	

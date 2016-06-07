@@ -881,7 +881,7 @@ public class Session extends BaseThreadSafe<org.openntf.domino.Session, lotus.do
 
 	@Override
 	public final WrapperFactory getFactory() {
-		System.out.println("<><><> Returning factory: " + parent);
+		//System.out.println("<><><> Returning factory: " + parent);
 		return parent;
 	}
 	

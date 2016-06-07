@@ -3,7 +3,11 @@
  */
 package org.openntf.redomino.impl;
 
+import java.lang.reflect.Method;
+import java.security.AccessController;
+import java.security.PrivilegedExceptionAction;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -14,14 +18,41 @@ import org.openntf.domino.Document;
 import org.openntf.domino.Session;
 import org.openntf.domino.View;
 import org.openntf.domino.WrapperFactory;
+import org.openntf.domino.ext.Session.Fixes;
 import org.openntf.domino.impl.ODAPincher;
+import org.openntf.domino.impl.View.DominoColumnInfo;
+import org.openntf.domino.utils.DominoUtils;
+
+import lotus.domino.NotesException;
 
 /**
  * @author Vladimir Kornienko
  *
  */
-public class ViewEntry extends BaseNonThreadSafe<org.openntf.domino.ViewEntry, lotus.domino.ViewEntry, View> implements
-org.openntf.domino.ViewEntry {
+public class ViewEntry extends BaseNonThreadSafe<org.openntf.domino.ViewEntry, lotus.domino.ViewEntry, View>
+		implements org.openntf.domino.ViewEntry {
+
+	private Vector<Object> columnValues_;
+
+	private static Method getParentViewMethod;
+
+	static {
+		try {
+			AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
+				@Override
+				public Object run() throws Exception {
+					getParentViewMethod = lotus.domino.local.ViewEntry.class.getDeclaredMethod("getParentView",
+							(Class<?>[]) null);
+					getParentViewMethod.setAccessible(true);
+					return null;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			DominoUtils.handleException(e);
+		}
+
+	}
 
 	/**
 	 * @param delegate
@@ -29,10 +60,19 @@ org.openntf.domino.ViewEntry {
 	 */
 	protected ViewEntry(lotus.domino.ViewEntry delegate, View parent) {
 		super(delegate, parent, NOTES_VIEWENTRY);
-		// TODO Auto-generated constructor stub
+
+		if (null == beObject)
+			try {
+				if (getAncestorSession().isFixEnabled(Fixes.FORCE_JAVA_DATES)) {
+					delegate.setPreferJavaDates(true);
+				}
+			} catch (NotesException ne) {
+				DominoUtils.handleException(ne);
+			}
 	}
-	
+
 	protected static lotus.domino.View getParentView(final lotus.domino.ViewEntry base) {
+		// FIXME get rid of this and merge
 		return ODAPincher.getParentView(base);
 	}
 
@@ -44,7 +84,27 @@ org.openntf.domino.ViewEntry {
 
 	@Override
 	public Object getColumnValue(String columnName) {
-		// TODO Auto-generated method stub
+		if (null == beObject) {
+			// Lotus object - follow ODA
+			Map<String, DominoColumnInfo> colInfoMap = ((org.openntf.redomino.impl.View) getParentView())
+					.getColumnInfoMap();
+
+			DominoColumnInfo colInfo = colInfoMap.get(columnName);
+			if (colInfo != null) {
+				int idx = colInfo.getColumnValuesIndex();
+				if (idx == 65535) {
+					return colInfo.getConstantValue();
+				} else {
+					Vector<Object> columnValues = getColumnValues(false);
+					if (idx < columnValues.size())
+						return (columnValues.get(idx));
+				}
+			}
+		} else {
+			// Couch object
+			// FIXME implement ColumnInfo on Couch and merge - does not wrap Couch DateTime/DateRange objects
+			return ((org.openntf.redomino.couch.ViewEntry)beObject).getColumnValue(columnName);
+		}
 		return null;
 	}
 
@@ -92,14 +152,13 @@ org.openntf.domino.ViewEntry {
 
 	@Override
 	public Session getAncestorSession() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent.getAncestorSession();
 	}
 
 	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -147,7 +206,7 @@ org.openntf.domino.ViewEntry {
 	@Override
 	public void putAll(Map<? extends String, ? extends Object> m) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -182,8 +241,64 @@ org.openntf.domino.ViewEntry {
 
 	@Override
 	public Vector<Object> getColumnValues() {
-		// TODO Auto-generated method stub
-		return null;
+		return getColumnValues(getAncestorSession().isFixEnabled(Fixes.VIEWENTRY_RETURN_CONSTANT_VALUES));
+	}
+
+	/**
+	 * Returns the columnValues of this entry.
+	 * 
+	 * @param returnConstants
+	 *            this parameter controls if constant values should also be
+	 *            returned
+	 */
+	protected java.util.Vector<Object> getColumnValues(final boolean returnConstants) {
+		try {
+
+			if (columnValues_ == null) {
+				// cache the columnValues and rely that the caller will NOT
+				// modify the objects inside
+				if (null == beObject)
+					// Lotus object - follow ODA
+					columnValues_ = wrapColumnValues(getDelegate().getColumnValues(), this.getAncestorSession());
+				else
+					// Couch object
+					columnValues_ = wrapColumnValues(
+							((org.openntf.redomino.couch.ViewEntry) beObject).getColumnValues(),
+							this.getAncestorSession());
+			}
+
+			if (null == beObject)
+				if (returnConstants) {
+					List<DominoColumnInfo> colInfos = ((org.openntf.redomino.impl.View) getParentView())
+							.getColumnInfos();
+					if (colInfos.size() > columnValues_.size()) { // there were
+																	// constant
+																	// columns
+
+						Vector<Object> ret = new Vector<Object>(colInfos.size());
+						for (DominoColumnInfo colInfo : colInfos) {
+							int idx = colInfo.getColumnValuesIndex();
+							if (idx < 65535) {
+								if (idx < columnValues_.size()) {
+									ret.add(columnValues_.get(idx));
+								} else {
+									ret.add(null); // Categories!
+								}
+							} else {
+								ret.add(colInfo.getConstantValue());
+							}
+						}
+						return ret;
+					}
+				}
+			return columnValues_;
+		} catch (NotesException e) {
+			if (e.id == 4432) {
+				return new Vector<Object>();
+			}
+			DominoUtils.handleException(e);
+			return null;
+		}
 	}
 
 	@Override
@@ -224,8 +339,7 @@ org.openntf.domino.ViewEntry {
 
 	@Override
 	public Base<?> getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent;
 	}
 
 	@Override
@@ -297,12 +411,11 @@ org.openntf.domino.ViewEntry {
 	@Override
 	public void setPreferJavaDates(boolean flag) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected WrapperFactory getFactory() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent.getAncestorSession().getFactory();
 	}
 }
