@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<faces-config>
-	<factory>
-		<faces-context-factory>org.openntf.redomino.xsp.REDFacesContextFactory</faces-context-factory>
-	</factory>
-</faces-config>

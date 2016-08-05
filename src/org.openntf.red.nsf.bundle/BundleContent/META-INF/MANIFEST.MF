@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.openntf.red.nsf.bundle
+Bundle-SymbolicName: org.openntf.red.nsf.bundle
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: javolution.util,
+ lotus.domino,
+ org.openntf.red.core.config,
+ org.osgi.framework;version="1.8.0"
+Export-Package: org.openntf.red.nsf,
+ org.openntf.red.nsf.couch,
+ org.openntf.red.nsf.endpoint,
+ org.openntf.red.nsf.notes,
+ org.openntf.red.nsf.notes.remote
+Bundle-ClassPath: .
+
