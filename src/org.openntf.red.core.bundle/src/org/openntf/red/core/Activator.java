@@ -14,10 +14,10 @@ public class Activator implements BundleActivator {
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
-		log.info("RED Server: starting...");
+		/*log.info("RED Server: starting...");
 		ConfigManager.startup();
 		ThreadManager.startup();
-		log.info("RED Server: started.");
+		log.info("RED Server: started.");*/
 	}
 
 	/*
@@ -25,10 +25,10 @@ public class Activator implements BundleActivator {
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
-		log.info("RED Server: shutting down...");
+		/*log.info("RED Server: shutting down...");
 		ThreadManager.shutdown();
 		ConfigManager.shutdown();
-		log.info("RED Server: shut down.");
+		log.info("RED Server: shut down.");*/
 	}
 
 }

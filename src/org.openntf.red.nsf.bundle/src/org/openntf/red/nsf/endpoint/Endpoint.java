@@ -3,12 +3,13 @@
  */
 package org.openntf.red.nsf.endpoint;
 
+import org.openntf.red.nsf.exceptions.EndpointException;
 
 /**
  * @author Vladimir Kornienko
  *
  */
-public interface Endpoint {
+public interface Endpoint<TE extends Endpoint<?, ?, ?>, TEF extends EndpointFactory, TEP extends EndpointFactory> extends Base<TE, TEF, TEP> {
 	/**
 	 * Get
 	 * 
@@ -82,5 +83,7 @@ public interface Endpoint {
 	 * @return
 	 */
 	public boolean removeNote(String unid) throws EndpointException;
+	
+	public void recycle();
 	
 }

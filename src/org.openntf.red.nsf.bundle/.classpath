@@ -9,17 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/com.ibm.ws.st.core.runtimeClasspathProvider/RED Server"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/commons-codec-1.6.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/commons-io-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/httpclient-4.2.5.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/httpclient-cache-4.2.5.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/httpcore-4.2.4.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/jackson-annotations-2.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/jackson-core-2.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/jackson-databind-2.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/org.ektorp-1.4.1.jar"/>
-	<classpathentry kind="lib" path="C:/projects/RED/liberty/usr/servers/red_server/lib/slf4j-api-1.6.4.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.openntf.red.notes.bundle">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/"/>
@@ -30,5 +19,16 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/commons-codec-1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/commons-io-2.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/httpclient-cache-4.2.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/httpcore-4.2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/jackson-annotations-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/jackson-core-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/jackson-databind-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/org.ektorp-1.4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/slf4j-api-1.6.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lib/httpclient-4.2.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -16,6 +16,7 @@
 		<feature>concurrent-1.0</feature>
 		<feature>javaee-7.0</feature>
 		<feature>usr:RED_NSF</feature>
+		<feature>usr:RED_Launch</feature>
 	</featureManager>
 
 	<!-- To access this server from a remote client add a host attribute to 

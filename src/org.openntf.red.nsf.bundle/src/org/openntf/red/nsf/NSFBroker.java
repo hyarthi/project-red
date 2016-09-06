@@ -3,6 +3,7 @@
  */
 package org.openntf.red.nsf;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ import org.openntf.red.nsf.couch.CouchEndpointFactory;
 import org.openntf.red.nsf.endpoint.Endpoint;
 import org.openntf.red.nsf.endpoint.EndpointConfig;
 import org.openntf.red.nsf.endpoint.EndpointFactory;
+import org.openntf.red.nsf.exceptions.NSFBrokerException;
 import org.openntf.red.nsf.notes.NotesEndpointFactory;
 import org.openntf.red.nsf.notes.remote.NotesRemoteEndpointFactory;
 
@@ -28,6 +30,9 @@ public class NSFBroker implements IServiceBroker {
 	private static NSFBroker _instance = null;
 	private FastMap<String, EndpointFactory> factories = null;
 	private FastMap<String, EndpointConfig> endpoints = null;
+	private FastMap<String, Endpoint> epcache = null;
+	private FastMap<String, Date> epcChrono = null;
+	private long epcExpiration = -1;
 	private String defaultEndpoint = null;
 
 	private NSFBroker() {// TODO more logs everywhere... and comments too.
@@ -49,13 +54,17 @@ public class NSFBroker implements IServiceBroker {
 		log.info("NSF Broker: starting...");
 		factories = new FastMap<String, EndpointFactory>().shared();
 		endpoints = new FastMap<String, EndpointConfig>().atomic();
+		epcache = new FastMap<String, Endpoint>().atomic();
+		epcChrono = new FastMap<String, Date>().shared();
+		epcExpiration = 1800000; // EPs expire after 30 mins FIXME: make param
+									// configurable in notes.ini, perhaps?
+		_started = true;
 		log.fine("NSF Broker: Initializing core endpoint factories.");
 		initCoreFactories();
 		log.fine("NSF Broker: Finished initializing core endpoint factories.");
 		log.fine("NSF Broker: Reading endpoint configurations from notes.ini.");
 		readEndpointConfigs();
 		log.fine("NSF Broker: Finished reading endpoint configurations from notes.ini.");
-		_started = true;
 		log.info("NSF Broker: started.");
 	}
 
@@ -88,7 +97,8 @@ public class NSFBroker implements IServiceBroker {
 			factory.startup();
 			factories.put(name, factory);
 		} catch (InstantiationException | IllegalAccessException e) {
-			log.severe("NSF Broker: Failed to register endpoint factory " + type.getName() + ": Reason: " + e.getMessage());
+			log.severe("NSF Broker: Failed to register endpoint factory " + type.getName() + ": Reason: "
+					+ e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -104,7 +114,7 @@ public class NSFBroker implements IServiceBroker {
 			factories.remove(name);
 		}
 	}
-	
+
 	public boolean hasEndpointFactory(String name) {
 		if (!_started)
 			return false;
@@ -120,41 +130,71 @@ public class NSFBroker implements IServiceBroker {
 
 	@Override
 	public Endpoint getEndpoint(String server) {
-		// TODO Auto-generated method stub
 		if (!_started)
 			return null;
 		if (null == server || "".equals(server) || ConfigManager.getServerName().equals(server)) {
+			log.info("Getting local endpoint.");
 			return getLocalEndpoint(null);
 		} else {
-			
+			return getRemoteEndpoint();
 		}
-		return null;
 	}
-	
+
 	@Override
 	public Endpoint getEndpoint() {
 		return null;
 	}
-	
+
 	@Override
 	public Set<String> getLocalEndpoints() {
 		if (!_started)
 			return null;
 		return endpoints.keySet();
 	}
-	
+
 	@Override
 	public Endpoint getLocalEndpoint(String name) {
 		if (!_started || null == defaultEndpoint)
 			return null;
 		EndpointConfig epcfg;
-		if (null == name)
+		if (null == name || "".equals(name))
 			epcfg = endpoints.get(defaultEndpoint);
 		else
 			epcfg = endpoints.get(name);
+		if (null == epcfg) {
+			log.severe("Unable to create endpoint: No endpoint configuration found.");
+			return null;
+		}
 		// maybe just log a severe and return null here?
 		if (!factories.containsKey(epcfg.type()))
-			throw new NSFBrokerException("Unable to create endpoint: No endpoint factory of type " + epcfg.type() + " registered.");
+			throw new NSFBrokerException(
+					"Unable to create endpoint: No endpoint factory of type " + epcfg.type() + " registered.");
+		if (!epcache.containsKey(epcfg.name())) {
+			EndpointFactory factory = factories.get(epcfg.type());
+			epcache.put(epcfg.name(), factory.getEndpoint(epcfg));
+		}
+		epcChrono.put(epcfg.name(), new Date());
+
+		return epcache.get(epcfg.name());
+	}
+
+	private Endpoint getRemoteEndpoint() {
+		// for now only 1 remote endpoint config (& factory) is allowed
+		if (!_started || endpoints.size() == 0)
+			return null;
+		EndpointConfig epcfg = null;
+		for (EndpointConfig cfg : endpoints.values()) {
+			if (cfg.type().equals(ConfigProperties.REPOSITORY_TYPE_NSF_REMOTE)) {
+				epcfg = cfg;
+				break;
+			}
+		}
+		if (null == epcfg)
+			throw new NSFBrokerException("Unable to create endpoint: No remote endpoint configuration exists.");
+		// maybe just log a severe and return null here?
+		if (!factories.containsKey(epcfg.type()))
+			throw new NSFBrokerException(
+					"Unable to create endpoint: No endpoint factory of type " + epcfg.type() + " registered.");
 		EndpointFactory factory = factories.get(epcfg.type());
 		return factory.getEndpoint(null, epcfg);
 	}
@@ -174,6 +214,8 @@ public class NSFBroker implements IServiceBroker {
 	private void readEndpointConfigs() {
 		log.finest("NSF Broker: Getting list of endpoints registered locally.");
 		// get a list of available endpoints
+		log.info("Endpoints: " + ConfigManager.getPropertyAsString(
+				ConfigProperties.SECTION_REPOSITORIES + "." + ConfigProperties.LOCAL_REPOSITORY_LIST));
 		String[] endpts = ConfigManager
 				.getPropertyAsString(
 						ConfigProperties.SECTION_REPOSITORIES + "." + ConfigProperties.LOCAL_REPOSITORY_LIST)
@@ -181,7 +223,8 @@ public class NSFBroker implements IServiceBroker {
 		Map<String, String> options = null;
 		for (String endpoint : endpts) {
 			log.finest("NSF Broker: Registering endpoint " + endpoint + ".");
-			// read options mentioned in notes.ini. NEEDS to have RepositoryType option
+			// read options mentioned in notes.ini. NEEDS to have RepositoryType
+			// option
 			options = ConfigManager.getSectionAsStrings(ConfigProperties.SECTION_REPOSITORIES + "/" + endpoint);
 			if (!options.containsKey(ConfigProperties.REPOSITORY_TYPE)) {
 				log.severe("NSF Broker: Failed to register endpoint " + endpoint + ": Repository type is not defined.");
@@ -195,11 +238,30 @@ public class NSFBroker implements IServiceBroker {
 		}
 		// get default endpoint
 		log.finest("NSF Broker: Setting default endpoint.");
-		defaultEndpoint = ConfigManager.getPropertyAsString(ConfigProperties.SECTION_REPOSITORIES + "." + ConfigProperties.DEFAULT_LOCAL_REPOSITORY);
+		defaultEndpoint = ConfigManager.getPropertyAsString(
+				ConfigProperties.SECTION_REPOSITORIES + "." + ConfigProperties.DEFAULT_LOCAL_REPOSITORY);
 		// mandatory to have default endpoint
 		if (null == defaultEndpoint || "".equals(defaultEndpoint))
 			throw new NSFBrokerException("No default endpoint set.");
 		log.fine("NSF Broker: Default local endpoint is " + defaultEndpoint + ".");
+	}
+
+	private void cleanEPCache() {
+		Date now = new Date();
+		for (String key : epcChrono.keySet()) {
+			if (now.getTime() - epcChrono.get(key).getTime() > epcExpiration) {
+				log.finest("NSF Broker: Endpoint " + key + " has expired. Removing...");
+				epcache.remove(key);
+				epcChrono.remove(key);
+			}
+		}
+	}
+
+	synchronized void update() {
+		log.fine("NSF Broker: Running maintenance.");
+		log.fine("NSF Broker: Cleaning endpoint cache.");
+		cleanEPCache();
+		log.fine("NSF Broker: Finished maintenance.");
 	}
 
 	// FIXME Are these 2 needed?
@@ -207,7 +269,7 @@ public class NSFBroker implements IServiceBroker {
 	public EndpointConfig getEndpointConfig(String name) {
 		return endpoints.get(name);
 	}
-	
+
 	@Override
 	public EndpointConfig getDefaultEndpointConfig() {
 		if (null == defaultEndpoint || "".equals(defaultEndpoint))

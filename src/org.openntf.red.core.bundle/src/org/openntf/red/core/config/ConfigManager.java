@@ -216,7 +216,7 @@ public enum ConfigManager {
 				result.put(key, config.getString(name + "." + key));
 			}
 		}
-		return result.unmodifiable();
+		return result;
 	}
 	
 	public static String getServerName() {
@@ -235,6 +235,8 @@ public enum ConfigManager {
 		public static final String REPOSITORY_TYPE = "RepositoryType";
 		public static final String REPOSITORY_URL = "RepositoryURL";
 		public static final String REPOSITORY_PORT = "RepositoryPort";
+		public static final String REPOSITORY_BINDING_USER = "RepositoryBindingUser";
+		public static final String REPOSITORY_BINDING_PASSWORD = "RepositoryBindingPassword";
 		public static final String LOCAL_REPOSITORY_LIST = "LocalRepositoryList";
 		public static final String DEFAULT_LOCAL_REPOSITORY = "DefaultLocalRepository";
 		// REPOSITORY types
