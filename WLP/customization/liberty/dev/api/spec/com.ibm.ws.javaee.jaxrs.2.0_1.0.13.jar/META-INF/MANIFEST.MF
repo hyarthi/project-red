@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1464302823020
+Build-Identifier: SNAPSHOT-Thu May 26 23:47:03 BST 2016
+Bundle-Copyright: The Program materials contained in this file are IBM
+  copyright materials. WLP Copyright International Business Machines C
+ orp. 1999, 2016 All Rights Reserved * Licensed Materials - Property o
+ f IBM US Government Users Restricted Rights - Use, duplication or dis
+ closure restricted by GSA ADP Schedule Contract with IBM Corp.
+Bundle-ManifestVersion: 2
+Bundle-Name: com.ibm.ws.javaee.jaxrs.2.0
+Bundle-SymbolicName: com.ibm.ws.javaee.jaxrs.2.0; singleton:=true
+Bundle-Vendor: IBM
+Bundle-Version: 1.0.13.cl160220160526-2258
+Copyright: Licensed Materials - Property of IBM 5724-J08, 5724-I63, 57
+ 24-H88, 5724-H89, 5655-W65, 5733-W70 Copyright IBM Corp. 1998, 2011 A
+ ll Rights Reserved. US Government Users Restricted Rights - Use, dupl
+ ication or disclosure restricted by GSA ADP Schedule Contract with IB
+ M Corp.
+Created-By: 1.7.0 (IBM Corporation)
+Export-Package: javax.ws.rs;version="2.0";uses:="javax.ws.rs.core",jav
+ ax.ws.rs.client;version="2.0";uses:="javax.net.ssl,javax.ws.rs,javax.
+ ws.rs.core",javax.ws.rs.container;version="2.0";uses:="javax.ws.rs.co
+ re",javax.ws.rs.core;version="2.0";uses:="javax.ws.rs,javax.xml.bind.
+ annotation,javax.xml.bind.annotation.adapters,javax.xml.namespace",ja
+ vax.ws.rs.ext;version="2.0";uses:="javax.ws.rs,javax.ws.rs.core"
+Import-Package: javax.net.ssl,javax.ws.rs;version="[2.0,3)",javax.ws.r
+ s.core;version="[2.0,3)",javax.ws.rs.ext;version="[2.0,3)",javax.xml.
+ bind.annotation,javax.xml.bind.annotation.adapters,javax.xml.namespac
+ e,org.glassfish.jersey.client;version="2.24.0",org.glassfish.jersey.client.authentication;version="2.24.0",org.glassfish.jersey.client.filter;version="2.24.0",org.glassfish.jersey.client.spi;version="2.24.0"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version>=1.6))
+ "
+Tool: Bnd-3.1.0.201511301807
+XmxValue: 2500M

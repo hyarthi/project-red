@@ -1,0 +1,3 @@
+RED_DB_LIST=demo/red_test.nsf
+RED_URL=lotuslocal
+RED_PORT=1353

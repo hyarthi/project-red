@@ -1,0 +1,54 @@
+{
+  "_id": "_design/SYS_ID_table",
+  "language": "query",
+  "views": {
+    "SYS_ID_table": {
+      "map": {
+        "fields": {
+          "RED_noteid": "asc",
+          "_id": "asc"
+        }
+      },
+      "reduce": "_count",
+      "options": {
+        "def": {
+          "fields": [
+            "RED_noteid",
+            "_id"
+          ]
+        }
+      }
+    }
+  },
+  "sortings": [
+    {
+      "fields": [
+        "RED_noteid",
+        "_id"
+      ],
+      "selector": {
+        "RED_noteid": {
+          "$gt": null
+        }
+      },
+      "use_index": "SYS_ID_table"
+    }
+  ],
+  "name": {
+    "_prog": "SYS_ID_table"
+  },
+  "columns": [
+    {
+      "_name": "RED_noteid",
+      "_type": 768,
+      "_sorted": true,
+      "_system": true
+    },
+    {
+      "_name": "_id",
+      "_type": 1280,
+      "_sorted": true,
+      "_system": true
+    }
+  ]
+}

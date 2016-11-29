@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+option cc_enable_arenas = true;
+option java_package="org.openntf.red.network.messages";
+
+package red.hooks.messages;
+
+//
+// RED Responses
+//
+message NoteInfo {
+	oneof id {
+		string unid = 1;
+		uint64 noteId = 2;
+	}
+	string dbId = 3;
+	string modified = 4;
+	uint32 classId = 5;
+	uint32 flags = 6;
+	string accessed = 7;
+	uint64 parentNoteId = 8;
+	uint64 responseCount = 9;
+	string addedToFile = 10;
+	reserved 11 to 100;
+}
+
+message Note {
+	oneof id {
+		string unid = 1;
+		uint64 noteId = 2;
+	}
+	string dbId = 3;
+	repeated Item items = 10;
+	reserved 4 to 9, 11 to 100;
+}
+
+message Item {
+	uint32 type = 1;
+	string name = 4;
+	uint32 flags = 5;
+	repeated string tvalue = 2;
+	repeated uint64 nvalue = 3;
+	reserved 6 to 100;
+}
+
+message NoteCollection {
+	reserved 1 to 100;
+}
+
+//
+// Hook queries
+//
+
+message RequestNoteInfo {
+	oneof id {
+		string unid = 1;
+		uint64 noteId = 2;
+	}
+	string dbId = 3;
+	Action action = 4;
+	reserved 5 to 100;
+}
+
+message RequestNote {
+	oneof id {
+		string unid = 1;
+		uint64 noteId = 2;
+	}
+	string dbId = 3;
+	Action action = 4;
+	repeated Item items = 10;
+	reserved 5 to 9, 11 to 100;
+}
+
+message RequestNoteCollection {
+	reserved 1 to 100;
+}
+
+//
+// Misc util stuff
+//
+
+enum Action {
+	READ = 0;
+	UPDATE = 1;
+	REMOVE = 2;
+}

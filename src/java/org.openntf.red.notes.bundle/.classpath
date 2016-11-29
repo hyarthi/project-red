@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry including="**/*.java" kind="src" output="bin" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent" sourcepath="BundleContent">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/com.ibm.icu_3.8.1.v20120530.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/com.ibm.icu.base_3.8.1.v20080530.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lwpd.commons.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/lwpd.domino.napi.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/Notes.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,20 @@
+{
+  "_id": "3650ECEAB30B8B924325803B002B466A",
+  "_rev": "3-f112501ecd94c2ce613ba5aece1581ba",
+  "Field_1": {
+    "_value": "Couch value 1 for 3650ECEAB30B8B924325803B002B466A",
+    "_type": 1280,
+    "_flags": 0
+  },
+  "Field_2": {
+    "_value": "Couch value 2 for 3650ECEAB30B8B924325803B002B466A",
+    "_type": 1280,
+    "_flags": 0
+  },
+  "Field_3": {
+    "_value": "Couch value 3 for 3650ECEAB30B8B924325803B002B466A",
+    "_type": 1280,
+    "_flags": 0
+  },
+  "RED_noteid": 2298
+}

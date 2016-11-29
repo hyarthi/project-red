@@ -1,0 +1,73 @@
+<server description="new server">
+
+	<!-- Enable features -->
+	<featureManager>
+		<feature>webProfile-7.0</feature>
+		<feature>ssl-1.0</feature>
+		<feature>adminCenter-1.0</feature>
+		<feature>localConnector-1.0</feature>
+		<feature>couchdb-1.0</feature>
+		<feature>jndi-1.0</feature>
+		<feature>appSecurity-2.0</feature>
+		<feature>osgiBundle-1.0</feature>
+    	<feature>osgiAppConsole-1.0</feature>
+		<feature>concurrent-1.0</feature>
+		<feature>javaee-7.0</feature>
+		<feature>cdi-1.2</feature>
+		<feature>usr:RED_Launch</feature>
+		<feature>usr:RED_Main</feature>
+		<feature>usr:RED_Notes</feature>
+		<feature>usr:RED_TP</feature>
+		<feature>beanValidation-1.1</feature>
+		<feature>jaxrsClient-2.0</feature>
+		<feature>jaxrs-2.0</feature>
+	</featureManager>
+
+	<!-- To access this server from a remote client add a host attribute to 
+		the following element, e.g. host="*" -->
+	<httpEndpoint httpPort="9080" httpsPort="9443"
+		id="defaultHttpEndpoint" />
+
+	<!-- Automatically expand WAR files and EAR files -->
+	<applicationManager autoExpand="true" />
+
+	<!-- My settings -->
+	<ssl id="defSSL" keyStoreRef="redKeyStore" />
+	<sslDefault sslRef="defSSL" />
+	<basicRegistry id="basic" realm="hyarthirealm">
+		<user name="fadams" password="password" />
+		<user name="gchao" password="password" />
+		<user name="scho" password="password" />
+		<user name="slowpoke" password="password" />
+		<group name="LocalDomainAdmins">
+			<member name="fadams" />
+		</group>
+	</basicRegistry>
+
+	<administrator-role>
+		<group>LocalDomainAdmins</group>
+	</administrator-role>
+	<!-- <couchdb password="passw0rd" username="admin" id="couchService" -->
+	<!-- jndiName="couch/service" url="http://lotuslocal:5984" -->
+	<!-- relaxedSSLSettings="true" libraryRef="ektorpConnector"> -->
+	<!-- </couchdb> -->
+	<jndiEntry id="notes_ini_location" jndiName="notes_ini_location"
+		value="${server.config.dir}/resources" />
+
+	<applicationMonitor updateTrigger="mbean" />
+
+	<osgiApplication id="RED_Tester_app" location="RED_Tester_app.eba"
+		name="RED_Tester_app">
+	</osgiApplication>
+	<managedThreadFactory createDaemonThreads="true"
+		id="REDThreadFactory" jndiName="REDThreadFactory"
+		defaultPriority="5" maxPriority="10">
+		<contextService>
+			<classloaderContext></classloaderContext>
+			<securityContext></securityContext>
+		</contextService>
+	</managedThreadFactory>
+	<jndiEntry value="${server.config.dir}/resources" jndiName="module_definition_location" id="module_definition_location"></jndiEntry>
+	<logging traceSpecification="org.openntf.*=finest"></logging>
+	<keyStore password="passw0rd" id="redKeyStore"></keyStore>
+</server>

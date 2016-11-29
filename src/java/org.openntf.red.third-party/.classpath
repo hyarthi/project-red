@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_111">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="con" path="com.ibm.osgi.container"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry exported="true" kind="lib" path="BundleContent/commons-beanutils-1.9.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/commons-configuration2-2.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/commons-lang3-3.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/commons-logging-1.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/javolution_6.1.0.201510032142.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/protobuf-java-3.1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/javax.inject-2.5.0-b05.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jackson-core-2.5.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jackson-annotations-2.5.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jackson-databind-2.5.4.jar" sourcepath="C:/Users/IBM_ADMIN/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.5.4/jackson-databind-2.5.4-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jackson-jaxrs-json-provider-2.5.4.jar" sourcepath="C:/Users/IBM_ADMIN/.m2/repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-json-provider/2.5.4/jackson-jaxrs-json-provider-2.5.4-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jackson-jaxrs-base-2.5.4.jar" sourcepath="C:/Users/IBM_ADMIN/.m2/repository/com/fasterxml/jackson/jaxrs/jackson-jaxrs-base/2.5.4/jackson-jaxrs-base-2.5.4-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/hk2-api-2.5.0-b05.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/hk2-locator-2.5.0-b05.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/hk2-utils-2.5.0-b05.jar" sourcepath="C:/Users/IBM_ADMIN/.m2/repository/org/glassfish/hk2/hk2-utils/2.5.0-b05/hk2-utils-2.5.0-b05-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jersey-client-2.24.jar" sourcepath="C:/Users/IBM_ADMIN/.m2/repository/org/glassfish/jersey/core/jersey-client/2.24/jersey-client-2.24-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jersey-common-2.24.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jersey-guava-2.24.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jersey-media-json-jackson-2.24.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/osgi-resource-locator-1.0.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="BundleContent/jackson-module-jaxb-annotations-2.5.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

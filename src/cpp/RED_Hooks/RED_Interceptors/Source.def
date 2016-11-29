@@ -1,0 +1,6 @@
+LIBRARY	NREDHOOKS
+EXPORTS
+	MainEntryPoint	@1
+	gCritSection	@2
+	DllMain			@3
+	CleanUp			@4

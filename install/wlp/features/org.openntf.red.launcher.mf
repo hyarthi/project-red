@@ -1,0 +1,10 @@
+Subsystem-ManifestVersion: 1.0
+IBM-Feature-Version: 2
+IBM-ShortName: RED_Launch
+Subsystem-SymbolicName: org.openntf.red.launcher;visibility:=public
+Subsystem-Version: 1.0.0.201611231737
+Subsystem-Type: osgi.subsystem.feature
+Subsystem-Content: org.openntf.red.launcher.bundle;version="1.0.0"
+Manifest-Version: 1.0
+IBM-API-Package: org.openntf.red.launcher
+IBM-SPI-Package: org.openntf.red.launcher

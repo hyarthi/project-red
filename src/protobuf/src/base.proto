@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option cc_enable_arenas = true;
+option java_package="org.openntf.red.network.messages";
+
+package red.hooks.messages;
+
+import "notes.proto";
+
+message Response {
+	uint32 status = 1;
+	oneof payload {
+		NoteInfo noteInfo = 2;
+		Note note = 3;
+		NoteCollection ncollection = 4;
+	}
+	reserved 5 to 100;
+}
+
+message Request {
+	oneof payload {
+		RequestNoteInfo noteInfo = 1;
+		RequestNote note = 2;
+		RequestNoteCollection ncollection = 3;
+	}
+	reserved 4 to 100;
+}

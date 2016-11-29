@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.openntf.red.launcher
+Bundle-SymbolicName: org.openntf.red.launcher.bundle
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.openntf.red.launcher.Activator
+Import-Package: org.openntf.red.core,
+ org.openntf.red.core.config,
+ org.openntf.red.core.modules,
+ org.openntf.red.core.thread,
+ org.openntf.red.nsf,
+ org.osgi.framework
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.openntf.red.launcher
+

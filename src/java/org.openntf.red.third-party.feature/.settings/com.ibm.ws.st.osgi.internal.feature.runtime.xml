@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment id="org.openntf.red.third-party.feature">
+    <runtime id="RED Server"/>
+</deployment>
