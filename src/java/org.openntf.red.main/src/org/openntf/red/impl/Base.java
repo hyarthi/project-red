@@ -21,9 +21,12 @@ import lotus.domino.NotesException;
 
 /**
  * <i>Parts of code borrowed from OpenNTF Domino API.</i><br>
+ * Base object of the Entity API. Extensions used to manipulate data objects in
+ * memory.
  * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see org.openntf.red.Base
  */
 public abstract class Base<P extends org.openntf.red.Base> implements org.openntf.red.Base {
 
@@ -95,13 +98,20 @@ public abstract class Base<P extends org.openntf.red.Base> implements org.opennt
 	final int clsid;
 	/** The parent/ancestor. */
 	protected P parent;
+	/**
+	 * List of children (for recycling). Under consideration. Currently
+	 * inactive.
+	 */
 	protected FastTable<Base<?>> children = null;
-	
+	/** Event listeners. Not implemented yet. */
 	private List<IDominoListener> listeners_;
+	/** Event listener cache. Not implemented yet. */
 	private transient Map<EnumEvent, List<IDominoListener>> listenerCache_;
 
 	/**
+	 * Default constructor.
 	 * 
+	 * @since 0.4.0
 	 */
 	protected Base(final P prnt, final int classId) {
 		clsid = classId;
@@ -110,43 +120,63 @@ public abstract class Base<P extends org.openntf.red.Base> implements org.opennt
 	}
 
 	/**
-	 * constructor for no arg child objects (deserialzation)
+	 * constructor for no arg child objects (deserialzation) <br>
+	 * Currently unused.
 	 */
 	protected Base(final int classId) {
 		clsid = classId;
 	}
 
+	/**
+	 * Gets the ancestor session of the object. Not implemented yet. Not sure if
+	 * needed.
+	 * 
+	 * @param base
+	 * @return
+	 */
 	protected static lotus.domino.Session getSession(final lotus.domino.Base base) {
 		return null;
 	}
 
+	/**
+	 * Recycles object. Under consideration.
+	 * 
+	 * @since 0.4.0
+	 */
 	@Override
 	public void recycle() throws NotesException {
-		/*if (null != children) {
-			for (Base<?> child : children) {
-				if (null != child) {
-					child.recycle();
-				}
-			}
-		}*/
+		/*
+		 * if (null != children) { for (Base<?> child : children) { if (null !=
+		 * child) { child.recycle(); } } }
+		 */
 	}
 
+	/**
+	 * Recycles a list of objects. Under consideration.
+	 * 
+	 * @since 0.4.0
+	 */
 	@SuppressWarnings("rawtypes")
 	public void recycle(final Vector objects) throws NotesException {
-		/*for (Object member : objects) {
-			if (null != member)
-				if (member instanceof Base<?>) {
-					((Base<?>)member).recycle();
-				}
-		}*/
+		/*
+		 * for (Object member : objects) { if (null != member) if (member
+		 * instanceof Base<?>) { ((Base<?>)member).recycle(); } }
+		 */
 	}
 
+	/**
+	 * Under consideration. Not sure if needed.
+	 */
 	@Override
 	public boolean isDead() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
+	/**
+	 * Whether there are any listeners attached to this object. Under
+	 * consideration.
+	 */
 	@Override
 	public final boolean hasListeners() {
 		return listeners_ != null && !listeners_.isEmpty();

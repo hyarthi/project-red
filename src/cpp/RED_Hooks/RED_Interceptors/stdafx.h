@@ -37,6 +37,7 @@
 #include <nif.h>
 #include <niferr.h>
 #include <osenv.h>
+#include <textlist.h>
 #include <google/protobuf/stubs/port.h>
 //#include <pool.h>
 
@@ -84,6 +85,8 @@
 //
 #define R_TYPE_TEXT 1280
 #define R_TYPE_NUMBER 768
+//
+#define UNID_LENGTH 32
 
 // variables/functions definitions
 // dllmain.cpp

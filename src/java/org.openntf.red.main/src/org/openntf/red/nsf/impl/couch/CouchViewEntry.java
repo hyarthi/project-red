@@ -6,31 +6,41 @@ package org.openntf.red.nsf.impl.couch;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.openntf.red.nsf.endpoint.Note;
 import org.openntf.red.nsf.endpoint.View;
 import org.openntf.red.nsf.endpoint.ViewEntry;
-import org.openntf.red.nsf.impl.couch.CouchField.SysNames;
 import org.openntf.red.nsf.impl.couch.CouchView.Defaults;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import javolution.util.FastTable;
-
 /**
+ * View entry implementation for CouchDB.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see ViewEntry
  */
 public class CouchViewEntry implements ViewEntry<CouchEndpoint, CouchEndpointFactory, CouchViewEntryCollection> {
-	
+
+	/** Logger object. */
 	private static Logger log = Logger.getLogger(CouchViewEntry.class.getName());
-	
+	/** Raw entry representation (JSON wrapped in Jackson). */
 	private ObjectNode rawentry;
+	/** View entry index (within the collection). */
 	private long idx;
+	/** Parent view entry collection. */
 	private CouchViewEntryCollection parent;
 
 	/**
+	 * Default constructor.
 	 * 
+	 * @param _rawentry
+	 *            Raw representation of the entry.
+	 * @param index
+	 *            View entry index.
+	 * @param _parent
+	 *            Parent view entry collection.
+	 * @since 0.4.0
 	 */
 	CouchViewEntry(ObjectNode _rawentry, long index, CouchViewEntryCollection _parent) {
 		rawentry = _rawentry;
@@ -38,64 +48,35 @@ public class CouchViewEntry implements ViewEntry<CouchEndpoint, CouchEndpointFac
 		parent = _parent;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.openntf.red.nsf.endpoint.HasProperties#getProperty(java.lang.String)
-	 */
 	@Override
 	public Object getProperty(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.openntf.red.nsf.endpoint.HasProperties#setProperty(java.lang.String,
-	 * java.lang.Object)
-	 */
 	@Override
 	public void setProperty(String name, Object value) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openntf.red.nsf.endpoint.HasProperties#removeProperty(java.lang.
-	 * String)
-	 */
 	@Override
 	public Object removeProperty(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openntf.red.nsf.endpoint.ViewEntry#getColumn(int)
-	 */
 	@Override
 	public Object getColumnValue(int idx) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openntf.red.nsf.endpoint.ViewEntry#getColumn(java.lang.String)
-	 */
 	@Override
 	public Object getColumnValue(String name) {
 		if (!rawentry.has(name))
 			return null;
-		
+
 		int type = getAncestorView().getColumnDataType(name);
 		JsonNode node = rawentry.get(name);
 		if (type < 0) {

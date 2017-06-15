@@ -199,8 +199,6 @@ public final class Notes {
      */
     com.google.protobuf.ByteString
         getAddedToFileBytes();
-
-    public org.openntf.red.network.rrpc.messages.Notes.NoteInfo.IdCase getIdCase();
   }
   /**
    * <pre>
@@ -218,6 +216,8 @@ public final class Notes {
       super(builder);
     }
     private NoteInfo() {
+      unid_ = "";
+      noteId_ = 0L;
       dbId_ = "";
       modified_ = "";
       classId_ = 0;
@@ -255,13 +255,13 @@ public final class Notes {
             }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
-              idCase_ = 1;
-              id_ = s;
+
+              unid_ = s;
               break;
             }
             case 16: {
-              idCase_ = 2;
-              id_ = input.readUInt64();
+
+              noteId_ = input.readUInt64();
               break;
             }
             case 26: {
@@ -331,62 +331,20 @@ public final class Notes {
               org.openntf.red.network.rrpc.messages.Notes.NoteInfo.class, org.openntf.red.network.rrpc.messages.Notes.NoteInfo.Builder.class);
     }
 
-    private int idCase_ = 0;
-    private java.lang.Object id_;
-    public enum IdCase
-        implements com.google.protobuf.Internal.EnumLite {
-      UNID(1),
-      NOTEID(2),
-      ID_NOT_SET(0);
-      private final int value;
-      private IdCase(int value) {
-        this.value = value;
-      }
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static IdCase valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static IdCase forNumber(int value) {
-        switch (value) {
-          case 1: return UNID;
-          case 2: return NOTEID;
-          case 0: return ID_NOT_SET;
-          default: return null;
-        }
-      }
-      public int getNumber() {
-        return this.value;
-      }
-    };
-
-    public IdCase
-    getIdCase() {
-      return IdCase.forNumber(
-          idCase_);
-    }
-
     public static final int UNID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object unid_;
     /**
      * <code>optional string unid = 1;</code>
      */
     public java.lang.String getUnid() {
-      java.lang.Object ref = "";
-      if (idCase_ == 1) {
-        ref = id_;
-      }
+      java.lang.Object ref = unid_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        if (idCase_ == 1) {
-          id_ = s;
-        }
+        unid_ = s;
         return s;
       }
     }
@@ -395,17 +353,12 @@ public final class Notes {
      */
     public com.google.protobuf.ByteString
         getUnidBytes() {
-      java.lang.Object ref = "";
-      if (idCase_ == 1) {
-        ref = id_;
-      }
+      java.lang.Object ref = unid_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        if (idCase_ == 1) {
-          id_ = b;
-        }
+        unid_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -413,14 +366,12 @@ public final class Notes {
     }
 
     public static final int NOTEID_FIELD_NUMBER = 2;
+    private long noteId_;
     /**
      * <code>optional uint64 noteId = 2;</code>
      */
     public long getNoteId() {
-      if (idCase_ == 2) {
-        return (java.lang.Long) id_;
-      }
-      return 0L;
+      return noteId_;
     }
 
     public static final int DBID_FIELD_NUMBER = 3;
@@ -607,12 +558,11 @@ public final class Notes {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (idCase_ == 1) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (!getUnidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, unid_);
       }
-      if (idCase_ == 2) {
-        output.writeUInt64(
-            2, (long)((java.lang.Long) id_));
+      if (noteId_ != 0L) {
+        output.writeUInt64(2, noteId_);
       }
       if (!getDbIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, dbId_);
@@ -645,13 +595,12 @@ public final class Notes {
       if (size != -1) return size;
 
       size = 0;
-      if (idCase_ == 1) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (!getUnidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, unid_);
       }
-      if (idCase_ == 2) {
+      if (noteId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(
-              2, (long)((java.lang.Long) id_));
+          .computeUInt64Size(2, noteId_);
       }
       if (!getDbIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, dbId_);
@@ -697,6 +646,10 @@ public final class Notes {
       org.openntf.red.network.rrpc.messages.Notes.NoteInfo other = (org.openntf.red.network.rrpc.messages.Notes.NoteInfo) obj;
 
       boolean result = true;
+      result = result && getUnid()
+          .equals(other.getUnid());
+      result = result && (getNoteId()
+          == other.getNoteId());
       result = result && getDbId()
           .equals(other.getDbId());
       result = result && getModified()
@@ -713,21 +666,6 @@ public final class Notes {
           == other.getResponseCount());
       result = result && getAddedToFile()
           .equals(other.getAddedToFile());
-      result = result && getIdCase().equals(
-          other.getIdCase());
-      if (!result) return false;
-      switch (idCase_) {
-        case 1:
-          result = result && getUnid()
-              .equals(other.getUnid());
-          break;
-        case 2:
-          result = result && (getNoteId()
-              == other.getNoteId());
-          break;
-        case 0:
-        default:
-      }
       return result;
     }
 
@@ -738,6 +676,11 @@ public final class Notes {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + UNID_FIELD_NUMBER;
+      hash = (53 * hash) + getUnid().hashCode();
+      hash = (37 * hash) + NOTEID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getNoteId());
       hash = (37 * hash) + DBID_FIELD_NUMBER;
       hash = (53 * hash) + getDbId().hashCode();
       hash = (37 * hash) + MODIFIED_FIELD_NUMBER;
@@ -756,19 +699,6 @@ public final class Notes {
           getResponseCount());
       hash = (37 * hash) + ADDEDTOFILE_FIELD_NUMBER;
       hash = (53 * hash) + getAddedToFile().hashCode();
-      switch (idCase_) {
-        case 1:
-          hash = (37 * hash) + UNID_FIELD_NUMBER;
-          hash = (53 * hash) + getUnid().hashCode();
-          break;
-        case 2:
-          hash = (37 * hash) + NOTEID_FIELD_NUMBER;
-          hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-              getNoteId());
-          break;
-        case 0:
-        default:
-      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -874,7 +804,7 @@ public final class Notes {
                 org.openntf.red.network.rrpc.messages.Notes.NoteInfo.class, org.openntf.red.network.rrpc.messages.Notes.NoteInfo.Builder.class);
       }
 
-      // Construct using org.openntf.red.network.messages.Notes.NoteInfo.newBuilder()
+      // Construct using org.openntf.red.network.rrpc.messages.Notes.NoteInfo.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -891,6 +821,10 @@ public final class Notes {
       }
       public Builder clear() {
         super.clear();
+        unid_ = "";
+
+        noteId_ = 0L;
+
         dbId_ = "";
 
         modified_ = "";
@@ -907,8 +841,6 @@ public final class Notes {
 
         addedToFile_ = "";
 
-        idCase_ = 0;
-        id_ = null;
         return this;
       }
 
@@ -931,12 +863,8 @@ public final class Notes {
 
       public org.openntf.red.network.rrpc.messages.Notes.NoteInfo buildPartial() {
         org.openntf.red.network.rrpc.messages.Notes.NoteInfo result = new org.openntf.red.network.rrpc.messages.Notes.NoteInfo(this);
-        if (idCase_ == 1) {
-          result.id_ = id_;
-        }
-        if (idCase_ == 2) {
-          result.id_ = id_;
-        }
+        result.unid_ = unid_;
+        result.noteId_ = noteId_;
         result.dbId_ = dbId_;
         result.modified_ = modified_;
         result.classId_ = classId_;
@@ -945,7 +873,6 @@ public final class Notes {
         result.parentNoteId_ = parentNoteId_;
         result.responseCount_ = responseCount_;
         result.addedToFile_ = addedToFile_;
-        result.idCase_ = idCase_;
         onBuilt();
         return result;
       }
@@ -987,6 +914,13 @@ public final class Notes {
 
       public Builder mergeFrom(org.openntf.red.network.rrpc.messages.Notes.NoteInfo other) {
         if (other == org.openntf.red.network.rrpc.messages.Notes.NoteInfo.getDefaultInstance()) return this;
+        if (!other.getUnid().isEmpty()) {
+          unid_ = other.unid_;
+          onChanged();
+        }
+        if (other.getNoteId() != 0L) {
+          setNoteId(other.getNoteId());
+        }
         if (!other.getDbId().isEmpty()) {
           dbId_ = other.dbId_;
           onChanged();
@@ -1015,21 +949,6 @@ public final class Notes {
           addedToFile_ = other.addedToFile_;
           onChanged();
         }
-        switch (other.getIdCase()) {
-          case UNID: {
-            idCase_ = 1;
-            id_ = other.id_;
-            onChanged();
-            break;
-          }
-          case NOTEID: {
-            setNoteId(other.getNoteId());
-            break;
-          }
-          case ID_NOT_SET: {
-            break;
-          }
-        }
         onChanged();
         return this;
       }
@@ -1055,37 +974,18 @@ public final class Notes {
         }
         return this;
       }
-      private int idCase_ = 0;
-      private java.lang.Object id_;
-      public IdCase
-          getIdCase() {
-        return IdCase.forNumber(
-            idCase_);
-      }
 
-      public Builder clearId() {
-        idCase_ = 0;
-        id_ = null;
-        onChanged();
-        return this;
-      }
-
-
+      private java.lang.Object unid_ = "";
       /**
        * <code>optional string unid = 1;</code>
        */
       public java.lang.String getUnid() {
-        java.lang.Object ref = "";
-        if (idCase_ == 1) {
-          ref = id_;
-        }
+        java.lang.Object ref = unid_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          if (idCase_ == 1) {
-            id_ = s;
-          }
+          unid_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1096,17 +996,12 @@ public final class Notes {
        */
       public com.google.protobuf.ByteString
           getUnidBytes() {
-        java.lang.Object ref = "";
-        if (idCase_ == 1) {
-          ref = id_;
-        }
+        java.lang.Object ref = unid_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          if (idCase_ == 1) {
-            id_ = b;
-          }
+          unid_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -1120,8 +1015,8 @@ public final class Notes {
         if (value == null) {
     throw new NullPointerException();
   }
-  idCase_ = 1;
-        id_ = value;
+  
+        unid_ = value;
         onChanged();
         return this;
       }
@@ -1129,11 +1024,9 @@ public final class Notes {
        * <code>optional string unid = 1;</code>
        */
       public Builder clearUnid() {
-        if (idCase_ == 1) {
-          idCase_ = 0;
-          id_ = null;
-          onChanged();
-        }
+        
+        unid_ = getDefaultInstance().getUnid();
+        onChanged();
         return this;
       }
       /**
@@ -1145,27 +1038,25 @@ public final class Notes {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        idCase_ = 1;
-        id_ = value;
+        
+        unid_ = value;
         onChanged();
         return this;
       }
 
+      private long noteId_ ;
       /**
        * <code>optional uint64 noteId = 2;</code>
        */
       public long getNoteId() {
-        if (idCase_ == 2) {
-          return (java.lang.Long) id_;
-        }
-        return 0L;
+        return noteId_;
       }
       /**
        * <code>optional uint64 noteId = 2;</code>
        */
       public Builder setNoteId(long value) {
-        idCase_ = 2;
-        id_ = value;
+        
+        noteId_ = value;
         onChanged();
         return this;
       }
@@ -1173,11 +1064,9 @@ public final class Notes {
        * <code>optional uint64 noteId = 2;</code>
        */
       public Builder clearNoteId() {
-        if (idCase_ == 2) {
-          idCase_ = 0;
-          id_ = null;
-          onChanged();
-        }
+        
+        noteId_ = 0L;
+        onChanged();
         return this;
       }
 
@@ -1639,6 +1528,11 @@ public final class Notes {
         getDbIdBytes();
 
     /**
+     * <code>optional uint32 seqNum = 4;</code>
+     */
+    int getSeqNum();
+
+    /**
      * <code>repeated .red.hooks.messages.Item items = 10;</code>
      */
     java.util.List<org.openntf.red.network.rrpc.messages.Notes.Item> 
@@ -1661,8 +1555,6 @@ public final class Notes {
      */
     org.openntf.red.network.rrpc.messages.Notes.ItemOrBuilder getItemsOrBuilder(
         int index);
-
-    public org.openntf.red.network.rrpc.messages.Notes.Note.IdCase getIdCase();
   }
   /**
    * Protobuf type {@code red.hooks.messages.Note}
@@ -1676,7 +1568,10 @@ public final class Notes {
       super(builder);
     }
     private Note() {
+      unid_ = "";
+      noteId_ = 0L;
       dbId_ = "";
+      seqNum_ = 0;
       items_ = java.util.Collections.emptyList();
     }
 
@@ -1707,13 +1602,13 @@ public final class Notes {
             }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
-              idCase_ = 1;
-              id_ = s;
+
+              unid_ = s;
               break;
             }
             case 16: {
-              idCase_ = 2;
-              id_ = input.readUInt64();
+
+              noteId_ = input.readUInt64();
               break;
             }
             case 26: {
@@ -1722,10 +1617,15 @@ public final class Notes {
               dbId_ = s;
               break;
             }
+            case 32: {
+
+              seqNum_ = input.readUInt32();
+              break;
+            }
             case 82: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
                 items_ = new java.util.ArrayList<org.openntf.red.network.rrpc.messages.Notes.Item>();
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000010;
               }
               items_.add(
                   input.readMessage(org.openntf.red.network.rrpc.messages.Notes.Item.parser(), extensionRegistry));
@@ -1739,7 +1639,7 @@ public final class Notes {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
           items_ = java.util.Collections.unmodifiableList(items_);
         }
         makeExtensionsImmutable();
@@ -1758,62 +1658,20 @@ public final class Notes {
     }
 
     private int bitField0_;
-    private int idCase_ = 0;
-    private java.lang.Object id_;
-    public enum IdCase
-        implements com.google.protobuf.Internal.EnumLite {
-      UNID(1),
-      NOTEID(2),
-      ID_NOT_SET(0);
-      private final int value;
-      private IdCase(int value) {
-        this.value = value;
-      }
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static IdCase valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static IdCase forNumber(int value) {
-        switch (value) {
-          case 1: return UNID;
-          case 2: return NOTEID;
-          case 0: return ID_NOT_SET;
-          default: return null;
-        }
-      }
-      public int getNumber() {
-        return this.value;
-      }
-    };
-
-    public IdCase
-    getIdCase() {
-      return IdCase.forNumber(
-          idCase_);
-    }
-
     public static final int UNID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object unid_;
     /**
      * <code>optional string unid = 1;</code>
      */
     public java.lang.String getUnid() {
-      java.lang.Object ref = "";
-      if (idCase_ == 1) {
-        ref = id_;
-      }
+      java.lang.Object ref = unid_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        if (idCase_ == 1) {
-          id_ = s;
-        }
+        unid_ = s;
         return s;
       }
     }
@@ -1822,17 +1680,12 @@ public final class Notes {
      */
     public com.google.protobuf.ByteString
         getUnidBytes() {
-      java.lang.Object ref = "";
-      if (idCase_ == 1) {
-        ref = id_;
-      }
+      java.lang.Object ref = unid_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        if (idCase_ == 1) {
-          id_ = b;
-        }
+        unid_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -1840,14 +1693,12 @@ public final class Notes {
     }
 
     public static final int NOTEID_FIELD_NUMBER = 2;
+    private long noteId_;
     /**
      * <code>optional uint64 noteId = 2;</code>
      */
     public long getNoteId() {
-      if (idCase_ == 2) {
-        return (java.lang.Long) id_;
-      }
-      return 0L;
+      return noteId_;
     }
 
     public static final int DBID_FIELD_NUMBER = 3;
@@ -1882,6 +1733,15 @@ public final class Notes {
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
+    }
+
+    public static final int SEQNUM_FIELD_NUMBER = 4;
+    private int seqNum_;
+    /**
+     * <code>optional uint32 seqNum = 4;</code>
+     */
+    public int getSeqNum() {
+      return seqNum_;
     }
 
     public static final int ITEMS_FIELD_NUMBER = 10;
@@ -1931,15 +1791,17 @@ public final class Notes {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (idCase_ == 1) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (!getUnidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, unid_);
       }
-      if (idCase_ == 2) {
-        output.writeUInt64(
-            2, (long)((java.lang.Long) id_));
+      if (noteId_ != 0L) {
+        output.writeUInt64(2, noteId_);
       }
       if (!getDbIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, dbId_);
+      }
+      if (seqNum_ != 0) {
+        output.writeUInt32(4, seqNum_);
       }
       for (int i = 0; i < items_.size(); i++) {
         output.writeMessage(10, items_.get(i));
@@ -1951,16 +1813,19 @@ public final class Notes {
       if (size != -1) return size;
 
       size = 0;
-      if (idCase_ == 1) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (!getUnidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, unid_);
       }
-      if (idCase_ == 2) {
+      if (noteId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(
-              2, (long)((java.lang.Long) id_));
+          .computeUInt64Size(2, noteId_);
       }
       if (!getDbIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, dbId_);
+      }
+      if (seqNum_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, seqNum_);
       }
       for (int i = 0; i < items_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
@@ -1982,25 +1847,16 @@ public final class Notes {
       org.openntf.red.network.rrpc.messages.Notes.Note other = (org.openntf.red.network.rrpc.messages.Notes.Note) obj;
 
       boolean result = true;
+      result = result && getUnid()
+          .equals(other.getUnid());
+      result = result && (getNoteId()
+          == other.getNoteId());
       result = result && getDbId()
           .equals(other.getDbId());
+      result = result && (getSeqNum()
+          == other.getSeqNum());
       result = result && getItemsList()
           .equals(other.getItemsList());
-      result = result && getIdCase().equals(
-          other.getIdCase());
-      if (!result) return false;
-      switch (idCase_) {
-        case 1:
-          result = result && getUnid()
-              .equals(other.getUnid());
-          break;
-        case 2:
-          result = result && (getNoteId()
-              == other.getNoteId());
-          break;
-        case 0:
-        default:
-      }
       return result;
     }
 
@@ -2011,24 +1867,18 @@ public final class Notes {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + UNID_FIELD_NUMBER;
+      hash = (53 * hash) + getUnid().hashCode();
+      hash = (37 * hash) + NOTEID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getNoteId());
       hash = (37 * hash) + DBID_FIELD_NUMBER;
       hash = (53 * hash) + getDbId().hashCode();
+      hash = (37 * hash) + SEQNUM_FIELD_NUMBER;
+      hash = (53 * hash) + getSeqNum();
       if (getItemsCount() > 0) {
         hash = (37 * hash) + ITEMS_FIELD_NUMBER;
         hash = (53 * hash) + getItemsList().hashCode();
-      }
-      switch (idCase_) {
-        case 1:
-          hash = (37 * hash) + UNID_FIELD_NUMBER;
-          hash = (53 * hash) + getUnid().hashCode();
-          break;
-        case 2:
-          hash = (37 * hash) + NOTEID_FIELD_NUMBER;
-          hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-              getNoteId());
-          break;
-        case 0:
-        default:
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -2131,7 +1981,7 @@ public final class Notes {
                 org.openntf.red.network.rrpc.messages.Notes.Note.class, org.openntf.red.network.rrpc.messages.Notes.Note.Builder.class);
       }
 
-      // Construct using org.openntf.red.network.messages.Notes.Note.newBuilder()
+      // Construct using org.openntf.red.network.rrpc.messages.Notes.Note.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2149,16 +1999,20 @@ public final class Notes {
       }
       public Builder clear() {
         super.clear();
+        unid_ = "";
+
+        noteId_ = 0L;
+
         dbId_ = "";
+
+        seqNum_ = 0;
 
         if (itemsBuilder_ == null) {
           items_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000010);
         } else {
           itemsBuilder_.clear();
         }
-        idCase_ = 0;
-        id_ = null;
         return this;
       }
 
@@ -2183,24 +2037,20 @@ public final class Notes {
         org.openntf.red.network.rrpc.messages.Notes.Note result = new org.openntf.red.network.rrpc.messages.Notes.Note(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (idCase_ == 1) {
-          result.id_ = id_;
-        }
-        if (idCase_ == 2) {
-          result.id_ = id_;
-        }
+        result.unid_ = unid_;
+        result.noteId_ = noteId_;
         result.dbId_ = dbId_;
+        result.seqNum_ = seqNum_;
         if (itemsBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          if (((bitField0_ & 0x00000010) == 0x00000010)) {
             items_ = java.util.Collections.unmodifiableList(items_);
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000010);
           }
           result.items_ = items_;
         } else {
           result.items_ = itemsBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
-        result.idCase_ = idCase_;
         onBuilt();
         return result;
       }
@@ -2242,15 +2092,25 @@ public final class Notes {
 
       public Builder mergeFrom(org.openntf.red.network.rrpc.messages.Notes.Note other) {
         if (other == org.openntf.red.network.rrpc.messages.Notes.Note.getDefaultInstance()) return this;
+        if (!other.getUnid().isEmpty()) {
+          unid_ = other.unid_;
+          onChanged();
+        }
+        if (other.getNoteId() != 0L) {
+          setNoteId(other.getNoteId());
+        }
         if (!other.getDbId().isEmpty()) {
           dbId_ = other.dbId_;
           onChanged();
+        }
+        if (other.getSeqNum() != 0) {
+          setSeqNum(other.getSeqNum());
         }
         if (itemsBuilder_ == null) {
           if (!other.items_.isEmpty()) {
             if (items_.isEmpty()) {
               items_ = other.items_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000010);
             } else {
               ensureItemsIsMutable();
               items_.addAll(other.items_);
@@ -2263,28 +2123,13 @@ public final class Notes {
               itemsBuilder_.dispose();
               itemsBuilder_ = null;
               items_ = other.items_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000010);
               itemsBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getItemsFieldBuilder() : null;
             } else {
               itemsBuilder_.addAllMessages(other.items_);
             }
-          }
-        }
-        switch (other.getIdCase()) {
-          case UNID: {
-            idCase_ = 1;
-            id_ = other.id_;
-            onChanged();
-            break;
-          }
-          case NOTEID: {
-            setNoteId(other.getNoteId());
-            break;
-          }
-          case ID_NOT_SET: {
-            break;
           }
         }
         onChanged();
@@ -2312,38 +2157,19 @@ public final class Notes {
         }
         return this;
       }
-      private int idCase_ = 0;
-      private java.lang.Object id_;
-      public IdCase
-          getIdCase() {
-        return IdCase.forNumber(
-            idCase_);
-      }
-
-      public Builder clearId() {
-        idCase_ = 0;
-        id_ = null;
-        onChanged();
-        return this;
-      }
-
       private int bitField0_;
 
+      private java.lang.Object unid_ = "";
       /**
        * <code>optional string unid = 1;</code>
        */
       public java.lang.String getUnid() {
-        java.lang.Object ref = "";
-        if (idCase_ == 1) {
-          ref = id_;
-        }
+        java.lang.Object ref = unid_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          if (idCase_ == 1) {
-            id_ = s;
-          }
+          unid_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2354,17 +2180,12 @@ public final class Notes {
        */
       public com.google.protobuf.ByteString
           getUnidBytes() {
-        java.lang.Object ref = "";
-        if (idCase_ == 1) {
-          ref = id_;
-        }
+        java.lang.Object ref = unid_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          if (idCase_ == 1) {
-            id_ = b;
-          }
+          unid_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -2378,8 +2199,8 @@ public final class Notes {
         if (value == null) {
     throw new NullPointerException();
   }
-  idCase_ = 1;
-        id_ = value;
+  
+        unid_ = value;
         onChanged();
         return this;
       }
@@ -2387,11 +2208,9 @@ public final class Notes {
        * <code>optional string unid = 1;</code>
        */
       public Builder clearUnid() {
-        if (idCase_ == 1) {
-          idCase_ = 0;
-          id_ = null;
-          onChanged();
-        }
+        
+        unid_ = getDefaultInstance().getUnid();
+        onChanged();
         return this;
       }
       /**
@@ -2403,27 +2222,25 @@ public final class Notes {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        idCase_ = 1;
-        id_ = value;
+        
+        unid_ = value;
         onChanged();
         return this;
       }
 
+      private long noteId_ ;
       /**
        * <code>optional uint64 noteId = 2;</code>
        */
       public long getNoteId() {
-        if (idCase_ == 2) {
-          return (java.lang.Long) id_;
-        }
-        return 0L;
+        return noteId_;
       }
       /**
        * <code>optional uint64 noteId = 2;</code>
        */
       public Builder setNoteId(long value) {
-        idCase_ = 2;
-        id_ = value;
+        
+        noteId_ = value;
         onChanged();
         return this;
       }
@@ -2431,11 +2248,9 @@ public final class Notes {
        * <code>optional uint64 noteId = 2;</code>
        */
       public Builder clearNoteId() {
-        if (idCase_ == 2) {
-          idCase_ = 0;
-          id_ = null;
-          onChanged();
-        }
+        
+        noteId_ = 0L;
+        onChanged();
         return this;
       }
 
@@ -2508,12 +2323,38 @@ public final class Notes {
         return this;
       }
 
+      private int seqNum_ ;
+      /**
+       * <code>optional uint32 seqNum = 4;</code>
+       */
+      public int getSeqNum() {
+        return seqNum_;
+      }
+      /**
+       * <code>optional uint32 seqNum = 4;</code>
+       */
+      public Builder setSeqNum(int value) {
+        
+        seqNum_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 seqNum = 4;</code>
+       */
+      public Builder clearSeqNum() {
+        
+        seqNum_ = 0;
+        onChanged();
+        return this;
+      }
+
       private java.util.List<org.openntf.red.network.rrpc.messages.Notes.Item> items_ =
         java.util.Collections.emptyList();
       private void ensureItemsIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
           items_ = new java.util.ArrayList<org.openntf.red.network.rrpc.messages.Notes.Item>(items_);
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000010;
          }
       }
 
@@ -2663,7 +2504,7 @@ public final class Notes {
       public Builder clearItems() {
         if (itemsBuilder_ == null) {
           items_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000010);
           onChanged();
         } else {
           itemsBuilder_.clear();
@@ -2740,7 +2581,7 @@ public final class Notes {
           itemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               org.openntf.red.network.rrpc.messages.Notes.Item, org.openntf.red.network.rrpc.messages.Notes.Item.Builder, org.openntf.red.network.rrpc.messages.Notes.ItemOrBuilder>(
                   items_,
-                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  ((bitField0_ & 0x00000010) == 0x00000010),
                   getParentForChildren(),
                   isClean());
           items_ = null;
@@ -3299,7 +3140,7 @@ public final class Notes {
                 org.openntf.red.network.rrpc.messages.Notes.Item.class, org.openntf.red.network.rrpc.messages.Notes.Item.Builder.class);
       }
 
-      // Construct using org.openntf.red.network.messages.Notes.Item.newBuilder()
+      // Construct using org.openntf.red.network.rrpc.messages.Notes.Item.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4002,7 +3843,7 @@ public final class Notes {
                 org.openntf.red.network.rrpc.messages.Notes.NoteCollection.class, org.openntf.red.network.rrpc.messages.Notes.NoteCollection.Builder.class);
       }
 
-      // Construct using org.openntf.red.network.messages.Notes.NoteCollection.newBuilder()
+      // Construct using org.openntf.red.network.rrpc.messages.Notes.NoteCollection.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4193,8 +4034,6 @@ public final class Notes {
      * <code>optional .red.hooks.messages.Action action = 4;</code>
      */
     org.openntf.red.network.rrpc.messages.Notes.Action getAction();
-
-    public org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo.IdCase getIdCase();
   }
   /**
    * Protobuf type {@code red.hooks.messages.RequestNoteInfo}
@@ -4208,6 +4047,8 @@ public final class Notes {
       super(builder);
     }
     private RequestNoteInfo() {
+      unid_ = "";
+      noteId_ = 0L;
       dbId_ = "";
       action_ = 0;
     }
@@ -4239,13 +4080,13 @@ public final class Notes {
             }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
-              idCase_ = 1;
-              id_ = s;
+
+              unid_ = s;
               break;
             }
             case 16: {
-              idCase_ = 2;
-              id_ = input.readUInt64();
+
+              noteId_ = input.readUInt64();
               break;
             }
             case 26: {
@@ -4283,62 +4124,20 @@ public final class Notes {
               org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo.class, org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo.Builder.class);
     }
 
-    private int idCase_ = 0;
-    private java.lang.Object id_;
-    public enum IdCase
-        implements com.google.protobuf.Internal.EnumLite {
-      UNID(1),
-      NOTEID(2),
-      ID_NOT_SET(0);
-      private final int value;
-      private IdCase(int value) {
-        this.value = value;
-      }
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static IdCase valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static IdCase forNumber(int value) {
-        switch (value) {
-          case 1: return UNID;
-          case 2: return NOTEID;
-          case 0: return ID_NOT_SET;
-          default: return null;
-        }
-      }
-      public int getNumber() {
-        return this.value;
-      }
-    };
-
-    public IdCase
-    getIdCase() {
-      return IdCase.forNumber(
-          idCase_);
-    }
-
     public static final int UNID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object unid_;
     /**
      * <code>optional string unid = 1;</code>
      */
     public java.lang.String getUnid() {
-      java.lang.Object ref = "";
-      if (idCase_ == 1) {
-        ref = id_;
-      }
+      java.lang.Object ref = unid_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        if (idCase_ == 1) {
-          id_ = s;
-        }
+        unid_ = s;
         return s;
       }
     }
@@ -4347,17 +4146,12 @@ public final class Notes {
      */
     public com.google.protobuf.ByteString
         getUnidBytes() {
-      java.lang.Object ref = "";
-      if (idCase_ == 1) {
-        ref = id_;
-      }
+      java.lang.Object ref = unid_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        if (idCase_ == 1) {
-          id_ = b;
-        }
+        unid_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -4365,14 +4159,12 @@ public final class Notes {
     }
 
     public static final int NOTEID_FIELD_NUMBER = 2;
+    private long noteId_;
     /**
      * <code>optional uint64 noteId = 2;</code>
      */
     public long getNoteId() {
-      if (idCase_ == 2) {
-        return (java.lang.Long) id_;
-      }
-      return 0L;
+      return noteId_;
     }
 
     public static final int DBID_FIELD_NUMBER = 3;
@@ -4437,12 +4229,11 @@ public final class Notes {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (idCase_ == 1) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (!getUnidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, unid_);
       }
-      if (idCase_ == 2) {
-        output.writeUInt64(
-            2, (long)((java.lang.Long) id_));
+      if (noteId_ != 0L) {
+        output.writeUInt64(2, noteId_);
       }
       if (!getDbIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, dbId_);
@@ -4457,13 +4248,12 @@ public final class Notes {
       if (size != -1) return size;
 
       size = 0;
-      if (idCase_ == 1) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (!getUnidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, unid_);
       }
-      if (idCase_ == 2) {
+      if (noteId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(
-              2, (long)((java.lang.Long) id_));
+          .computeUInt64Size(2, noteId_);
       }
       if (!getDbIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, dbId_);
@@ -4488,24 +4278,13 @@ public final class Notes {
       org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo other = (org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo) obj;
 
       boolean result = true;
+      result = result && getUnid()
+          .equals(other.getUnid());
+      result = result && (getNoteId()
+          == other.getNoteId());
       result = result && getDbId()
           .equals(other.getDbId());
       result = result && action_ == other.action_;
-      result = result && getIdCase().equals(
-          other.getIdCase());
-      if (!result) return false;
-      switch (idCase_) {
-        case 1:
-          result = result && getUnid()
-              .equals(other.getUnid());
-          break;
-        case 2:
-          result = result && (getNoteId()
-              == other.getNoteId());
-          break;
-        case 0:
-        default:
-      }
       return result;
     }
 
@@ -4516,23 +4295,15 @@ public final class Notes {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + UNID_FIELD_NUMBER;
+      hash = (53 * hash) + getUnid().hashCode();
+      hash = (37 * hash) + NOTEID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getNoteId());
       hash = (37 * hash) + DBID_FIELD_NUMBER;
       hash = (53 * hash) + getDbId().hashCode();
       hash = (37 * hash) + ACTION_FIELD_NUMBER;
       hash = (53 * hash) + action_;
-      switch (idCase_) {
-        case 1:
-          hash = (37 * hash) + UNID_FIELD_NUMBER;
-          hash = (53 * hash) + getUnid().hashCode();
-          break;
-        case 2:
-          hash = (37 * hash) + NOTEID_FIELD_NUMBER;
-          hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-              getNoteId());
-          break;
-        case 0:
-        default:
-      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4634,7 +4405,7 @@ public final class Notes {
                 org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo.class, org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo.Builder.class);
       }
 
-      // Construct using org.openntf.red.network.messages.Notes.RequestNoteInfo.newBuilder()
+      // Construct using org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4651,12 +4422,14 @@ public final class Notes {
       }
       public Builder clear() {
         super.clear();
+        unid_ = "";
+
+        noteId_ = 0L;
+
         dbId_ = "";
 
         action_ = 0;
 
-        idCase_ = 0;
-        id_ = null;
         return this;
       }
 
@@ -4679,15 +4452,10 @@ public final class Notes {
 
       public org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo buildPartial() {
         org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo result = new org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo(this);
-        if (idCase_ == 1) {
-          result.id_ = id_;
-        }
-        if (idCase_ == 2) {
-          result.id_ = id_;
-        }
+        result.unid_ = unid_;
+        result.noteId_ = noteId_;
         result.dbId_ = dbId_;
         result.action_ = action_;
-        result.idCase_ = idCase_;
         onBuilt();
         return result;
       }
@@ -4729,27 +4497,19 @@ public final class Notes {
 
       public Builder mergeFrom(org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo other) {
         if (other == org.openntf.red.network.rrpc.messages.Notes.RequestNoteInfo.getDefaultInstance()) return this;
+        if (!other.getUnid().isEmpty()) {
+          unid_ = other.unid_;
+          onChanged();
+        }
+        if (other.getNoteId() != 0L) {
+          setNoteId(other.getNoteId());
+        }
         if (!other.getDbId().isEmpty()) {
           dbId_ = other.dbId_;
           onChanged();
         }
         if (other.action_ != 0) {
           setActionValue(other.getActionValue());
-        }
-        switch (other.getIdCase()) {
-          case UNID: {
-            idCase_ = 1;
-            id_ = other.id_;
-            onChanged();
-            break;
-          }
-          case NOTEID: {
-            setNoteId(other.getNoteId());
-            break;
-          }
-          case ID_NOT_SET: {
-            break;
-          }
         }
         onChanged();
         return this;
@@ -4776,37 +4536,18 @@ public final class Notes {
         }
         return this;
       }
-      private int idCase_ = 0;
-      private java.lang.Object id_;
-      public IdCase
-          getIdCase() {
-        return IdCase.forNumber(
-            idCase_);
-      }
 
-      public Builder clearId() {
-        idCase_ = 0;
-        id_ = null;
-        onChanged();
-        return this;
-      }
-
-
+      private java.lang.Object unid_ = "";
       /**
        * <code>optional string unid = 1;</code>
        */
       public java.lang.String getUnid() {
-        java.lang.Object ref = "";
-        if (idCase_ == 1) {
-          ref = id_;
-        }
+        java.lang.Object ref = unid_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          if (idCase_ == 1) {
-            id_ = s;
-          }
+          unid_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -4817,17 +4558,12 @@ public final class Notes {
        */
       public com.google.protobuf.ByteString
           getUnidBytes() {
-        java.lang.Object ref = "";
-        if (idCase_ == 1) {
-          ref = id_;
-        }
+        java.lang.Object ref = unid_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          if (idCase_ == 1) {
-            id_ = b;
-          }
+          unid_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -4841,8 +4577,8 @@ public final class Notes {
         if (value == null) {
     throw new NullPointerException();
   }
-  idCase_ = 1;
-        id_ = value;
+  
+        unid_ = value;
         onChanged();
         return this;
       }
@@ -4850,11 +4586,9 @@ public final class Notes {
        * <code>optional string unid = 1;</code>
        */
       public Builder clearUnid() {
-        if (idCase_ == 1) {
-          idCase_ = 0;
-          id_ = null;
-          onChanged();
-        }
+        
+        unid_ = getDefaultInstance().getUnid();
+        onChanged();
         return this;
       }
       /**
@@ -4866,27 +4600,25 @@ public final class Notes {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        idCase_ = 1;
-        id_ = value;
+        
+        unid_ = value;
         onChanged();
         return this;
       }
 
+      private long noteId_ ;
       /**
        * <code>optional uint64 noteId = 2;</code>
        */
       public long getNoteId() {
-        if (idCase_ == 2) {
-          return (java.lang.Long) id_;
-        }
-        return 0L;
+        return noteId_;
       }
       /**
        * <code>optional uint64 noteId = 2;</code>
        */
       public Builder setNoteId(long value) {
-        idCase_ = 2;
-        id_ = value;
+        
+        noteId_ = value;
         onChanged();
         return this;
       }
@@ -4894,11 +4626,9 @@ public final class Notes {
        * <code>optional uint64 noteId = 2;</code>
        */
       public Builder clearNoteId() {
-        if (idCase_ == 2) {
-          idCase_ = 0;
-          id_ = null;
-          onChanged();
-        }
+        
+        noteId_ = 0L;
+        onChanged();
         return this;
       }
 
@@ -5102,6 +4832,16 @@ public final class Notes {
     org.openntf.red.network.rrpc.messages.Notes.Action getAction();
 
     /**
+     * <code>optional uint32 seqNum = 5;</code>
+     */
+    int getSeqNum();
+
+    /**
+     * <code>optional uint32 flags = 6;</code>
+     */
+    int getFlags();
+
+    /**
      * <code>repeated .red.hooks.messages.Item items = 10;</code>
      */
     java.util.List<org.openntf.red.network.rrpc.messages.Notes.Item> 
@@ -5124,8 +4864,6 @@ public final class Notes {
      */
     org.openntf.red.network.rrpc.messages.Notes.ItemOrBuilder getItemsOrBuilder(
         int index);
-
-    public org.openntf.red.network.rrpc.messages.Notes.RequestNote.IdCase getIdCase();
   }
   /**
    * Protobuf type {@code red.hooks.messages.RequestNote}
@@ -5139,8 +4877,12 @@ public final class Notes {
       super(builder);
     }
     private RequestNote() {
+      unid_ = "";
+      noteId_ = 0L;
       dbId_ = "";
       action_ = 0;
+      seqNum_ = 0;
+      flags_ = 0;
       items_ = java.util.Collections.emptyList();
     }
 
@@ -5171,13 +4913,13 @@ public final class Notes {
             }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
-              idCase_ = 1;
-              id_ = s;
+
+              unid_ = s;
               break;
             }
             case 16: {
-              idCase_ = 2;
-              id_ = input.readUInt64();
+
+              noteId_ = input.readUInt64();
               break;
             }
             case 26: {
@@ -5192,10 +4934,20 @@ public final class Notes {
               action_ = rawValue;
               break;
             }
+            case 40: {
+
+              seqNum_ = input.readUInt32();
+              break;
+            }
+            case 48: {
+
+              flags_ = input.readUInt32();
+              break;
+            }
             case 82: {
-              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
                 items_ = new java.util.ArrayList<org.openntf.red.network.rrpc.messages.Notes.Item>();
-                mutable_bitField0_ |= 0x00000010;
+                mutable_bitField0_ |= 0x00000040;
               }
               items_.add(
                   input.readMessage(org.openntf.red.network.rrpc.messages.Notes.Item.parser(), extensionRegistry));
@@ -5209,7 +4961,7 @@ public final class Notes {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
           items_ = java.util.Collections.unmodifiableList(items_);
         }
         makeExtensionsImmutable();
@@ -5228,62 +4980,20 @@ public final class Notes {
     }
 
     private int bitField0_;
-    private int idCase_ = 0;
-    private java.lang.Object id_;
-    public enum IdCase
-        implements com.google.protobuf.Internal.EnumLite {
-      UNID(1),
-      NOTEID(2),
-      ID_NOT_SET(0);
-      private final int value;
-      private IdCase(int value) {
-        this.value = value;
-      }
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static IdCase valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static IdCase forNumber(int value) {
-        switch (value) {
-          case 1: return UNID;
-          case 2: return NOTEID;
-          case 0: return ID_NOT_SET;
-          default: return null;
-        }
-      }
-      public int getNumber() {
-        return this.value;
-      }
-    };
-
-    public IdCase
-    getIdCase() {
-      return IdCase.forNumber(
-          idCase_);
-    }
-
     public static final int UNID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object unid_;
     /**
      * <code>optional string unid = 1;</code>
      */
     public java.lang.String getUnid() {
-      java.lang.Object ref = "";
-      if (idCase_ == 1) {
-        ref = id_;
-      }
+      java.lang.Object ref = unid_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        if (idCase_ == 1) {
-          id_ = s;
-        }
+        unid_ = s;
         return s;
       }
     }
@@ -5292,17 +5002,12 @@ public final class Notes {
      */
     public com.google.protobuf.ByteString
         getUnidBytes() {
-      java.lang.Object ref = "";
-      if (idCase_ == 1) {
-        ref = id_;
-      }
+      java.lang.Object ref = unid_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        if (idCase_ == 1) {
-          id_ = b;
-        }
+        unid_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -5310,14 +5015,12 @@ public final class Notes {
     }
 
     public static final int NOTEID_FIELD_NUMBER = 2;
+    private long noteId_;
     /**
      * <code>optional uint64 noteId = 2;</code>
      */
     public long getNoteId() {
-      if (idCase_ == 2) {
-        return (java.lang.Long) id_;
-      }
-      return 0L;
+      return noteId_;
     }
 
     public static final int DBID_FIELD_NUMBER = 3;
@@ -5370,6 +5073,24 @@ public final class Notes {
       return result == null ? org.openntf.red.network.rrpc.messages.Notes.Action.UNRECOGNIZED : result;
     }
 
+    public static final int SEQNUM_FIELD_NUMBER = 5;
+    private int seqNum_;
+    /**
+     * <code>optional uint32 seqNum = 5;</code>
+     */
+    public int getSeqNum() {
+      return seqNum_;
+    }
+
+    public static final int FLAGS_FIELD_NUMBER = 6;
+    private int flags_;
+    /**
+     * <code>optional uint32 flags = 6;</code>
+     */
+    public int getFlags() {
+      return flags_;
+    }
+
     public static final int ITEMS_FIELD_NUMBER = 10;
     private java.util.List<org.openntf.red.network.rrpc.messages.Notes.Item> items_;
     /**
@@ -5417,18 +5138,23 @@ public final class Notes {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (idCase_ == 1) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (!getUnidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, unid_);
       }
-      if (idCase_ == 2) {
-        output.writeUInt64(
-            2, (long)((java.lang.Long) id_));
+      if (noteId_ != 0L) {
+        output.writeUInt64(2, noteId_);
       }
       if (!getDbIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, dbId_);
       }
       if (action_ != org.openntf.red.network.rrpc.messages.Notes.Action.READ.getNumber()) {
         output.writeEnum(4, action_);
+      }
+      if (seqNum_ != 0) {
+        output.writeUInt32(5, seqNum_);
+      }
+      if (flags_ != 0) {
+        output.writeUInt32(6, flags_);
       }
       for (int i = 0; i < items_.size(); i++) {
         output.writeMessage(10, items_.get(i));
@@ -5440,13 +5166,12 @@ public final class Notes {
       if (size != -1) return size;
 
       size = 0;
-      if (idCase_ == 1) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (!getUnidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, unid_);
       }
-      if (idCase_ == 2) {
+      if (noteId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(
-              2, (long)((java.lang.Long) id_));
+          .computeUInt64Size(2, noteId_);
       }
       if (!getDbIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, dbId_);
@@ -5454,6 +5179,14 @@ public final class Notes {
       if (action_ != org.openntf.red.network.rrpc.messages.Notes.Action.READ.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(4, action_);
+      }
+      if (seqNum_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(5, seqNum_);
+      }
+      if (flags_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(6, flags_);
       }
       for (int i = 0; i < items_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
@@ -5475,26 +5208,19 @@ public final class Notes {
       org.openntf.red.network.rrpc.messages.Notes.RequestNote other = (org.openntf.red.network.rrpc.messages.Notes.RequestNote) obj;
 
       boolean result = true;
+      result = result && getUnid()
+          .equals(other.getUnid());
+      result = result && (getNoteId()
+          == other.getNoteId());
       result = result && getDbId()
           .equals(other.getDbId());
       result = result && action_ == other.action_;
+      result = result && (getSeqNum()
+          == other.getSeqNum());
+      result = result && (getFlags()
+          == other.getFlags());
       result = result && getItemsList()
           .equals(other.getItemsList());
-      result = result && getIdCase().equals(
-          other.getIdCase());
-      if (!result) return false;
-      switch (idCase_) {
-        case 1:
-          result = result && getUnid()
-              .equals(other.getUnid());
-          break;
-        case 2:
-          result = result && (getNoteId()
-              == other.getNoteId());
-          break;
-        case 0:
-        default:
-      }
       return result;
     }
 
@@ -5505,26 +5231,22 @@ public final class Notes {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + UNID_FIELD_NUMBER;
+      hash = (53 * hash) + getUnid().hashCode();
+      hash = (37 * hash) + NOTEID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getNoteId());
       hash = (37 * hash) + DBID_FIELD_NUMBER;
       hash = (53 * hash) + getDbId().hashCode();
       hash = (37 * hash) + ACTION_FIELD_NUMBER;
       hash = (53 * hash) + action_;
+      hash = (37 * hash) + SEQNUM_FIELD_NUMBER;
+      hash = (53 * hash) + getSeqNum();
+      hash = (37 * hash) + FLAGS_FIELD_NUMBER;
+      hash = (53 * hash) + getFlags();
       if (getItemsCount() > 0) {
         hash = (37 * hash) + ITEMS_FIELD_NUMBER;
         hash = (53 * hash) + getItemsList().hashCode();
-      }
-      switch (idCase_) {
-        case 1:
-          hash = (37 * hash) + UNID_FIELD_NUMBER;
-          hash = (53 * hash) + getUnid().hashCode();
-          break;
-        case 2:
-          hash = (37 * hash) + NOTEID_FIELD_NUMBER;
-          hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-              getNoteId());
-          break;
-        case 0:
-        default:
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -5627,7 +5349,7 @@ public final class Notes {
                 org.openntf.red.network.rrpc.messages.Notes.RequestNote.class, org.openntf.red.network.rrpc.messages.Notes.RequestNote.Builder.class);
       }
 
-      // Construct using org.openntf.red.network.messages.Notes.RequestNote.newBuilder()
+      // Construct using org.openntf.red.network.rrpc.messages.Notes.RequestNote.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5645,18 +5367,24 @@ public final class Notes {
       }
       public Builder clear() {
         super.clear();
+        unid_ = "";
+
+        noteId_ = 0L;
+
         dbId_ = "";
 
         action_ = 0;
 
+        seqNum_ = 0;
+
+        flags_ = 0;
+
         if (itemsBuilder_ == null) {
           items_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000010);
+          bitField0_ = (bitField0_ & ~0x00000040);
         } else {
           itemsBuilder_.clear();
         }
-        idCase_ = 0;
-        id_ = null;
         return this;
       }
 
@@ -5681,25 +5409,22 @@ public final class Notes {
         org.openntf.red.network.rrpc.messages.Notes.RequestNote result = new org.openntf.red.network.rrpc.messages.Notes.RequestNote(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (idCase_ == 1) {
-          result.id_ = id_;
-        }
-        if (idCase_ == 2) {
-          result.id_ = id_;
-        }
+        result.unid_ = unid_;
+        result.noteId_ = noteId_;
         result.dbId_ = dbId_;
         result.action_ = action_;
+        result.seqNum_ = seqNum_;
+        result.flags_ = flags_;
         if (itemsBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) == 0x00000010)) {
+          if (((bitField0_ & 0x00000040) == 0x00000040)) {
             items_ = java.util.Collections.unmodifiableList(items_);
-            bitField0_ = (bitField0_ & ~0x00000010);
+            bitField0_ = (bitField0_ & ~0x00000040);
           }
           result.items_ = items_;
         } else {
           result.items_ = itemsBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
-        result.idCase_ = idCase_;
         onBuilt();
         return result;
       }
@@ -5741,6 +5466,13 @@ public final class Notes {
 
       public Builder mergeFrom(org.openntf.red.network.rrpc.messages.Notes.RequestNote other) {
         if (other == org.openntf.red.network.rrpc.messages.Notes.RequestNote.getDefaultInstance()) return this;
+        if (!other.getUnid().isEmpty()) {
+          unid_ = other.unid_;
+          onChanged();
+        }
+        if (other.getNoteId() != 0L) {
+          setNoteId(other.getNoteId());
+        }
         if (!other.getDbId().isEmpty()) {
           dbId_ = other.dbId_;
           onChanged();
@@ -5748,11 +5480,17 @@ public final class Notes {
         if (other.action_ != 0) {
           setActionValue(other.getActionValue());
         }
+        if (other.getSeqNum() != 0) {
+          setSeqNum(other.getSeqNum());
+        }
+        if (other.getFlags() != 0) {
+          setFlags(other.getFlags());
+        }
         if (itemsBuilder_ == null) {
           if (!other.items_.isEmpty()) {
             if (items_.isEmpty()) {
               items_ = other.items_;
-              bitField0_ = (bitField0_ & ~0x00000010);
+              bitField0_ = (bitField0_ & ~0x00000040);
             } else {
               ensureItemsIsMutable();
               items_.addAll(other.items_);
@@ -5765,28 +5503,13 @@ public final class Notes {
               itemsBuilder_.dispose();
               itemsBuilder_ = null;
               items_ = other.items_;
-              bitField0_ = (bitField0_ & ~0x00000010);
+              bitField0_ = (bitField0_ & ~0x00000040);
               itemsBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getItemsFieldBuilder() : null;
             } else {
               itemsBuilder_.addAllMessages(other.items_);
             }
-          }
-        }
-        switch (other.getIdCase()) {
-          case UNID: {
-            idCase_ = 1;
-            id_ = other.id_;
-            onChanged();
-            break;
-          }
-          case NOTEID: {
-            setNoteId(other.getNoteId());
-            break;
-          }
-          case ID_NOT_SET: {
-            break;
           }
         }
         onChanged();
@@ -5814,38 +5537,19 @@ public final class Notes {
         }
         return this;
       }
-      private int idCase_ = 0;
-      private java.lang.Object id_;
-      public IdCase
-          getIdCase() {
-        return IdCase.forNumber(
-            idCase_);
-      }
-
-      public Builder clearId() {
-        idCase_ = 0;
-        id_ = null;
-        onChanged();
-        return this;
-      }
-
       private int bitField0_;
 
+      private java.lang.Object unid_ = "";
       /**
        * <code>optional string unid = 1;</code>
        */
       public java.lang.String getUnid() {
-        java.lang.Object ref = "";
-        if (idCase_ == 1) {
-          ref = id_;
-        }
+        java.lang.Object ref = unid_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          if (idCase_ == 1) {
-            id_ = s;
-          }
+          unid_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -5856,17 +5560,12 @@ public final class Notes {
        */
       public com.google.protobuf.ByteString
           getUnidBytes() {
-        java.lang.Object ref = "";
-        if (idCase_ == 1) {
-          ref = id_;
-        }
+        java.lang.Object ref = unid_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          if (idCase_ == 1) {
-            id_ = b;
-          }
+          unid_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -5880,8 +5579,8 @@ public final class Notes {
         if (value == null) {
     throw new NullPointerException();
   }
-  idCase_ = 1;
-        id_ = value;
+  
+        unid_ = value;
         onChanged();
         return this;
       }
@@ -5889,11 +5588,9 @@ public final class Notes {
        * <code>optional string unid = 1;</code>
        */
       public Builder clearUnid() {
-        if (idCase_ == 1) {
-          idCase_ = 0;
-          id_ = null;
-          onChanged();
-        }
+        
+        unid_ = getDefaultInstance().getUnid();
+        onChanged();
         return this;
       }
       /**
@@ -5905,27 +5602,25 @@ public final class Notes {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        idCase_ = 1;
-        id_ = value;
+        
+        unid_ = value;
         onChanged();
         return this;
       }
 
+      private long noteId_ ;
       /**
        * <code>optional uint64 noteId = 2;</code>
        */
       public long getNoteId() {
-        if (idCase_ == 2) {
-          return (java.lang.Long) id_;
-        }
-        return 0L;
+        return noteId_;
       }
       /**
        * <code>optional uint64 noteId = 2;</code>
        */
       public Builder setNoteId(long value) {
-        idCase_ = 2;
-        id_ = value;
+        
+        noteId_ = value;
         onChanged();
         return this;
       }
@@ -5933,11 +5628,9 @@ public final class Notes {
        * <code>optional uint64 noteId = 2;</code>
        */
       public Builder clearNoteId() {
-        if (idCase_ == 2) {
-          idCase_ = 0;
-          id_ = null;
-          onChanged();
-        }
+        
+        noteId_ = 0L;
+        onChanged();
         return this;
       }
 
@@ -6054,12 +5747,64 @@ public final class Notes {
         return this;
       }
 
+      private int seqNum_ ;
+      /**
+       * <code>optional uint32 seqNum = 5;</code>
+       */
+      public int getSeqNum() {
+        return seqNum_;
+      }
+      /**
+       * <code>optional uint32 seqNum = 5;</code>
+       */
+      public Builder setSeqNum(int value) {
+        
+        seqNum_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 seqNum = 5;</code>
+       */
+      public Builder clearSeqNum() {
+        
+        seqNum_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int flags_ ;
+      /**
+       * <code>optional uint32 flags = 6;</code>
+       */
+      public int getFlags() {
+        return flags_;
+      }
+      /**
+       * <code>optional uint32 flags = 6;</code>
+       */
+      public Builder setFlags(int value) {
+        
+        flags_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 flags = 6;</code>
+       */
+      public Builder clearFlags() {
+        
+        flags_ = 0;
+        onChanged();
+        return this;
+      }
+
       private java.util.List<org.openntf.red.network.rrpc.messages.Notes.Item> items_ =
         java.util.Collections.emptyList();
       private void ensureItemsIsMutable() {
-        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
           items_ = new java.util.ArrayList<org.openntf.red.network.rrpc.messages.Notes.Item>(items_);
-          bitField0_ |= 0x00000010;
+          bitField0_ |= 0x00000040;
          }
       }
 
@@ -6209,7 +5954,7 @@ public final class Notes {
       public Builder clearItems() {
         if (itemsBuilder_ == null) {
           items_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000010);
+          bitField0_ = (bitField0_ & ~0x00000040);
           onChanged();
         } else {
           itemsBuilder_.clear();
@@ -6286,7 +6031,7 @@ public final class Notes {
           itemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               org.openntf.red.network.rrpc.messages.Notes.Item, org.openntf.red.network.rrpc.messages.Notes.Item.Builder, org.openntf.red.network.rrpc.messages.Notes.ItemOrBuilder>(
                   items_,
-                  ((bitField0_ & 0x00000010) == 0x00000010),
+                  ((bitField0_ & 0x00000040) == 0x00000040),
                   getParentForChildren(),
                   isClean());
           items_ = null;
@@ -6553,7 +6298,7 @@ public final class Notes {
                 org.openntf.red.network.rrpc.messages.Notes.RequestNoteCollection.class, org.openntf.red.network.rrpc.messages.Notes.RequestNoteCollection.Builder.class);
       }
 
-      // Construct using org.openntf.red.network.messages.Notes.RequestNoteCollection.newBuilder()
+      // Construct using org.openntf.red.network.rrpc.messages.Notes.RequestNoteCollection.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6751,28 +6496,29 @@ public final class Notes {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013notes.proto\022\022red.hooks.messages\"\314\001\n\010No" +
-      "teInfo\022\016\n\004unid\030\001 \001(\tH\000\022\020\n\006noteId\030\002 \001(\004H\000" +
-      "\022\014\n\004dbId\030\003 \001(\t\022\020\n\010modified\030\004 \001(\t\022\017\n\007clas" +
-      "sId\030\005 \001(\r\022\r\n\005flags\030\006 \001(\r\022\020\n\010accessed\030\007 \001" +
-      "(\t\022\024\n\014parentNoteId\030\010 \001(\004\022\025\n\rresponseCoun" +
-      "t\030\t \001(\004\022\023\n\013addedToFile\030\n \001(\tB\004\n\002idJ\004\010\013\020e" +
-      "\"q\n\004Note\022\016\n\004unid\030\001 \001(\tH\000\022\020\n\006noteId\030\002 \001(\004" +
-      "H\000\022\014\n\004dbId\030\003 \001(\t\022\'\n\005items\030\n \003(\0132\030.red.ho" +
-      "oks.messages.ItemB\004\n\002idJ\004\010\004\020\nJ\004\010\013\020e\"W\n\004I" +
-      "tem\022\014\n\004type\030\001 \001(\r\022\014\n\004name\030\004 \001(\t\022\r\n\005flags",
-      "\030\005 \001(\r\022\016\n\006tvalue\030\002 \003(\t\022\016\n\006nvalue\030\003 \003(\004J\004" +
-      "\010\006\020e\"\026\n\016NoteCollectionJ\004\010\001\020e\"y\n\017RequestN" +
-      "oteInfo\022\016\n\004unid\030\001 \001(\tH\000\022\020\n\006noteId\030\002 \001(\004H" +
-      "\000\022\014\n\004dbId\030\003 \001(\t\022*\n\006action\030\004 \001(\0162\032.red.ho" +
-      "oks.messages.ActionB\004\n\002idJ\004\010\005\020e\"\244\001\n\013Requ" +
-      "estNote\022\016\n\004unid\030\001 \001(\tH\000\022\020\n\006noteId\030\002 \001(\004H" +
-      "\000\022\014\n\004dbId\030\003 \001(\t\022*\n\006action\030\004 \001(\0162\032.red.ho" +
-      "oks.messages.Action\022\'\n\005items\030\n \003(\0132\030.red" +
-      ".hooks.messages.ItemB\004\n\002idJ\004\010\005\020\nJ\004\010\013\020e\"\035" +
-      "\n\025RequestNoteCollectionJ\004\010\001\020e**\n\006Action\022",
-      "\010\n\004READ\020\000\022\n\n\006UPDATE\020\001\022\n\n\006REMOVE\020\002B%\n org" +
-      ".openntf.red.network.messages\370\001\001b\006proto3"
+      "\n\013notes.proto\022\022red.hooks.messages\"\302\001\n\010No" +
+      "teInfo\022\014\n\004unid\030\001 \001(\t\022\016\n\006noteId\030\002 \001(\004\022\014\n\004" +
+      "dbId\030\003 \001(\t\022\020\n\010modified\030\004 \001(\t\022\017\n\007classId\030" +
+      "\005 \001(\r\022\r\n\005flags\030\006 \001(\r\022\020\n\010accessed\030\007 \001(\t\022\024" +
+      "\n\014parentNoteId\030\010 \001(\004\022\025\n\rresponseCount\030\t " +
+      "\001(\004\022\023\n\013addedToFile\030\n \001(\tJ\004\010\013\020e\"w\n\004Note\022\014" +
+      "\n\004unid\030\001 \001(\t\022\016\n\006noteId\030\002 \001(\004\022\014\n\004dbId\030\003 \001" +
+      "(\t\022\016\n\006seqNum\030\004 \001(\r\022\'\n\005items\030\n \003(\0132\030.red." +
+      "hooks.messages.ItemJ\004\010\005\020\nJ\004\010\013\020e\"W\n\004Item\022" +
+      "\014\n\004type\030\001 \001(\r\022\014\n\004name\030\004 \001(\t\022\r\n\005flags\030\005 \001",
+      "(\r\022\016\n\006tvalue\030\002 \003(\t\022\016\n\006nvalue\030\003 \003(\004J\004\010\006\020e" +
+      "\"\026\n\016NoteCollectionJ\004\010\001\020e\"o\n\017RequestNoteI" +
+      "nfo\022\014\n\004unid\030\001 \001(\t\022\016\n\006noteId\030\002 \001(\004\022\014\n\004dbI" +
+      "d\030\003 \001(\t\022*\n\006action\030\004 \001(\0162\032.red.hooks.mess" +
+      "ages.ActionJ\004\010\005\020e\"\271\001\n\013RequestNote\022\014\n\004uni" +
+      "d\030\001 \001(\t\022\016\n\006noteId\030\002 \001(\004\022\014\n\004dbId\030\003 \001(\t\022*\n" +
+      "\006action\030\004 \001(\0162\032.red.hooks.messages.Actio" +
+      "n\022\016\n\006seqNum\030\005 \001(\r\022\r\n\005flags\030\006 \001(\r\022\'\n\005item" +
+      "s\030\n \003(\0132\030.red.hooks.messages.ItemJ\004\010\007\020\nJ" +
+      "\004\010\013\020e\"\035\n\025RequestNoteCollectionJ\004\010\001\020e**\n\006",
+      "Action\022\010\n\004READ\020\000\022\n\n\006UPDATE\020\001\022\n\n\006REMOVE\020\002" +
+      "B*\n%org.openntf.red.network.rrpc.message" +
+      "s\370\001\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6791,13 +6537,13 @@ public final class Notes {
     internal_static_red_hooks_messages_NoteInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_red_hooks_messages_NoteInfo_descriptor,
-        new java.lang.String[] { "Unid", "NoteId", "DbId", "Modified", "ClassId", "Flags", "Accessed", "ParentNoteId", "ResponseCount", "AddedToFile", "Id", });
+        new java.lang.String[] { "Unid", "NoteId", "DbId", "Modified", "ClassId", "Flags", "Accessed", "ParentNoteId", "ResponseCount", "AddedToFile", });
     internal_static_red_hooks_messages_Note_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_red_hooks_messages_Note_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_red_hooks_messages_Note_descriptor,
-        new java.lang.String[] { "Unid", "NoteId", "DbId", "Items", "Id", });
+        new java.lang.String[] { "Unid", "NoteId", "DbId", "SeqNum", "Items", });
     internal_static_red_hooks_messages_Item_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_red_hooks_messages_Item_fieldAccessorTable = new
@@ -6815,13 +6561,13 @@ public final class Notes {
     internal_static_red_hooks_messages_RequestNoteInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_red_hooks_messages_RequestNoteInfo_descriptor,
-        new java.lang.String[] { "Unid", "NoteId", "DbId", "Action", "Id", });
+        new java.lang.String[] { "Unid", "NoteId", "DbId", "Action", });
     internal_static_red_hooks_messages_RequestNote_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_red_hooks_messages_RequestNote_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_red_hooks_messages_RequestNote_descriptor,
-        new java.lang.String[] { "Unid", "NoteId", "DbId", "Action", "Items", "Id", });
+        new java.lang.String[] { "Unid", "NoteId", "DbId", "Action", "SeqNum", "Flags", "Items", });
     internal_static_red_hooks_messages_RequestNoteCollection_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_red_hooks_messages_RequestNoteCollection_fieldAccessorTable = new

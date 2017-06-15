@@ -2,7 +2,7 @@ Subsystem-ManifestVersion: 1.0
 IBM-Feature-Version: 2
 IBM-ShortName: RED_Main
 Subsystem-SymbolicName: org.openntf.red.main.feature;visibility:=public
-Subsystem-Version: 1.0.0.201611281425
+Subsystem-Version: 1.0.0.201612281756
 Subsystem-Type: osgi.subsystem.feature
 Subsystem-Content: org.openntf.red.main;version="1.0.0"
 Manifest-Version: 1.0
@@ -145,7 +145,11 @@ IBM-API-Package: com.fasterxml.jackson.annotation,
  org.openntf.red.nsf.impl.couch.converters,
  org.openntf.red.nsf.impl.exceptions,
  org.openntf.red.nsf.impl.notes,
- org.openntf.red.nsf.impl.notes.remote
+ org.openntf.red.nsf.impl.notes.remote,
+ org.openntf.red.ext,
+ org.openntf.red.network.rrpc.handlers,
+ org.openntf.red.security.authentication,
+ org.openntf.red.security.authentication.http
 IBM-SPI-Package: com.fasterxml.jackson.annotation,
  com.fasterxml.jackson.core,
  com.fasterxml.jackson.core.base,
@@ -285,4 +289,8 @@ IBM-SPI-Package: com.fasterxml.jackson.annotation,
  org.openntf.red.nsf.impl.couch.converters,
  org.openntf.red.nsf.impl.exceptions,
  org.openntf.red.nsf.impl.notes,
- org.openntf.red.nsf.impl.notes.remote
+ org.openntf.red.nsf.impl.notes.remote,
+ org.openntf.red.ext,
+ org.openntf.red.network.rrpc.handlers,
+ org.openntf.red.security.authentication,
+ org.openntf.red.security.authentication.http

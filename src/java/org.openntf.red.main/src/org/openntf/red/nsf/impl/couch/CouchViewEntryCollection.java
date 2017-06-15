@@ -16,33 +16,53 @@ import org.openntf.red.nsf.endpoint.ViewEntry;
 import org.openntf.red.nsf.endpoint.ViewEntryCollection;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-//import javolution.util.FastTable;
-
 /**
+ * View entry collection implementation for CouchDB.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see ViewEntryCollection
  */
 public class CouchViewEntryCollection implements ViewEntryCollection<CouchEndpoint, CouchEndpointFactory, CouchView> {
 
+	/** Logger object. */
 	private static Logger log = Logger.getLogger(CouchViewEntryCollection.class.getName());
-
+	/** View entry collection web target (Java RS). */
 	private WebTarget target;
+	/**
+	 * Raw representation of the selection used to get this collection (JSON
+	 * wrapped in Jackson).
+	 */
 	private ObjectNode selection;
+	/** Offset of the current cached page of the view. */
 	private long offset;
+	/** Size of the cached view page. */
 	private long cachesize;
+	/** Index of the last entry in the collection. */
 	private long lastentryidx;
+	/** Currently cached view entry. */
 	private ObjectNode cache;
+	/** Currently cached view page. */
 	private ArrayNode cacheView;
+	/** Parent view. */
 	private CouchView parent;
+	/** Object mapper (used for JSON manipulation). */
 	private ObjectMapper mapper;
 
 	/**
+	 * Default constructor.
 	 * 
+	 * @param _target
+	 *            View entry collection web target.
+	 * @param _selection
+	 *            Raw selection object for the collection.
+	 * @param _parent
+	 *            Parent view object.
+	 * @since 0.4.0
 	 */
 	CouchViewEntryCollection(WebTarget _target, ObjectNode _selection, CouchView _parent) {
 		// init variables
@@ -90,6 +110,12 @@ public class CouchViewEntryCollection implements ViewEntryCollection<CouchEndpoi
 		return parent;
 	}
 
+	/**
+	 * CouchDB-specific view defaults.
+	 * 
+	 * @author Vladimir Kornienko
+	 * @since 0.4.0
+	 */
 	public static class Defaults {
 		// misc values
 		public static final long DEFAULT_PAGE_SIZE = 30;
@@ -141,9 +167,9 @@ public class CouchViewEntryCollection implements ViewEntryCollection<CouchEndpoi
 					this);
 		// paginate to the correct page
 		// TODO maybe use a more efficient mechanism?
-		while(n < offset)
+		while (n < offset)
 			offset -= cachesize;
-		while(n >= offset + cachesize)
+		while (n >= offset + cachesize)
 			offset += cachesize;
 		// clear cache
 		if (null != cacheView)
@@ -158,12 +184,18 @@ public class CouchViewEntryCollection implements ViewEntryCollection<CouchEndpoi
 		// if no entries available or ran into end of collection
 		if (cacheView.size() == 0 || (n - offset) >= cacheView.size())
 			return null;
-		
-		ObjectNode rawentry = (ObjectNode) ((ArrayNode) cache.get(Defaults.VIEW_RESULTS_WRAPPER)).get((int)(n - offset));
-		
+
+		ObjectNode rawentry = (ObjectNode) ((ArrayNode) cache.get(Defaults.VIEW_RESULTS_WRAPPER))
+				.get((int) (n - offset));
+
 		return new CouchViewEntry(rawentry, n, this);
 	}
 
+	/**
+	 * Turn to the first page in the collection and cache it.
+	 * 
+	 * @since 0.4.0
+	 */
 	void firstPage() {
 		offset = 0;
 		if (null != cacheView)
@@ -177,10 +209,21 @@ public class CouchViewEntryCollection implements ViewEntryCollection<CouchEndpoi
 		queryPage();
 	}
 
+	/**
+	 * (Under construction)<br>
+	 * Turn to the last page in the collection and cache it.
+	 * 
+	 * @since 0.4.0
+	 */
 	void lastPage() {
 
 	}
 
+	/**
+	 * Query the current page from CouchDB and cache it.
+	 * 
+	 * @since 0.4.0
+	 */
 	private void queryPage() {
 		log.finest("Will be posting: [" + selection.toString() + "]");
 		log.finest("Querying target: " + target.toString());
@@ -191,10 +234,11 @@ public class CouchViewEntryCollection implements ViewEntryCollection<CouchEndpoi
 			return;
 		// TODO maybe something else here (exception)?
 		try {
-			String sresult = response.readEntity(String.class);//.replaceAll("[\n]", "");
+			String sresult = response.readEntity(String.class);// .replaceAll("[\n]",
+																// "");
 			log.finest("Came back: [" + sresult + "]");
-			//JsonNode node = mapper.readTree(sresult);
-			//log.finest("Parsed: " + node);
+			// JsonNode node = mapper.readTree(sresult);
+			// log.finest("Parsed: " + node);
 			cache = (ObjectNode) mapper.readTree(sresult);
 			log.finest("cache: [" + cache.toString() + "]");
 		} catch (JsonProcessingException e) {
@@ -215,7 +259,14 @@ public class CouchViewEntryCollection implements ViewEntryCollection<CouchEndpoi
 		}
 		cacheView = (ArrayNode) cache.get(Defaults.VIEW_RESULTS_WRAPPER);
 	}
-	
+
+	/**
+	 * (Under construction)<br>
+	 * Discovers and returns the last element index of the entry collection.
+	 * 
+	 * @return Last element index.
+	 * @since 0.4.0
+	 */
 	private long findLastElementIdx() {
 		return -1;
 	}

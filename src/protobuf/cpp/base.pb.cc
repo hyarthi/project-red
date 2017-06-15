@@ -152,8 +152,8 @@ void protobuf_AddDesc_base_2eproto_impl() {
     "\002 \001(\0132\037.red.hooks.messages.RequestNoteH\000"
     "\022@\n\013ncollection\030\003 \001(\0132).red.hooks.messag"
     "es.RequestNoteCollectionH\000B\t\n\007payloadJ\004\010"
-    "\004\020eB%\n org.openntf.red.network.messages\370"
-    "\001\001b\006proto3", 490);
+    "\004\020eB*\n%org.openntf.red.network.rrpc.mess"
+    "ages\370\001\001b\006proto3", 495);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "base.proto", &protobuf_RegisterTypes);
   ::red::hooks::messages::protobuf_AddDesc_notes_2eproto();

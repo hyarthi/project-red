@@ -19,15 +19,23 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import javolution.util.FastTable;
 
 /**
+ * Text converter for CouchDB.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see RawDataConverter
  */
 public class CouchTextConverter extends RawDataConverter {
-	
+
+	/** Logger object. */
 	private static Logger log = Logger.getLogger(CouchTextConverter.class.getName());
 
 	/**
+	 * Default constructor.
+	 * 
 	 * @param type
+	 *            Data type code.
+	 * @since 0.4.0
 	 */
 	public CouchTextConverter(int type) {
 		super(type);
@@ -37,7 +45,8 @@ public class CouchTextConverter extends RawDataConverter {
 	public Object parseReadData(Object raw) throws ConverterException {
 		// only accept JsonNode types
 		if (!(raw instanceof JsonNode))
-			throw new ConverterException("Couch Text Converter: Unsupported data type - " + raw.getClass().getName() + ".");
+			throw new ConverterException(
+					"Couch Text Converter: Unsupported data type - " + raw.getClass().getName() + ".");
 		JsonNode node = (JsonNode) raw;
 		if (node.isNull()) {
 			return "";
@@ -46,16 +55,19 @@ public class CouchTextConverter extends RawDataConverter {
 				return node.asText();
 			} else if (node.isArray()) {
 				FastTable<String> result = new FastTable<String>();
-				ArrayNode arr = (ArrayNode) node;//((ObjectNode) node).arrayNode();
+				ArrayNode arr = (ArrayNode) node;// ((ObjectNode)
+													// node).arrayNode();
 				for (JsonNode item : arr) {
 					if (item.isTextual())
 						result.add(item.asText());
 					else
-						throw new ConverterException("Couch Text Converter: Unsupported data type - " + item.getClass().getName() + ".");
+						throw new ConverterException(
+								"Couch Text Converter: Unsupported data type - " + item.getClass().getName() + ".");
 				}
 				return result;
 			} else
-				throw new ConverterException("Couch Text Converter: Unsupported data type - " + node.getNodeType().toString() + ".");
+				throw new ConverterException(
+						"Couch Text Converter: Unsupported data type - " + node.getNodeType().toString() + ".");
 		}
 	}
 
@@ -63,34 +75,36 @@ public class CouchTextConverter extends RawDataConverter {
 	@Override
 	public Object parseWriteData(Object data) throws ConverterException {
 		JsonNodeFactory factory = new JsonNodeFactory(true);
-		//ObjectMapper mapper = new ObjectMapper();
+		// ObjectMapper mapper = new ObjectMapper();
 		if (null == data)
 			return factory.nullNode();
-			//return mapper.createObjectNode().textNode("");
+		// return mapper.createObjectNode().textNode("");
 		if (data instanceof String) {
 			return factory.textNode((String) data);
-			//return mapper.createObjectNode().textNode((String) data);
+			// return mapper.createObjectNode().textNode((String) data);
 		}
 		if (data instanceof FastTable) {
 			FastTable coll = (FastTable) data;
 			if (coll.isEmpty()) {
 				return factory.nullNode();
-				//return mapper.createObjectNode().textNode("");
+				// return mapper.createObjectNode().textNode("");
 			}
 			if (coll.size() == 1) {
 				Object o = coll.get(0);
 				if (o instanceof String)
 					return factory.textNode((String) o);
-					//return mapper.createObjectNode().textNode((String) o);
+				// return mapper.createObjectNode().textNode((String) o);
 				else
-					throw new ConverterException("Couch Text Converter: Unsupported data type - " + o.getClass().getName() + ".");
+					throw new ConverterException(
+							"Couch Text Converter: Unsupported data type - " + o.getClass().getName() + ".");
 			}
-			ArrayNode result = factory.arrayNode();//mapper.createArrayNode();
+			ArrayNode result = factory.arrayNode();// mapper.createArrayNode();
 			for (int i = 0; i < coll.size(); i++) {
 				if (coll.get(i) instanceof String)
 					result.add((String) coll.get(i));
 				else
-					throw new ConverterException("Couch Text Converter: Unsupported data type - " + coll.get(i).getClass().getName() + ".");
+					throw new ConverterException(
+							"Couch Text Converter: Unsupported data type - " + coll.get(i).getClass().getName() + ".");
 			}
 			return result;
 		}
@@ -98,28 +112,31 @@ public class CouchTextConverter extends RawDataConverter {
 			Collection coll = (Collection) data;
 			if (coll.isEmpty())
 				return factory.nullNode();
-				//return mapper.createObjectNode().textNode("");
+			// return mapper.createObjectNode().textNode("");
 			if (coll.size() == 1) {
 				Object o = coll.iterator().next();
 				if (o instanceof String)
 					return factory.textNode((String) o);
-					//return mapper.createObjectNode().textNode((String) o);
-				else 
-					throw new ConverterException("Couch Text Converter: Unsupported data type - " + o.getClass().getName() + ".");
+				// return mapper.createObjectNode().textNode((String) o);
+				else
+					throw new ConverterException(
+							"Couch Text Converter: Unsupported data type - " + o.getClass().getName() + ".");
 			}
-			ArrayNode result = factory.arrayNode();//mapper.createArrayNode();
+			ArrayNode result = factory.arrayNode();// mapper.createArrayNode();
 			Iterator iterator = coll.iterator();
 			while (iterator.hasNext()) {
 				Object o = iterator.next();
 				if (o instanceof String)
 					result.add((String) o);
 				else
-					throw new ConverterException("Couch Text Converter: Unsupported data type - " + o.getClass().getName() + ".");
+					throw new ConverterException(
+							"Couch Text Converter: Unsupported data type - " + o.getClass().getName() + ".");
 			}
 			return result;
 		}
-		
-		throw new ConverterException("Couch Text Converter: Unsupported data type - " + data.getClass().getName() + ".");
+
+		throw new ConverterException(
+				"Couch Text Converter: Unsupported data type - " + data.getClass().getName() + ".");
 	}
 
 }

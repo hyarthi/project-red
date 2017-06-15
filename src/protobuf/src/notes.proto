@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option cc_enable_arenas = true;
-option java_package="org.openntf.red.network.messages";
+option java_package="org.openntf.red.network.rrpc.messages";
 
 package red.hooks.messages;
 
@@ -9,10 +9,8 @@ package red.hooks.messages;
 // RED Responses
 //
 message NoteInfo {
-	oneof id {
-		string unid = 1;
-		uint64 noteId = 2;
-	}
+	string unid = 1;
+	uint64 noteId = 2;
 	string dbId = 3;
 	string modified = 4;
 	uint32 classId = 5;
@@ -25,13 +23,12 @@ message NoteInfo {
 }
 
 message Note {
-	oneof id {
-		string unid = 1;
-		uint64 noteId = 2;
-	}
+	string unid = 1;
+	uint64 noteId = 2;
 	string dbId = 3;
+	uint32 seqNum = 4;
 	repeated Item items = 10;
-	reserved 4 to 9, 11 to 100;
+	reserved 5 to 9, 11 to 100;
 }
 
 message Item {
@@ -52,24 +49,22 @@ message NoteCollection {
 //
 
 message RequestNoteInfo {
-	oneof id {
-		string unid = 1;
-		uint64 noteId = 2;
-	}
+	string unid = 1;
+	uint64 noteId = 2;
 	string dbId = 3;
 	Action action = 4;
 	reserved 5 to 100;
 }
 
 message RequestNote {
-	oneof id {
-		string unid = 1;
-		uint64 noteId = 2;
-	}
+	string unid = 1;
+	uint64 noteId = 2;
 	string dbId = 3;
 	Action action = 4;
+	uint32 seqNum = 5;
+	uint32 flags = 6;
 	repeated Item items = 10;
-	reserved 5 to 9, 11 to 100;
+	reserved 7 to 9, 11 to 100;
 }
 
 message RequestNoteCollection {

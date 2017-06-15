@@ -4,8 +4,10 @@
 package org.openntf.red.nsf.exceptions;
 
 /**
+ * Exceptions thrown by data converters.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
  */
 public class ConverterException extends RuntimeException {
 
@@ -15,46 +17,64 @@ public class ConverterException extends RuntimeException {
 	private static final long serialVersionUID = -8881303448617568967L;
 
 	/**
+	 * Default constructor.
 	 * 
+	 * @since 0.4.0
 	 */
 	public ConverterException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @param arg0
+	 * Constructor with message text.
+	 * 
+	 * @param msg
+	 *            Message text.
+	 * @since 0.4.0
 	 */
-	public ConverterException(String arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
+	public ConverterException(String msg) {
+		super(msg);
 	}
 
 	/**
-	 * @param arg0
+	 * Constructor with cause of error.
+	 * 
+	 * @param e
+	 *            Cause of error.
+	 * @since 0.4.0
 	 */
-	public ConverterException(Throwable arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
+	public ConverterException(Throwable e) {
+		super(e);
 	}
 
 	/**
-	 * @param arg0
-	 * @param arg1
+	 * Constructor with message text and cause of error.
+	 * 
+	 * @param msg
+	 *            Message text.
+	 * @param e
+	 *            Cause of error.
+	 * @since 0.4.0
 	 */
-	public ConverterException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
+	public ConverterException(String msg, Throwable e) {
+		super(msg, e);
 	}
 
 	/**
-	 * @param arg0
-	 * @param arg1
-	 * @param arg2
-	 * @param arg3
+	 * Constructor with message text, cause of error, and flags - suppression
+	 * enabled and writable stack trace.
+	 * 
+	 * @param msg
+	 *            Message text.
+	 * @param e
+	 *            Cause of error.
+	 * @param suppression
+	 *            Flag - suppression enabled.
+	 * @param writest
+	 *            Flag - writable stack trace.
+	 * @since 0.4.0
 	 */
-	public ConverterException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
-		// TODO Auto-generated constructor stub
+	public ConverterException(String msg, Throwable e, boolean suppression, boolean writest) {
+		super(msg, e, suppression, writest);
 	}
 
 }

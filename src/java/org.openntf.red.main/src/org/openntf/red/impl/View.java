@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -23,23 +22,35 @@ import org.openntf.red.ViewColumn;
 import org.openntf.red.ViewEntry;
 import org.openntf.red.ViewEntryCollection;
 import org.openntf.red.ViewNavigator;
-import org.openntf.red.events.EnumEvent;
-import org.openntf.red.events.IDominoEvent;
-import org.openntf.red.events.IDominoListener;
-
-import lotus.domino.NotesException;
 
 /**
+ * Entity representing a view (index).
+ * 
  * @author Vladimir Kornienko
- *
+ * @see org.openntf.red.View
+ * @since 0.4.0
  */
 public class View extends Base<org.openntf.red.Database> implements org.openntf.red.View {
-	
-	private static Logger log = Logger.getLogger(View.class.getName());
+
+	/** Logger object. */
+	private static final Logger log = Logger.getLogger(View.class.getName());
+	/** Back-end object used to manipulate data. */
 	@SuppressWarnings("rawtypes")
 	private org.openntf.red.nsf.endpoint.View beObject;
+	/** View name. */
 	private String name;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param prnt
+	 *            Parent database.
+	 * @param _name
+	 *            View name.
+	 * @param beview
+	 *            Back-end object.
+	 * @since 0.4.0
+	 */
 	@SuppressWarnings("rawtypes")
 	protected View(org.openntf.red.impl.Database prnt, String _name, org.openntf.red.nsf.endpoint.View beview) {
 		super(prnt, Base.NOTES_VIEW);
@@ -47,8 +58,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		name = _name;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Base#isDead()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDead() {
@@ -56,8 +67,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.Design#getNoteID()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getNoteID() {
@@ -65,8 +76,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.Design#getDocument()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getDocument() {
@@ -74,24 +85,30 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.DatabaseDescendant#getAncestorDatabase()
+	/**
+	 * Returns the ancestor database.
+	 * 
+	 * @return Ancestor database
+	 * @since 0.4.0
 	 */
 	@Override
 	public Database getAncestorDatabase() {
 		return parent;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.SessionDescendant#getAncestorSession()
+	/**
+	 * Returns the ancestor session.
+	 * 
+	 * @return Ancestor session.
+	 * @since 0.4.0
 	 */
 	@Override
 	public Session getAncestorSession() {
 		return parent.getAncestorSession();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void readExternal(ObjectInput arg0) throws IOException, ClassNotFoundException {
@@ -99,8 +116,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void writeExternal(ObjectOutput arg0) throws IOException {
@@ -108,8 +125,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#containsKey(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsKey(Object arg0) {
@@ -117,8 +134,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#containsValue(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsValue(Object arg0) {
@@ -126,8 +143,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#entrySet()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Set<java.util.Map.Entry<String, Object>> entrySet() {
@@ -135,8 +152,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#equals(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean equals(Object arg0) {
@@ -144,8 +161,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#get(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object get(Object arg0) {
@@ -153,8 +170,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#hashCode()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int hashCode() {
@@ -162,8 +179,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#isEmpty()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -171,8 +188,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#keySet()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Set<String> keySet() {
@@ -180,8 +197,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#put(java.lang.Object, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object put(String arg0, Object arg1) {
@@ -189,8 +206,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#putAll(java.util.Map)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void putAll(Map<? extends String, ? extends Object> arg0) {
@@ -198,8 +215,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#remove(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object remove(Object arg0) {
@@ -207,8 +224,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#size()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int size() {
@@ -216,8 +233,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#values()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Collection<Object> values() {
@@ -225,8 +242,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#clear()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void clear() {
@@ -234,8 +251,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#copyColumn(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn copyColumn(int sourceColumn) {
@@ -243,8 +260,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#copyColumn(int, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn copyColumn(int sourceColumn, int destinationIndex) {
@@ -252,8 +269,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#copyColumn(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn copyColumn(String sourceColumn) {
@@ -261,8 +278,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#copyColumn(java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn copyColumn(String sourceColumn, int destinationIndex) {
@@ -270,8 +287,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#copyColumn(lotus.domino.ViewColumn)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn copyColumn(lotus.domino.ViewColumn sourceColumn) {
@@ -279,8 +296,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#copyColumn(lotus.domino.ViewColumn, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn copyColumn(lotus.domino.ViewColumn sourceColumn, int destinationIndex) {
@@ -288,8 +305,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createColumn()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn createColumn() {
@@ -297,8 +314,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createColumn(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn createColumn(int position) {
@@ -306,8 +323,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createColumn(int, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn createColumn(int position, String columnTitle) {
@@ -315,8 +332,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createColumn(int, java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn createColumn(int position, String columnTitle, String formula) {
@@ -324,8 +341,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewEntryCollection()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntryCollection createViewEntryCollection() {
@@ -333,8 +350,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNav()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNav() {
@@ -342,8 +359,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNav(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNav(int cacheSize) {
@@ -351,8 +368,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFrom(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFrom(Object entry) {
@@ -360,8 +377,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFrom(java.lang.Object, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFrom(Object entry, int cacheSize) {
@@ -369,8 +386,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFromAllUnread()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFromAllUnread() {
@@ -378,8 +395,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFromAllUnread(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFromAllUnread(String userName) {
@@ -387,8 +404,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFromCategory(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFromCategory(String categoryName) {
@@ -396,8 +413,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFromCategory(java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFromCategory(String categoryName, int cacheSize) {
@@ -405,8 +422,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFromChildren(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFromChildren(Object entry) {
@@ -414,8 +431,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFromChildren(java.lang.Object, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFromChildren(Object entry, int cacheSize) {
@@ -423,8 +440,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFromDescendants(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFromDescendants(Object entry) {
@@ -432,8 +449,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavFromDescendants(java.lang.Object, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavFromDescendants(Object entry, int cacheSize) {
@@ -441,8 +458,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavMaxLevel(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavMaxLevel(int level) {
@@ -450,8 +467,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#createViewNavMaxLevel(int, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewNavigator createViewNavMaxLevel(int level, int cacheSize) {
@@ -459,8 +476,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearch(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int FTSearch(String query) {
@@ -468,8 +485,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearch(java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int FTSearch(String query, int maxDocs) {
@@ -477,8 +494,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int FTSearchSorted(String query) {
@@ -486,8 +503,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int FTSearchSorted(String query, int maxDocs) {
@@ -495,8 +512,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.lang.String, int, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int FTSearchSorted(String query, int maxDocs, int column) {
@@ -504,8 +521,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.lang.String, int, int, boolean, boolean, boolean, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int FTSearchSorted(String query, int maxDocs, int column, boolean ascending, boolean exact, boolean variants,
@@ -514,8 +531,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.lang.String, int, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int FTSearchSorted(String query, int maxDocs, String column) {
@@ -523,8 +540,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.lang.String, int, java.lang.String, boolean, boolean, boolean, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int FTSearchSorted(String query, int maxDocs, String column, boolean ascending, boolean exact,
@@ -533,36 +550,40 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.util.Vector, int)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.util.Vector, int, int)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs, int column) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.util.Vector, int, int, boolean, boolean, boolean, boolean)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs, int column, boolean ascending, boolean exact, boolean variants,
 			boolean fuzzy) {
@@ -570,18 +591,20 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.util.Vector, int, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs, String column) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#FTSearchSorted(java.util.Vector, int, java.lang.String, boolean, boolean, boolean, boolean)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int FTSearchSorted(Vector query, int maxDocs, String column, boolean ascending, boolean exact,
 			boolean variants, boolean fuzzy) {
@@ -589,8 +612,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAliases()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getAliases() {
@@ -598,8 +621,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllDocumentsByKey(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getAllDocumentsByKey(Object key) {
@@ -607,8 +630,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllDocumentsByKey(java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getAllDocumentsByKey(Object key, boolean exact) {
@@ -616,26 +639,28 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllDocumentsByKey(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public DocumentCollection getAllDocumentsByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllDocumentsByKey(java.util.Vector, boolean)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public DocumentCollection getAllDocumentsByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllEntries()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntryCollection getAllEntries() {
@@ -643,8 +668,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllEntriesByKey(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntryCollection getAllEntriesByKey(Object key) {
@@ -652,8 +677,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllEntriesByKey(java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntryCollection getAllEntriesByKey(Object key, boolean exact) {
@@ -661,8 +686,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllEntriesByKey(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -670,22 +695,38 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return getAllEntriesByKey(keys, true);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllEntriesByKey(java.util.Vector, boolean)
+	/**
+	 * Looks up the view for a collection of entries that fit the criteria.
+	 * First ordered column is looked up on first key, second - on the second,
+	 * etc.
+	 * <p>
+	 * If the number of keys is less than the number of ordered columns, these
+	 * last ordered columns are not filtered by.
+	 * <p>
+	 * If the number of keys is greater than the number of ordered columns (or
+	 * if no ordered columns present in the view), returns an empty collection.
+	 * 
+	 * @param keys
+	 *            Lookup keys
+	 * @param exact
+	 *            Whether the keys should be looked up exactly as they
+	 *            mentioned. If <code>false</code>, partial matches are allowed.
+	 * @return The collection of entries that fit the criteria
+	 * @since 0.4.0
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntryCollection getAllEntriesByKey(Vector keys, boolean exact) {
 		org.openntf.red.nsf.endpoint.ViewEntryCollection vecoll = beObject.getAllEntriesByKey(keys, exact);
-		
+
 		if (null == vecoll)
 			return null;
-		
+
 		return new org.openntf.red.impl.ViewEntryCollection(this, vecoll);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllReadEntries()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntryCollection getAllReadEntries() {
@@ -693,8 +734,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllReadEntries(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntryCollection getAllReadEntries(String userName) {
@@ -702,8 +743,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllUnreadEntries()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntryCollection getAllUnreadEntries() {
@@ -711,8 +752,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllUnreadEntries(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntryCollection getAllUnreadEntries(String userName) {
@@ -720,8 +761,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getBackgroundColor()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getBackgroundColor() {
@@ -729,8 +770,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getChild(lotus.domino.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getChild(lotus.domino.Document doc) {
@@ -738,8 +779,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getColumn(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewColumn getColumn(int columnNumber) {
@@ -747,8 +788,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getColumnCount()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getColumnCount() {
@@ -756,8 +797,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getColumnNames()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getColumnNames() {
@@ -765,8 +806,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getColumns()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<ViewColumn> getColumns() {
@@ -774,8 +815,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getColumnValues(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Object> getColumnValues(int column) {
@@ -783,8 +824,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getCreated()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getCreated() {
@@ -792,8 +833,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getDocumentByKey(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getDocumentByKey(Object key) {
@@ -801,8 +842,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getDocumentByKey(java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getDocumentByKey(Object key, boolean exact) {
@@ -810,26 +851,28 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getDocumentByKey(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getDocumentByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getDocumentByKey(java.util.Vector, boolean)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getDocumentByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getEntryByKey(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getEntryByKey(Object key) {
@@ -837,8 +880,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getEntryByKey(java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getEntryByKey(Object key, boolean exact) {
@@ -846,26 +889,28 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getEntryByKey(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry getEntryByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getEntryByKey(java.util.Vector, boolean)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry getEntryByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getEntryCount()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getEntryCount() {
@@ -873,8 +918,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getFirstDocument()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getFirstDocument() {
@@ -882,8 +927,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getHeaderLines()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getHeaderLines() {
@@ -891,8 +936,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getHttpURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getHttpURL() {
@@ -900,8 +945,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getLastDocument()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getLastDocument() {
@@ -909,8 +954,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getLastModified()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getLastModified() {
@@ -918,8 +963,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getLockHolders()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getLockHolders() {
@@ -927,8 +972,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getName()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getName() {
@@ -936,8 +981,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getNextDocument(lotus.domino.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getNextDocument(lotus.domino.Document doc) {
@@ -945,8 +990,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getNextSibling(lotus.domino.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getNextSibling(lotus.domino.Document doc) {
@@ -954,8 +999,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getNotesURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getNotesURL() {
@@ -963,8 +1008,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getNthDocument(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getNthDocument(int n) {
@@ -972,17 +1017,20 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getParent()
+	/**
+	 * Returns the parent database. Similar to
+	 * <code>getAncestorDatabase()</code> in this case.
+	 * 
+	 * @return Parent database
+	 * @since 0.4.0
 	 */
 	@Override
 	public Database getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getParentDocument(lotus.domino.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getParentDocument(lotus.domino.Document doc) {
@@ -990,8 +1038,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getPrevDocument(lotus.domino.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getPrevDocument(lotus.domino.Document doc) {
@@ -999,8 +1047,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getPrevSibling(lotus.domino.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getPrevSibling(lotus.domino.Document doc) {
@@ -1008,8 +1056,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getReaders()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getReaders() {
@@ -1017,8 +1065,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getRowLines()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getRowLines() {
@@ -1026,8 +1074,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getSelectionFormula()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getSelectionFormula() {
@@ -1035,8 +1083,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getSelectionQuery()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getSelectionQuery() {
@@ -1044,8 +1092,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getSpacing()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getSpacing() {
@@ -1053,8 +1101,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getTopLevelEntryCount()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getTopLevelEntryCount() {
@@ -1062,8 +1110,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getUniversalID()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getUniversalID() {
@@ -1071,8 +1119,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getURL() {
@@ -1080,8 +1128,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getViewInheritedName()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getViewInheritedName() {
@@ -1089,8 +1137,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isAutoUpdate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isAutoUpdate() {
@@ -1098,8 +1146,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isCalendar()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isCalendar() {
@@ -1107,8 +1155,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isCategorized()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isCategorized() {
@@ -1116,8 +1164,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isConflict()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isConflict() {
@@ -1125,8 +1173,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isDefaultView()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDefaultView() {
@@ -1134,8 +1182,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isEnableNoteIDsForCategories()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isEnableNoteIDsForCategories() {
@@ -1143,8 +1191,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isFolder()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isFolder() {
@@ -1152,8 +1200,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isHierarchical()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isHierarchical() {
@@ -1161,8 +1209,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isModified()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isModified() {
@@ -1170,8 +1218,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isPrivate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isPrivate() {
@@ -1179,8 +1227,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isProhibitDesignRefresh()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isProhibitDesignRefresh() {
@@ -1188,8 +1236,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isProtectReaders()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isProtectReaders() {
@@ -1197,8 +1245,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isQueryView()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isQueryView() {
@@ -1206,8 +1254,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#lock()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lock() {
@@ -1215,8 +1263,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#lock(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lock(boolean provisionalOk) {
@@ -1224,8 +1272,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#lock(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lock(String name) {
@@ -1233,8 +1281,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#lock(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lock(String name, boolean provisionalOk) {
@@ -1242,26 +1290,28 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#lock(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean lock(Vector names) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#lock(java.util.Vector, boolean)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean lock(Vector names, boolean provisionalOk) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#lockProvisional()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lockProvisional() {
@@ -1269,8 +1319,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#lockProvisional(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lockProvisional(String name) {
@@ -1278,17 +1328,18 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#lockProvisional(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean lockProvisional(Vector names) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#markAllRead()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markAllRead() {
@@ -1296,8 +1347,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#markAllRead(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markAllRead(String userName) {
@@ -1305,8 +1356,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#markAllUnread()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markAllUnread() {
@@ -1314,8 +1365,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#markAllUnread(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markAllUnread(String userName) {
@@ -1323,8 +1374,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#refresh()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void refresh() {
@@ -1332,8 +1383,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#remove()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void remove() {
@@ -1341,8 +1392,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#removeColumn()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void removeColumn() {
@@ -1350,8 +1401,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#removeColumn(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void removeColumn(int column) {
@@ -1359,8 +1410,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#removeColumn(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void removeColumn(String column) {
@@ -1368,8 +1419,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#resortView()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void resortView() {
@@ -1377,8 +1428,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#resortView(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void resortView(String column) {
@@ -1386,8 +1437,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#resortView(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void resortView(String column, boolean ascending) {
@@ -1395,8 +1446,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setAliases(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setAliases(String alias) {
@@ -1404,17 +1455,18 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setAliases(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void setAliases(Vector aliases) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setAutoUpdate(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setAutoUpdate(boolean flag) {
@@ -1422,8 +1474,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setBackgroundColor(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setBackgroundColor(int color) {
@@ -1431,8 +1483,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setDefaultView(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setDefaultView(boolean flag) {
@@ -1440,8 +1492,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setEnableNoteIDsForCategories(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setEnableNoteIDsForCategories(boolean flag) {
@@ -1449,8 +1501,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setName(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setName(String name) {
@@ -1458,8 +1510,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setProhibitDesignRefresh(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setProhibitDesignRefresh(boolean flag) {
@@ -1467,8 +1519,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setProtectReaders(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setProtectReaders(boolean flag) {
@@ -1476,17 +1528,18 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setReaders(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void setReaders(Vector readers) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setSelectionFormula(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setSelectionFormula(String formula) {
@@ -1494,8 +1547,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setSelectionQuery(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setSelectionQuery(String query) {
@@ -1503,8 +1556,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#setSpacing(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setSpacing(int spacing) {
@@ -1512,8 +1565,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#unlock()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void unlock() {
@@ -1521,8 +1574,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAllDocuments()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getAllDocuments() {
@@ -1530,8 +1583,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getNoteCollection()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public NoteCollection getNoteCollection() {
@@ -1539,8 +1592,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getXPageAlt()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getXPageAlt() {
@@ -1548,8 +1601,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isIndexed()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isIndexed() {
@@ -1557,8 +1610,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#checkUnique(java.lang.Object, org.openntf.red.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean checkUnique(Object key, Document srcDoc) {
@@ -1566,8 +1619,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getColumnMap()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Map<String, ViewColumn> getColumnMap() {
@@ -1575,8 +1628,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getIndexType()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public IndexType getIndexType() {
@@ -1584,8 +1637,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isTimeSensitive()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isTimeSensitive() {
@@ -1593,8 +1646,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isDisableAutoUpdate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDisableAutoUpdate() {
@@ -1602,8 +1655,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isHideEmptyCategories()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isHideEmptyCategories() {
@@ -1611,8 +1664,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isDiscardIndex()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDiscardIndex() {
@@ -1620,8 +1673,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isManualRefresh()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isManualRefresh() {
@@ -1629,8 +1682,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isAutomaticRefresh()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isAutomaticRefresh() {
@@ -1638,8 +1691,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#isAutoRefreshAfterFirstUse()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isAutoRefreshAfterFirstUse() {
@@ -1647,8 +1700,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getAutoRefreshSeconds()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getAutoRefreshSeconds() {
@@ -1656,8 +1709,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getDiscardHours()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getDiscardHours() {
@@ -1665,8 +1718,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getFirstDocumentByKey(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getFirstDocumentByKey(Object key) {
@@ -1674,8 +1727,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getFirstDocumentByKey(java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getFirstDocumentByKey(Object key, boolean exact) {
@@ -1683,26 +1736,28 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getFirstDocumentByKey(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getFirstDocumentByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getFirstDocumentByKey(java.util.Vector, boolean)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getFirstDocumentByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getFirstEntryByKey(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getFirstEntryByKey(Object key) {
@@ -1710,8 +1765,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getFirstEntryByKey(java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getFirstEntryByKey(Object key, boolean exact) {
@@ -1719,26 +1774,28 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getFirstEntryByKey(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry getFirstEntryByKey(Vector keys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getFirstEntryByKey(java.util.Vector, boolean)
+	/**
+	 * Not implemented yet.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry getFirstEntryByKey(Vector keys, boolean exact) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getEntryAtPosition(java.lang.String, char)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getEntryAtPosition(String position, char separator) {
@@ -1746,8 +1803,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getEntryAtPosition(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getEntryAtPosition(String position) {
@@ -1755,8 +1812,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#containsDocument(org.openntf.red.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsDocument(Document doc) {
@@ -1764,8 +1821,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#containsEntry(org.openntf.red.ViewEntry)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsEntry(ViewEntry entry) {
@@ -1773,8 +1830,8 @@ public class View extends Base<org.openntf.red.Database> implements org.openntf.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.View#getMetaversalID()
+	/**
+	 * Not implemented yet. Under consideration. Not sure if needed.
 	 */
 	@Override
 	public String getMetaversalID() {

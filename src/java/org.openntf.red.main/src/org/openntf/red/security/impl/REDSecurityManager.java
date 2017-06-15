@@ -8,24 +8,41 @@ import org.openntf.red.security.session.ISessionManager;
 import org.openntf.red.security.session.impl.REDSessionManager;
 
 /**
+ * Default implementation of the Security Manager.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see ISecurityManager
  */
 public class REDSecurityManager implements ISecurityManager {
-	
+
+	/** Session Manager reference. */
 	private ISessionManager sessionManager = null;
+	/** Flag - whether the service is initialized. */
 	private boolean _started;
-	private static REDSecurityManager _instance = null;
-	
 	/**
+	 * Object instance reference. There can be only 1 Security Manager instance
+	 * per runtime.
+	 */
+	private static REDSecurityManager _instance = null;
+
+	/**
+	 * Default constructor.
 	 * 
+	 * @since 0.4.0
 	 */
 	private REDSecurityManager() {
 		_started = false;
 	}
-	
+
+	/**
+	 * Static function to get the object reference.
+	 * 
+	 * @return Security Manager instance.
+	 * @since 0.4.0
+	 */
 	public static REDSecurityManager getInstance() {
-		synchronized(REDSecurityManager.class) {
+		synchronized (REDSecurityManager.class) {
 			if (null == _instance) {
 				_instance = new REDSecurityManager();
 			}
@@ -56,5 +73,5 @@ public class REDSecurityManager implements ISecurityManager {
 	public boolean isStarted() {
 		return _started;
 	}
-	
+
 }

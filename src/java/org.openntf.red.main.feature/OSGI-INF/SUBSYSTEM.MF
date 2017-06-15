@@ -145,7 +145,11 @@ IBM-API-Package: com.fasterxml.jackson.annotation,
  org.openntf.red.nsf.impl.couch.converters,
  org.openntf.red.nsf.impl.exceptions,
  org.openntf.red.nsf.impl.notes,
- org.openntf.red.nsf.impl.notes.remote
+ org.openntf.red.nsf.impl.notes.remote,
+ org.openntf.red.ext,
+ org.openntf.red.network.rrpc.handlers,
+ org.openntf.red.security.authentication,
+ org.openntf.red.security.authentication.http
 IBM-SPI-Package: com.fasterxml.jackson.annotation,
  com.fasterxml.jackson.core,
  com.fasterxml.jackson.core.base,
@@ -285,4 +289,8 @@ IBM-SPI-Package: com.fasterxml.jackson.annotation,
  org.openntf.red.nsf.impl.couch.converters,
  org.openntf.red.nsf.impl.exceptions,
  org.openntf.red.nsf.impl.notes,
- org.openntf.red.nsf.impl.notes.remote
+ org.openntf.red.nsf.impl.notes.remote,
+ org.openntf.red.ext,
+ org.openntf.red.network.rrpc.handlers,
+ org.openntf.red.security.authentication,
+ org.openntf.red.security.authentication.http

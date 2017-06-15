@@ -13,33 +13,40 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.xml.bind.DatatypeConverter;
 
 /**
+ * Basic HTTP authentication implementaion.<br>
+ * (Needs improvement)
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see {@link ClientRequestFilter}, {@link ClientResponseFilter}
  */
 public class BasicHttpAuthentication implements ClientRequestFilter, ClientResponseFilter {
-	
+
+	/** User name. */
 	private String user;
+	/** User password. */
 	private String password;
 
 	/**
+	 * Default cosntructor.
 	 * 
+	 * @param _user
+	 *            User name.
+	 * @param _password
+	 *            User password.
+	 * @since 0.4.0
 	 */
 	public BasicHttpAuthentication(String _user, String _password) {
 		user = _user;
 		password = _password;
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.ws.rs.client.ClientResponseFilter#filter(javax.ws.rs.client.ClientRequestContext, javax.ws.rs.client.ClientResponseContext)
-	 */
 	@Override
 	public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) throws IOException {
-		// TODO Check if this is needed (perhaps needs a separate implementation for server functionality)
+		// TODO Check if this is needed (perhaps needs a separate implementation
+		// for server functionality)
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.ws.rs.client.ClientRequestFilter#filter(javax.ws.rs.client.ClientRequestContext)
-	 */
 	@Override
 	public void filter(ClientRequestContext context) throws IOException {
 		// TODO Auto-generated method stub

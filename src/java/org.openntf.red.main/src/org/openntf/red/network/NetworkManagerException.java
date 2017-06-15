@@ -4,8 +4,10 @@
 package org.openntf.red.network;
 
 /**
+ * Exception produced by Network Manager.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
  */
 public class NetworkManagerException extends RuntimeException {
 
@@ -15,46 +17,64 @@ public class NetworkManagerException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Default constructor.
 	 * 
+	 * @since 0.4.0
 	 */
 	public NetworkManagerException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @param arg0
+	 * Default constructor with message text.
+	 * 
+	 * @param msg
+	 *            Message text.
+	 * @since 0.4.0
 	 */
-	public NetworkManagerException(String arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
+	public NetworkManagerException(String msg) {
+		super(msg);
 	}
 
 	/**
-	 * @param arg0
+	 * Default constructor with cause of error.
+	 * 
+	 * @param e
+	 *            cause of error.
+	 * @since 0.4.0
 	 */
-	public NetworkManagerException(Throwable arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
+	public NetworkManagerException(Throwable e) {
+		super(e);
 	}
 
 	/**
-	 * @param arg0
-	 * @param arg1
+	 * Default constructor with message text and cause of error.
+	 * 
+	 * @param msg
+	 *            Message text.
+	 * @param e
+	 *            Cause of error.
+	 * @since 0.4.0
 	 */
-	public NetworkManagerException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
+	public NetworkManagerException(String msg, Throwable e) {
+		super(msg, e);
 	}
 
 	/**
-	 * @param arg0
-	 * @param arg1
-	 * @param arg2
-	 * @param arg3
+	 * Default constructor with message text, cause of error, and flags:
+	 * suppression enabled and writable stack trace.
+	 * 
+	 * @param msg
+	 *            Message text.
+	 * @param e
+	 *            Cause of error.
+	 * @param suppression
+	 *            Flag - suppression enabled.
+	 * @param writest
+	 *            Flag - writable stack trace.
+	 * @since 0.4.0
 	 */
-	public NetworkManagerException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
-		// TODO Auto-generated constructor stub
+	public NetworkManagerException(String msg, Throwable e, boolean suppression, boolean writest) {
+		super(msg, e, suppression, writest);
 	}
 
 }

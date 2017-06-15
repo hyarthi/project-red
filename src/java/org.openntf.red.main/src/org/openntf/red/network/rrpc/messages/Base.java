@@ -484,7 +484,7 @@ public final class Base {
                 org.openntf.red.network.rrpc.messages.Base.Response.class, org.openntf.red.network.rrpc.messages.Base.Response.Builder.class);
       }
 
-      // Construct using org.openntf.red.network.messages.Base.Response.newBuilder()
+      // Construct using org.openntf.red.network.rrpc.messages.Base.Response.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1555,7 +1555,7 @@ public final class Base {
                 org.openntf.red.network.rrpc.messages.Base.Request.class, org.openntf.red.network.rrpc.messages.Base.Request.Builder.class);
       }
 
-      // Construct using org.openntf.red.network.messages.Base.Request.newBuilder()
+      // Construct using org.openntf.red.network.rrpc.messages.Base.Request.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2185,8 +2185,8 @@ public final class Base {
       "\002 \001(\0132\037.red.hooks.messages.RequestNoteH\000" +
       "\022@\n\013ncollection\030\003 \001(\0132).red.hooks.messag",
       "es.RequestNoteCollectionH\000B\t\n\007payloadJ\004\010" +
-      "\004\020eB%\n org.openntf.red.network.messages\370" +
-      "\001\001b\006proto3"
+      "\004\020eB*\n%org.openntf.red.network.rrpc.mess" +
+      "ages\370\001\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

@@ -52,46 +52,81 @@ import lotus.domino.NotesException;
 
 /**
  * <i>Parts of code borrowed from OpenNTF Domino API.</i><br>
+ * Entity representing a Notes session.
  * 
  * @author Vladimir Kornienko
- *
+ * @see org.openntf.red.Session
+ * @since 0.4.0
  */
 public class Session extends BaseImpl implements org.openntf.red.Session {
-	
-	private static Logger log = Logger.getLogger(Session.class.getName());
-	
+
+	/** Logger object. */
+	private static final Logger log = Logger.getLogger(Session.class.getName());
+
 	/** Session's user name */
 	private String userName;
 	/** Who really created this session */
 	private String effectiveUserName;
 	/** Session type */
 	private org.openntf.red.Session.Type type;
+	/** The path of the database that this session is attached to. */
 	private String curdbPath;
-	
+
+	/**
+	 * Not implemented yet.
+	 * 
+	 * @return
+	 */
 	public static Session getSession() {
 		return null;
 	}
-	
+
+	/**
+	 * Default way to create a session. Under consideration.
+	 * 
+	 * @param options
+	 *            Session options needed to set up the session.
+	 * @return The newly created session.
+	 * @see SessionOptions
+	 * @since 0.4.0
+	 */
 	public static org.openntf.red.Session createSession(SessionOptions options) {
 		Session session = new Session(options);
-		
+
 		ModuleManager.getSecurityManager().getSessionManager().registerSession(session);
-		
+
 		return session;
 	}
-	
+
+	/**
+	 * Not implemented yet.
+	 */
 	public static Session getSessionFullAccess() {
 		return null;
 	}
-	
+
+	/**
+	 * Not implemented yet.
+	 */
 	public static Session getSessionAsSigner() {
 		return null;
 	}
-	
+
+	/**
+	 * Not implemented yet.
+	 */
 	public static Session getSessionAsSignerFullAccess() {
 		return null;
 	}
-	
+
+	/**
+	 * Default constructor.
+	 * 
+	 * @param options
+	 *            Session options needed to set up a session.
+	 * @see SessionOptions
+	 * @since 0.4.0
+	 */
 	private Session(SessionOptions options) {
 		if (null == ModuleManager.getSecurityManager().getSessionManager())
 			throw new OpenNTFNotesException("Could not instantiate session: no session manager present.");
@@ -105,8 +140,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		curdbPath = options.getDbPath();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Base#isDead()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDead() {
@@ -114,8 +149,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ExceptionDetails#fillExceptionDetails(java.util.List)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void fillExceptionDetails(List<Entry> result) {
@@ -123,8 +158,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void readExternal(ObjectInput arg0) throws IOException, ClassNotFoundException {
@@ -132,8 +167,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void writeExternal(ObjectOutput arg0) throws IOException {
@@ -141,8 +176,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createAdministrationProcess(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public AdministrationProcess createAdministrationProcess(String server) {
@@ -150,8 +185,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createColorObject()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ColorObject createColorObject() {
@@ -159,8 +194,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createDateRange()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateRange createDateRange() {
@@ -168,8 +203,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createDateRange(java.util.Date, java.util.Date)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateRange createDateRange(Date startTime, Date endTime) {
@@ -177,8 +212,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createDateRange(lotus.domino.DateTime, lotus.domino.DateTime)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateRange createDateRange(DateTime startTime, DateTime endTime) {
@@ -186,8 +221,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createDateTime(java.util.Date)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.DateTime createDateTime(Date date) {
@@ -195,8 +230,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createDateTime(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.DateTime createDateTime(String date) {
@@ -204,8 +239,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createDateTime(int, int, int, int, int, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.DateTime createDateTime(int y, int m, int d, int h, int i, int s) {
@@ -213,8 +248,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createDxlExporter()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DxlExporter createDxlExporter() {
@@ -222,8 +257,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createDxlImporter()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DxlImporter createDxlImporter() {
@@ -231,8 +266,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createLog(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Log createLog(String name) {
@@ -240,8 +275,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createName(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Name createName(String name) {
@@ -249,8 +284,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createName(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Name createName(String name, String lang) {
@@ -258,8 +293,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createNewsletter(lotus.domino.DocumentCollection)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Newsletter createNewsletter(DocumentCollection collection) {
@@ -267,8 +302,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createRegistration()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Registration createRegistration() {
@@ -276,8 +311,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createRichTextParagraphStyle()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public RichTextParagraphStyle createRichTextParagraphStyle() {
@@ -285,8 +320,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createRichTextStyle()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public RichTextStyle createRichTextStyle() {
@@ -294,8 +329,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createStream()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Stream createStream() {
@@ -303,8 +338,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#evaluate(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Object> evaluate(String formula) {
@@ -312,8 +347,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#evaluate(java.lang.String, lotus.domino.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Object> evaluate(String formula, Document doc) {
@@ -321,8 +356,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#freeResourceSearch(lotus.domino.DateTime, lotus.domino.DateTime, java.lang.String, int, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> freeResourceSearch(DateTime arg0, DateTime arg1, String arg2, int arg3, int arg4) {
@@ -330,8 +365,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#freeResourceSearch(lotus.domino.DateTime, lotus.domino.DateTime, java.lang.String, int, int, java.lang.String, int, java.lang.String, java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> freeResourceSearch(DateTime arg0, DateTime arg1, String arg2, int arg3, int arg4, String arg5,
@@ -340,8 +375,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#freeTimeSearch(lotus.domino.DateRange, int, java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<DateRange> freeTimeSearch(lotus.domino.DateRange window, int duration, Object names,
@@ -350,8 +385,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getAddressBooks()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Database> getAddressBooks() {
@@ -359,8 +394,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getAgentContext()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public AgentContext getAgentContext() {
@@ -368,8 +403,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getCalendar(lotus.domino.Database)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public NotesCalendar getCalendar(lotus.domino.Database db) {
@@ -377,8 +412,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getCommonUserName()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getCommonUserName() {
@@ -386,8 +421,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getCredentials()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object getCredentials() {
@@ -395,31 +430,51 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getCurrentDatabase()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Database getCurrentDatabase() {
 		// TODO Add authorization here
-		
+
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDatabase(java.lang.String, java.lang.String)
+	/**
+	 * Returns and opens a database given a server and db path specified.
+	 * 
+	 * @param server
+	 *            Server name to look for a database. Leave blank/null for local
+	 *            server.
+	 * @param db
+	 *            Database path relative to data directory.
+	 * @return The database (or null of none exist).
+	 * @since 0.4.0
 	 */
 	@Override
 	public Database getDatabase(String server, String db) {
+		// TODO enable replica search
 		return getDatabase(server, db, false);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDatabase(java.lang.String, java.lang.String, boolean)
+	/**
+	 * Returns and opens a database given a server and db path specified.
+	 * 
+	 * @param server
+	 *            Server name to look for a database. Leave blank/null for local
+	 *            server.
+	 * @param db
+	 *            Database path relative to data directory.
+	 * @param createOnFail
+	 *            Will attempt to create the database if none exist.
+	 * @return The database (or null of none exist).
+	 * @since 0.4.0
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Database getDatabase(String server, String dbpath, boolean createOnFail) {
 		// TODO Authorization check here
+		// TODO enable replica search
 		Endpoint endpoint = ModuleManager.getDataBroker().getEndpoint(server);
 		log.finest("API: Getting BE database...");
 		org.openntf.red.nsf.endpoint.Database bedb = endpoint.getDatabase(dbpath, createOnFail);
@@ -430,8 +485,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return new org.openntf.red.impl.Database(this, dbpath, bedb);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDbDirectory(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DbDirectory getDbDirectory(String server) {
@@ -439,8 +494,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDirectory()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Directory getDirectory() {
@@ -448,8 +503,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDirectory(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Directory getDirectory(String server) {
@@ -457,16 +512,20 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getEffectiveUserName()
+	/**
+	 * Returns the effective user name (name of the user that instantiated the
+	 * session).
+	 * 
+	 * @return Effective user name
+	 * @since 0.4.0
 	 */
 	@Override
 	public String getEffectiveUserName() {
 		return effectiveUserName;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getEnvironmentString(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getEnvironmentString(String vname) {
@@ -474,8 +533,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getEnvironmentString(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getEnvironmentString(String vname, boolean isSystem) {
@@ -483,8 +542,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getEnvironmentValue(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object getEnvironmentValue(String vname) {
@@ -492,8 +551,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getEnvironmentValue(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object getEnvironmentValue(String vname, boolean isSystem) {
@@ -501,8 +560,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getHttpURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getHttpURL() {
@@ -510,8 +569,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getInternational()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public International getInternational() {
@@ -519,8 +578,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getNotesVersion()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getNotesVersion() {
@@ -528,8 +587,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getOrgDirectoryPath()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getOrgDirectoryPath() {
@@ -537,8 +596,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getPlatform()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getPlatform() {
@@ -546,8 +605,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getPropertyBroker()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public PropertyBroker getPropertyBroker() {
@@ -555,8 +614,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getServerName()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getServerName() {
@@ -564,8 +623,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getSessionToken()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getSessionToken() {
@@ -573,8 +632,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getSessionToken(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getSessionToken(String serverName) {
@@ -582,8 +641,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getURL() {
@@ -591,8 +650,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getURLDatabase()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Database getURLDatabase() {
@@ -600,8 +659,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getUserGroupNameList()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Name> getUserGroupNameList() {
@@ -609,16 +668,19 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getUserName()
+	/**
+	 * Returns the session user name. May differ from effective user name.
+	 * 
+	 * @return Session user name.
+	 * @since 0.4.0
 	 */
 	@Override
 	public String getUserName() {
 		return userName;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getUserNameList()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Name> getUserNameList() {
@@ -626,8 +688,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getUserNameObject()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Name getUserNameObject() {
@@ -635,8 +697,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getUserPolicySettings(java.lang.String, java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Document getUserPolicySettings(String server, String name, int type) {
@@ -644,8 +706,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getUserPolicySettings(java.lang.String, java.lang.String, int, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Document getUserPolicySettings(String server, String name, int type, String explicitPolicy) {
@@ -653,8 +715,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#hashPassword(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String hashPassword(String password) {
@@ -662,8 +724,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isConvertMime()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isConvertMime() {
@@ -671,8 +733,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isConvertMIME()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isConvertMIME() {
@@ -680,8 +742,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isOnServer()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isOnServer() {
@@ -689,8 +751,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isRestricted()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isRestricted() {
@@ -698,8 +760,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isTrackMillisecInJavaDates()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isTrackMillisecInJavaDates() {
@@ -707,8 +769,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isTrustedSession()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isTrustedSession() {
@@ -716,8 +778,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isValid()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isValid() {
@@ -725,8 +787,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#resetUserPassword(java.lang.String, java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean resetUserPassword(String serverName, String userName, String password) {
@@ -734,8 +796,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#resetUserPassword(java.lang.String, java.lang.String, java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean resetUserPassword(String serverName, String userName, String password, int downloadCount) {
@@ -743,8 +805,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#resolve(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Base<?> resolve(String url) {
@@ -752,8 +814,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#sendConsoleCommand(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String sendConsoleCommand(String serverName, String consoleCommand) {
@@ -761,8 +823,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setAllowLoopBack(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setAllowLoopBack(boolean flag) {
@@ -770,8 +832,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setConvertMime(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setConvertMime(boolean flag) {
@@ -779,8 +841,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setConvertMIME(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setConvertMIME(boolean flag) {
@@ -788,8 +850,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setEnvironmentVar(java.lang.String, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setEnvironmentVar(String vname, Object value) {
@@ -797,8 +859,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setEnvironmentVar(java.lang.String, java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setEnvironmentVar(String vname, Object value, boolean isSystem) {
@@ -806,8 +868,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setTrackMillisecInJavaDates(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setTrackMillisecInJavaDates(boolean flag) {
@@ -815,8 +877,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#verifyPassword(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean verifyPassword(String password, String hashedPassword) {
@@ -824,8 +886,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getEventFactory()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public IDominoEventFactory getEventFactory() {
@@ -833,8 +895,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setEventFactory(org.openntf.red.events.IDominoEventFactory)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setEventFactory(IDominoEventFactory factory) {
@@ -842,16 +904,16 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#generateEvent(org.openntf.red.events.EnumEvent, org.openntf.red.Base, org.openntf.red.Base, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	public IDominoEvent generateEvent(EnumEvent event, Base<?> source, Base<?> target, Object payload) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createColorObject(java.awt.Color)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ColorObject createColorObject(Color color) {
@@ -859,8 +921,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#freeTimeSearch(org.openntf.red.DateRange, int, java.util.Collection, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Collection<DateRange> freeTimeSearch(DateRange window, int duration, Collection<String> names,
@@ -869,8 +931,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#freeTimeSearch(org.openntf.red.DateRange, int, java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Collection<DateRange> freeTimeSearch(DateRange window, int duration, String names, boolean firstFit) {
@@ -878,8 +940,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getAddressBookCollection()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Collection<Database> getAddressBookCollection() {
@@ -887,8 +949,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getUserGroupNameCollection()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Collection<String> getUserGroupNameCollection() {
@@ -896,8 +958,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getUserNameCollection()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Collection<String> getUserNameCollection() {
@@ -905,8 +967,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createDateTime(java.util.Calendar)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.DateTime createDateTime(Calendar date) {
@@ -914,8 +976,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#createNameNonODA(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Name createNameNonODA(String name) {
@@ -923,8 +985,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isAnonymous()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isAnonymous() {
@@ -932,8 +994,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isFixEnabled(org.openntf.red.Session.Fixes)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isFixEnabled(Fixes fix) {
@@ -941,8 +1003,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getEnabledFixes()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Fixes[] getEnabledFixes() {
@@ -950,8 +1012,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setFixEnable(org.openntf.red.Session.Fixes, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setFixEnable(Fixes fix, boolean value) {
@@ -959,8 +1021,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#toCommonName(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String toCommonName(String name) {
@@ -968,8 +1030,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#boogie()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void boogie() {
@@ -977,8 +1039,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#isFeatureRestricted()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isFeatureRestricted() {
@@ -986,8 +1048,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getUnique()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getUnique() {
@@ -995,8 +1057,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDatabaseByReplicaID(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Database getDatabaseByReplicaID(String server, String replicaid) {
@@ -1004,8 +1066,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDatabaseWithFailover(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Database getDatabaseWithFailover(String server, String dbfile) {
@@ -1013,8 +1075,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDatabaseIfModified(java.lang.String, java.lang.String, lotus.domino.DateTime)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Database getDatabaseIfModified(String server, String dbfile, DateTime modifiedsince) {
@@ -1022,8 +1084,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDatabaseIfModified(java.lang.String, java.lang.String, java.util.Date)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Database getDatabaseIfModified(String server, String dbfile, Date modifiedsince) {
@@ -1031,8 +1093,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getMailDatabase()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Database getMailDatabase() {
@@ -1040,8 +1102,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDatabase(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Database getDatabase(String key) {
@@ -1049,8 +1111,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDocumentByMetaversalID(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Document getDocumentByMetaversalID(String metaversalID) {
@@ -1058,8 +1120,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getDocumentByMetaversalID(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Document getDocumentByMetaversalID(String metaversalID, String serverName) {
@@ -1067,8 +1129,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#getAutoMime()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public AutoMime getAutoMime() {
@@ -1076,8 +1138,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setAutoMime(org.openntf.red.util.AutoMime)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setAutoMime(AutoMime autoMime) {
@@ -1085,8 +1147,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setCurrentDatabase(org.openntf.red.Database)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setCurrentDatabase(Database db) {
@@ -1094,8 +1156,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#setNoRecycle(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setNoRecycle(boolean noRecycle) {
@@ -1103,8 +1165,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#recycle()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void recycle() {
@@ -1112,8 +1174,8 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		ModuleManager.getSecurityManager().getSessionManager().deregisterSession(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Session#clearIdentity()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void clearIdentity() {
@@ -1121,6 +1183,9 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 
 	}
 
+	/**
+	 * Not implemented yet.
+	 */
 	@Override
 	public IDominoEvent generateEvent(EnumEvent event, org.openntf.red.Base source, org.openntf.red.Base target,
 			Object payload) {
@@ -1128,18 +1193,34 @@ public class Session extends BaseImpl implements org.openntf.red.Session {
 		return null;
 	}
 
+	/**
+	 * Not implemented yet.
+	 */
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void recycle(Vector arg0) throws NotesException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	/**
+	 * Returns the current db path.
+	 * 
+	 * @return Current db path.
+	 * @since 0.4.0
+	 */
 	@Override
 	public String getCurrentDatabasePath() {
 		return curdbPath;
 	}
 
+	/**
+	 * Returns the session type.
+	 * 
+	 * @return Session type.
+	 * @see Type
+	 * @since 0.4.0
+	 */
 	@Override
 	public Type getSessionType() {
 		return this.type;

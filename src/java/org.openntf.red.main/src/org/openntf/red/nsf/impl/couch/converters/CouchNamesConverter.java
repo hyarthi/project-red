@@ -7,21 +7,28 @@ import org.openntf.red.nsf.endpoint.RawDataConverter;
 import org.openntf.red.nsf.exceptions.ConverterException;
 
 /**
+ * Names converter for CouchDB.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see RawDataConverter
  */
 public class CouchNamesConverter extends RawDataConverter {
 
 	/**
+	 * Default constructor.
+	 * 
 	 * @param type
+	 *            Data type code.
+	 * @since 0.4.0
 	 */
 	public CouchNamesConverter(int type) {
 		super(type);
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.nsf.endpoint.RawDataConverter#parseReadData(java.lang.Object)
+	/**
+	 * (Under construction)
 	 */
 	@Override
 	public Object parseReadData(Object raw) throws ConverterException {
@@ -29,8 +36,8 @@ public class CouchNamesConverter extends RawDataConverter {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.nsf.endpoint.RawDataConverter#parseWriteData(java.lang.Object)
+	/**
+	 * (Under construction)
 	 */
 	@Override
 	public Object parseWriteData(Object data) throws ConverterException {

@@ -26,17 +26,9 @@ namespace {
 const ::google::protobuf::Descriptor* NoteInfo_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   NoteInfo_reflection_ = NULL;
-struct NoteInfoOneofInstance {
-  ::google::protobuf::internal::ArenaStringPtr unid_;
-  ::google::protobuf::uint64 noteid_;
-}* NoteInfo_default_oneof_instance_ = NULL;
 const ::google::protobuf::Descriptor* Note_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Note_reflection_ = NULL;
-struct NoteOneofInstance {
-  ::google::protobuf::internal::ArenaStringPtr unid_;
-  ::google::protobuf::uint64 noteid_;
-}* Note_default_oneof_instance_ = NULL;
 const ::google::protobuf::Descriptor* Item_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Item_reflection_ = NULL;
@@ -46,17 +38,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* RequestNoteInfo_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   RequestNoteInfo_reflection_ = NULL;
-struct RequestNoteInfoOneofInstance {
-  ::google::protobuf::internal::ArenaStringPtr unid_;
-  ::google::protobuf::uint64 noteid_;
-}* RequestNoteInfo_default_oneof_instance_ = NULL;
 const ::google::protobuf::Descriptor* RequestNote_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   RequestNote_reflection_ = NULL;
-struct RequestNoteOneofInstance {
-  ::google::protobuf::internal::ArenaStringPtr unid_;
-  ::google::protobuf::uint64 noteid_;
-}* RequestNote_default_oneof_instance_ = NULL;
 const ::google::protobuf::Descriptor* RequestNoteCollection_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   RequestNoteCollection_reflection_ = NULL;
@@ -73,9 +57,9 @@ void protobuf_AssignDesc_notes_2eproto() {
       "notes.proto");
   GOOGLE_CHECK(file != NULL);
   NoteInfo_descriptor_ = file->message_type(0);
-  static const int NoteInfo_offsets_[11] = {
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(NoteInfo_default_oneof_instance_, unid_),
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(NoteInfo_default_oneof_instance_, noteid_),
+  static const int NoteInfo_offsets_[10] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, unid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, noteid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, dbid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, modified_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, classid_),
@@ -84,7 +68,6 @@ void protobuf_AssignDesc_notes_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, parentnoteid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, responsecount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, addedtofile_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, id_),
   };
   NoteInfo_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -94,17 +77,15 @@ void protobuf_AssignDesc_notes_2eproto() {
       -1,
       -1,
       -1,
-      NoteInfo_default_oneof_instance_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, _oneof_case_[0]),
       sizeof(NoteInfo),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteInfo, _internal_metadata_));
   Note_descriptor_ = file->message_type(1);
   static const int Note_offsets_[5] = {
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(Note_default_oneof_instance_, unid_),
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(Note_default_oneof_instance_, noteid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Note, unid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Note, noteid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Note, dbid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Note, seqnum_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Note, items_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Note, id_),
   };
   Note_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -114,8 +95,6 @@ void protobuf_AssignDesc_notes_2eproto() {
       -1,
       -1,
       -1,
-      Note_default_oneof_instance_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Note, _oneof_case_[0]),
       sizeof(Note),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Note, _internal_metadata_));
   Item_descriptor_ = file->message_type(2);
@@ -150,12 +129,11 @@ void protobuf_AssignDesc_notes_2eproto() {
       sizeof(NoteCollection),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NoteCollection, _internal_metadata_));
   RequestNoteInfo_descriptor_ = file->message_type(4);
-  static const int RequestNoteInfo_offsets_[5] = {
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(RequestNoteInfo_default_oneof_instance_, unid_),
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(RequestNoteInfo_default_oneof_instance_, noteid_),
+  static const int RequestNoteInfo_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNoteInfo, unid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNoteInfo, noteid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNoteInfo, dbid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNoteInfo, action_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNoteInfo, id_),
   };
   RequestNoteInfo_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -165,18 +143,17 @@ void protobuf_AssignDesc_notes_2eproto() {
       -1,
       -1,
       -1,
-      RequestNoteInfo_default_oneof_instance_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNoteInfo, _oneof_case_[0]),
       sizeof(RequestNoteInfo),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNoteInfo, _internal_metadata_));
   RequestNote_descriptor_ = file->message_type(5);
-  static const int RequestNote_offsets_[6] = {
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(RequestNote_default_oneof_instance_, unid_),
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(RequestNote_default_oneof_instance_, noteid_),
+  static const int RequestNote_offsets_[7] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, unid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, noteid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, dbid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, action_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, seqnum_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, flags_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, items_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, id_),
   };
   RequestNote_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -186,8 +163,6 @@ void protobuf_AssignDesc_notes_2eproto() {
       -1,
       -1,
       -1,
-      RequestNote_default_oneof_instance_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, _oneof_case_[0]),
       sizeof(RequestNote),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RequestNote, _internal_metadata_));
   RequestNoteCollection_descriptor_ = file->message_type(6);
@@ -237,20 +212,16 @@ void protobuf_RegisterTypes(const ::std::string&) {
 
 void protobuf_ShutdownFile_notes_2eproto() {
   NoteInfo_default_instance_.Shutdown();
-  delete NoteInfo_default_oneof_instance_;
   delete NoteInfo_reflection_;
   Note_default_instance_.Shutdown();
-  delete Note_default_oneof_instance_;
   delete Note_reflection_;
   Item_default_instance_.Shutdown();
   delete Item_reflection_;
   NoteCollection_default_instance_.Shutdown();
   delete NoteCollection_reflection_;
   RequestNoteInfo_default_instance_.Shutdown();
-  delete RequestNoteInfo_default_oneof_instance_;
   delete RequestNoteInfo_reflection_;
   RequestNote_default_instance_.Shutdown();
-  delete RequestNote_default_oneof_instance_;
   delete RequestNote_reflection_;
   RequestNoteCollection_default_instance_.Shutdown();
   delete RequestNoteCollection_reflection_;
@@ -261,19 +232,15 @@ void protobuf_InitDefaults_notes_2eproto_impl() {
 
   ::google::protobuf::internal::GetEmptyString();
   NoteInfo_default_instance_.DefaultConstruct();
-  NoteInfo_default_oneof_instance_ = new NoteInfoOneofInstance();
   ::google::protobuf::internal::GetEmptyString();
   Note_default_instance_.DefaultConstruct();
-  Note_default_oneof_instance_ = new NoteOneofInstance();
   ::google::protobuf::internal::GetEmptyString();
   Item_default_instance_.DefaultConstruct();
   NoteCollection_default_instance_.DefaultConstruct();
   ::google::protobuf::internal::GetEmptyString();
   RequestNoteInfo_default_instance_.DefaultConstruct();
-  RequestNoteInfo_default_oneof_instance_ = new RequestNoteInfoOneofInstance();
   ::google::protobuf::internal::GetEmptyString();
   RequestNote_default_instance_.DefaultConstruct();
-  RequestNote_default_oneof_instance_ = new RequestNoteOneofInstance();
   RequestNoteCollection_default_instance_.DefaultConstruct();
   NoteInfo_default_instance_.get_mutable()->InitAsDefaultInstance();
   Note_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -294,28 +261,29 @@ void protobuf_AddDesc_notes_2eproto_impl() {
 
   protobuf_InitDefaults_notes_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013notes.proto\022\022red.hooks.messages\"\314\001\n\010No"
-    "teInfo\022\016\n\004unid\030\001 \001(\tH\000\022\020\n\006noteId\030\002 \001(\004H\000"
-    "\022\014\n\004dbId\030\003 \001(\t\022\020\n\010modified\030\004 \001(\t\022\017\n\007clas"
-    "sId\030\005 \001(\r\022\r\n\005flags\030\006 \001(\r\022\020\n\010accessed\030\007 \001"
-    "(\t\022\024\n\014parentNoteId\030\010 \001(\004\022\025\n\rresponseCoun"
-    "t\030\t \001(\004\022\023\n\013addedToFile\030\n \001(\tB\004\n\002idJ\004\010\013\020e"
-    "\"q\n\004Note\022\016\n\004unid\030\001 \001(\tH\000\022\020\n\006noteId\030\002 \001(\004"
-    "H\000\022\014\n\004dbId\030\003 \001(\t\022\'\n\005items\030\n \003(\0132\030.red.ho"
-    "oks.messages.ItemB\004\n\002idJ\004\010\004\020\nJ\004\010\013\020e\"W\n\004I"
-    "tem\022\014\n\004type\030\001 \001(\r\022\014\n\004name\030\004 \001(\t\022\r\n\005flags"
-    "\030\005 \001(\r\022\016\n\006tvalue\030\002 \003(\t\022\016\n\006nvalue\030\003 \003(\004J\004"
-    "\010\006\020e\"\026\n\016NoteCollectionJ\004\010\001\020e\"y\n\017RequestN"
-    "oteInfo\022\016\n\004unid\030\001 \001(\tH\000\022\020\n\006noteId\030\002 \001(\004H"
-    "\000\022\014\n\004dbId\030\003 \001(\t\022*\n\006action\030\004 \001(\0162\032.red.ho"
-    "oks.messages.ActionB\004\n\002idJ\004\010\005\020e\"\244\001\n\013Requ"
-    "estNote\022\016\n\004unid\030\001 \001(\tH\000\022\020\n\006noteId\030\002 \001(\004H"
-    "\000\022\014\n\004dbId\030\003 \001(\t\022*\n\006action\030\004 \001(\0162\032.red.ho"
-    "oks.messages.Action\022\'\n\005items\030\n \003(\0132\030.red"
-    ".hooks.messages.ItemB\004\n\002idJ\004\010\005\020\nJ\004\010\013\020e\"\035"
-    "\n\025RequestNoteCollectionJ\004\010\001\020e**\n\006Action\022"
-    "\010\n\004READ\020\000\022\n\n\006UPDATE\020\001\022\n\n\006REMOVE\020\002B%\n org"
-    ".openntf.red.network.messages\370\001\001b\006proto3", 880);
+    "\n\013notes.proto\022\022red.hooks.messages\"\302\001\n\010No"
+    "teInfo\022\014\n\004unid\030\001 \001(\t\022\016\n\006noteId\030\002 \001(\004\022\014\n\004"
+    "dbId\030\003 \001(\t\022\020\n\010modified\030\004 \001(\t\022\017\n\007classId\030"
+    "\005 \001(\r\022\r\n\005flags\030\006 \001(\r\022\020\n\010accessed\030\007 \001(\t\022\024"
+    "\n\014parentNoteId\030\010 \001(\004\022\025\n\rresponseCount\030\t "
+    "\001(\004\022\023\n\013addedToFile\030\n \001(\tJ\004\010\013\020e\"w\n\004Note\022\014"
+    "\n\004unid\030\001 \001(\t\022\016\n\006noteId\030\002 \001(\004\022\014\n\004dbId\030\003 \001"
+    "(\t\022\016\n\006seqNum\030\004 \001(\r\022\'\n\005items\030\n \003(\0132\030.red."
+    "hooks.messages.ItemJ\004\010\005\020\nJ\004\010\013\020e\"W\n\004Item\022"
+    "\014\n\004type\030\001 \001(\r\022\014\n\004name\030\004 \001(\t\022\r\n\005flags\030\005 \001"
+    "(\r\022\016\n\006tvalue\030\002 \003(\t\022\016\n\006nvalue\030\003 \003(\004J\004\010\006\020e"
+    "\"\026\n\016NoteCollectionJ\004\010\001\020e\"o\n\017RequestNoteI"
+    "nfo\022\014\n\004unid\030\001 \001(\t\022\016\n\006noteId\030\002 \001(\004\022\014\n\004dbI"
+    "d\030\003 \001(\t\022*\n\006action\030\004 \001(\0162\032.red.hooks.mess"
+    "ages.ActionJ\004\010\005\020e\"\271\001\n\013RequestNote\022\014\n\004uni"
+    "d\030\001 \001(\t\022\016\n\006noteId\030\002 \001(\004\022\014\n\004dbId\030\003 \001(\t\022*\n"
+    "\006action\030\004 \001(\0162\032.red.hooks.messages.Actio"
+    "n\022\016\n\006seqNum\030\005 \001(\r\022\r\n\005flags\030\006 \001(\r\022\'\n\005item"
+    "s\030\n \003(\0132\030.red.hooks.messages.ItemJ\004\010\007\020\nJ"
+    "\004\010\013\020e\"\035\n\025RequestNoteCollectionJ\004\010\001\020e**\n\006"
+    "Action\022\010\n\004READ\020\000\022\n\n\006UPDATE\020\001\022\n\n\006REMOVE\020\002"
+    "B*\n%org.openntf.red.network.rrpc.message"
+    "s\370\001\001b\006proto3", 892);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "notes.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_notes_2eproto);
@@ -391,8 +359,6 @@ NoteInfo::NoteInfo(::google::protobuf::Arena* arena)
 }
 
 void NoteInfo::InitAsDefaultInstance() {
-  NoteInfo_default_oneof_instance_->unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  NoteInfo_default_oneof_instance_->noteid_ = GOOGLE_ULONGLONG(0);
 }
 
 NoteInfo::NoteInfo(const NoteInfo& from)
@@ -404,13 +370,13 @@ NoteInfo::NoteInfo(const NoteInfo& from)
 }
 
 void NoteInfo::SharedCtor() {
+  unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   dbid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   modified_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   accessed_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   addedtofile_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&classid_, 0, reinterpret_cast<char*>(&responsecount_) -
-    reinterpret_cast<char*>(&classid_) + sizeof(responsecount_));
-  clear_has_id();
+  ::memset(&noteid_, 0, reinterpret_cast<char*>(&responsecount_) -
+    reinterpret_cast<char*>(&noteid_) + sizeof(responsecount_));
   _cached_size_ = 0;
 }
 
@@ -425,13 +391,11 @@ void NoteInfo::SharedDtor() {
     return;
   }
 
+  unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
   dbid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
   modified_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
   accessed_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
   addedtofile_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
-  if (has_id()) {
-    clear_id();
-  }
 }
 
 void NoteInfo::ArenaDtor(void* object) {
@@ -461,26 +425,6 @@ NoteInfo* NoteInfo::New(::google::protobuf::Arena* arena) const {
   return ::google::protobuf::Arena::CreateMessage<NoteInfo>(arena);
 }
 
-void NoteInfo::clear_id() {
-// @@protoc_insertion_point(one_of_clear_start:red.hooks.messages.NoteInfo)
-  switch (id_case()) {
-    case kUnid: {
-      id_.unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-          GetArenaNoVirtual());
-      break;
-    }
-    case kNoteId: {
-      // No need to clear
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
-  }
-  _oneof_case_[0] = ID_NOT_SET;
-}
-
-
 void NoteInfo::Clear() {
 // @@protoc_insertion_point(message_clear_start:red.hooks.messages.NoteInfo)
 #if defined(__clang__)
@@ -499,7 +443,8 @@ void NoteInfo::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(classid_, parentnoteid_);
+  ZR_(noteid_, parentnoteid_);
+  unid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
   dbid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
   modified_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
   accessed_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
@@ -509,7 +454,6 @@ void NoteInfo::Clear() {
 #undef ZR_HELPER_
 #undef ZR_
 
-  clear_id();
 }
 
 bool NoteInfo::MergePartialFromCodedStream(
@@ -534,22 +478,21 @@ bool NoteInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        goto after_noteid;
+        if (input->ExpectTag(16)) goto parse_noteId;
         break;
       }
 
       // optional uint64 noteId = 2;
       case 2: {
         if (tag == 16) {
-          clear_id();
+         parse_noteId:
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &id_.noteid_)));
-          set_has_noteid();
+                 input, &noteid_)));
         } else {
           goto handle_unusual;
         }
-       after_noteid:
         if (input->ExpectTag(26)) goto parse_dbId;
         break;
       }
@@ -707,7 +650,7 @@ void NoteInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:red.hooks.messages.NoteInfo)
   // optional string unid = 1;
-  if (has_unid()) {
+  if (this->unid().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unid().data(), this->unid().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
@@ -717,7 +660,7 @@ void NoteInfo::SerializeWithCachedSizes(
   }
 
   // optional uint64 noteId = 2;
-  if (has_noteid()) {
+  if (this->noteid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->noteid(), output);
   }
 
@@ -789,7 +732,7 @@ void NoteInfo::SerializeWithCachedSizes(
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:red.hooks.messages.NoteInfo)
   // optional string unid = 1;
-  if (has_unid()) {
+  if (this->unid().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unid().data(), this->unid().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
@@ -800,7 +743,7 @@ void NoteInfo::SerializeWithCachedSizes(
   }
 
   // optional uint64 noteId = 2;
-  if (has_noteid()) {
+  if (this->noteid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->noteid(), target);
   }
 
@@ -876,6 +819,20 @@ size_t NoteInfo::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:red.hooks.messages.NoteInfo)
   size_t total_size = 0;
 
+  // optional string unid = 1;
+  if (this->unid().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->unid());
+  }
+
+  // optional uint64 noteId = 2;
+  if (this->noteid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->noteid());
+  }
+
   // optional string dbId = 3;
   if (this->dbid().size() > 0) {
     total_size += 1 +
@@ -932,25 +889,6 @@ size_t NoteInfo::ByteSizeLong() const {
         this->addedtofile());
   }
 
-  switch (id_case()) {
-    // optional string unid = 1;
-    case kUnid: {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->unid());
-      break;
-    }
-    // optional uint64 noteId = 2;
-    case kNoteId: {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt64Size(
-          this->noteid());
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
-  }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -984,18 +922,11 @@ void NoteInfo::MergeFrom(const NoteInfo& from) {
 
 void NoteInfo::UnsafeMergeFrom(const NoteInfo& from) {
   GOOGLE_DCHECK(&from != this);
-  switch (from.id_case()) {
-    case kUnid: {
-      set_unid(from.unid());
-      break;
-    }
-    case kNoteId: {
-      set_noteid(from.noteid());
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
+  if (from.unid().size() > 0) {
+    set_unid(from.unid());
+  }
+  if (from.noteid() != 0) {
+    set_noteid(from.noteid());
   }
   if (from.dbid().size() > 0) {
     set_dbid(from.dbid());
@@ -1059,6 +990,8 @@ void NoteInfo::UnsafeArenaSwap(NoteInfo* other) {
   InternalSwap(other);
 }
 void NoteInfo::InternalSwap(NoteInfo* other) {
+  unid_.Swap(&other->unid_);
+  std::swap(noteid_, other->noteid_);
   dbid_.Swap(&other->dbid_);
   modified_.Swap(&other->modified_);
   std::swap(classid_, other->classid_);
@@ -1067,8 +1000,6 @@ void NoteInfo::InternalSwap(NoteInfo* other) {
   std::swap(parentnoteid_, other->parentnoteid_);
   std::swap(responsecount_, other->responsecount_);
   addedtofile_.Swap(&other->addedtofile_);
-  std::swap(id_, other->id_);
-  std::swap(_oneof_case_[0], other->_oneof_case_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1085,140 +1016,82 @@ void NoteInfo::InternalSwap(NoteInfo* other) {
 // NoteInfo
 
 // optional string unid = 1;
-bool NoteInfo::has_unid() const {
-  return id_case() == kUnid;
-}
-void NoteInfo::set_has_unid() {
-  _oneof_case_[0] = kUnid;
-}
 void NoteInfo::clear_unid() {
-  if (has_unid()) {
-    id_.unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-        GetArenaNoVirtual());
-    clear_has_id();
-  }
+  unid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 const ::std::string& NoteInfo::unid() const {
   // @@protoc_insertion_point(field_get:red.hooks.messages.NoteInfo.unid)
-  if (has_unid()) {
-    return id_.unid_.Get(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  return *&::google::protobuf::internal::GetEmptyStringAlreadyInited();
+  return unid_.Get(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 void NoteInfo::set_unid(const ::std::string& value) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value,
-      GetArenaNoVirtual());
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value, GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set:red.hooks.messages.NoteInfo.unid)
 }
 void NoteInfo::set_unid(const char* value) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(value), GetArenaNoVirtual());
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_char:red.hooks.messages.NoteInfo.unid)
 }
 void NoteInfo::set_unid(const char* value,
-                             size_t size) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(
-      reinterpret_cast<const char*>(value), size),
-      GetArenaNoVirtual());
+    size_t size) {
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_pointer:red.hooks.messages.NoteInfo.unid)
 }
 ::std::string* NoteInfo::mutable_unid() {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  return id_.unid_.Mutable(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      GetArenaNoVirtual());
+  
   // @@protoc_insertion_point(field_mutable:red.hooks.messages.NoteInfo.unid)
+  return unid_.Mutable(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 ::std::string* NoteInfo::release_unid() {
   // @@protoc_insertion_point(field_release:red.hooks.messages.NoteInfo.unid)
-  if (has_unid()) {
-    clear_has_id();
-    return id_.unid_.Release(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-        GetArenaNoVirtual());
-  } else {
-    return NULL;
-  }
+  
+  return unid_.Release(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 ::std::string* NoteInfo::unsafe_arena_release_unid() {
   // @@protoc_insertion_point(field_unsafe_arena_release:red.hooks.messages.NoteInfo.unid)
   GOOGLE_DCHECK(GetArenaNoVirtual() != NULL);
-  if (has_unid()) {
-    clear_has_id();
-    return id_.unid_.UnsafeArenaRelease(
-        &::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
-  } else {
-    return NULL;
-  }
+  
+  return unid_.UnsafeArenaRelease(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      GetArenaNoVirtual());
 }
 void NoteInfo::set_allocated_unid(::std::string* unid) {
-  if (!has_unid()) {
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  clear_id();
   if (unid != NULL) {
-    set_has_unid();
-    id_.unid_.SetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid,
-        GetArenaNoVirtual());
+    
+  } else {
+    
   }
+  unid_.SetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid,
+      GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_allocated:red.hooks.messages.NoteInfo.unid)
 }
-void NoteInfo::unsafe_arena_set_allocated_unid(::std::string* unid) {
+void NoteInfo::unsafe_arena_set_allocated_unid(
+    ::std::string* unid) {
   GOOGLE_DCHECK(GetArenaNoVirtual() != NULL);
-  if (!has_unid()) {
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (unid != NULL) {
+    
+  } else {
+    
   }
-  clear_id();
-  if (unid) {
-    set_has_unid();
-    id_.unid_.UnsafeArenaSetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid, GetArenaNoVirtual());
-  }
+  unid_.UnsafeArenaSetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      unid, GetArenaNoVirtual());
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:red.hooks.messages.NoteInfo.unid)
 }
 
 // optional uint64 noteId = 2;
-bool NoteInfo::has_noteid() const {
-  return id_case() == kNoteId;
-}
-void NoteInfo::set_has_noteid() {
-  _oneof_case_[0] = kNoteId;
-}
 void NoteInfo::clear_noteid() {
-  if (has_noteid()) {
-    id_.noteid_ = GOOGLE_ULONGLONG(0);
-    clear_has_id();
-  }
+  noteid_ = GOOGLE_ULONGLONG(0);
 }
 ::google::protobuf::uint64 NoteInfo::noteid() const {
   // @@protoc_insertion_point(field_get:red.hooks.messages.NoteInfo.noteId)
-  if (has_noteid()) {
-    return id_.noteid_;
-  }
-  return GOOGLE_ULONGLONG(0);
+  return noteid_;
 }
 void NoteInfo::set_noteid(::google::protobuf::uint64 value) {
-  if (!has_noteid()) {
-    clear_id();
-    set_has_noteid();
-  }
-  id_.noteid_ = value;
+  
+  noteid_ = value;
   // @@protoc_insertion_point(field_set:red.hooks.messages.NoteInfo.noteId)
 }
 
@@ -1542,15 +1415,6 @@ void NoteInfo::unsafe_arena_set_allocated_addedtofile(
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:red.hooks.messages.NoteInfo.addedToFile)
 }
 
-bool NoteInfo::has_id() const {
-  return id_case() != ID_NOT_SET;
-}
-void NoteInfo::clear_has_id() {
-  _oneof_case_[0] = ID_NOT_SET;
-}
-NoteInfo::IdCase NoteInfo::id_case() const {
-  return NoteInfo::IdCase(_oneof_case_[0]);
-}
 inline const NoteInfo* NoteInfo::internal_default_instance() {
   return &NoteInfo_default_instance_.get();
 }
@@ -1562,6 +1426,7 @@ inline const NoteInfo* NoteInfo::internal_default_instance() {
 const int Note::kUnidFieldNumber;
 const int Note::kNoteIdFieldNumber;
 const int Note::kDbIdFieldNumber;
+const int Note::kSeqNumFieldNumber;
 const int Note::kItemsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -1584,8 +1449,6 @@ Note::Note(::google::protobuf::Arena* arena)
 }
 
 void Note::InitAsDefaultInstance() {
-  Note_default_oneof_instance_->unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  Note_default_oneof_instance_->noteid_ = GOOGLE_ULONGLONG(0);
 }
 
 Note::Note(const Note& from)
@@ -1597,8 +1460,10 @@ Note::Note(const Note& from)
 }
 
 void Note::SharedCtor() {
+  unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   dbid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_id();
+  ::memset(&noteid_, 0, reinterpret_cast<char*>(&seqnum_) -
+    reinterpret_cast<char*>(&noteid_) + sizeof(seqnum_));
   _cached_size_ = 0;
 }
 
@@ -1613,10 +1478,8 @@ void Note::SharedDtor() {
     return;
   }
 
+  unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
   dbid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
-  if (has_id()) {
-    clear_id();
-  }
 }
 
 void Note::ArenaDtor(void* object) {
@@ -1646,31 +1509,32 @@ Note* Note::New(::google::protobuf::Arena* arena) const {
   return ::google::protobuf::Arena::CreateMessage<Note>(arena);
 }
 
-void Note::clear_id() {
-// @@protoc_insertion_point(one_of_clear_start:red.hooks.messages.Note)
-  switch (id_case()) {
-    case kUnid: {
-      id_.unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-          GetArenaNoVirtual());
-      break;
-    }
-    case kNoteId: {
-      // No need to clear
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
-  }
-  _oneof_case_[0] = ID_NOT_SET;
-}
-
-
 void Note::Clear() {
 // @@protoc_insertion_point(message_clear_start:red.hooks.messages.Note)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(Note, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<Note*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(noteid_, seqnum_);
+  unid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
   dbid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
+
+#undef ZR_HELPER_
+#undef ZR_
+
   items_.Clear();
-  clear_id();
 }
 
 bool Note::MergePartialFromCodedStream(
@@ -1695,22 +1559,21 @@ bool Note::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        goto after_noteid;
+        if (input->ExpectTag(16)) goto parse_noteId;
         break;
       }
 
       // optional uint64 noteId = 2;
       case 2: {
         if (tag == 16) {
-          clear_id();
+         parse_noteId:
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &id_.noteid_)));
-          set_has_noteid();
+                 input, &noteid_)));
         } else {
           goto handle_unusual;
         }
-       after_noteid:
         if (input->ExpectTag(26)) goto parse_dbId;
         break;
       }
@@ -1725,6 +1588,21 @@ bool Note::MergePartialFromCodedStream(
             this->dbid().data(), this->dbid().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
             "red.hooks.messages.Note.dbId"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_seqNum;
+        break;
+      }
+
+      // optional uint32 seqNum = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_seqNum:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &seqnum_)));
         } else {
           goto handle_unusual;
         }
@@ -1774,7 +1652,7 @@ void Note::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:red.hooks.messages.Note)
   // optional string unid = 1;
-  if (has_unid()) {
+  if (this->unid().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unid().data(), this->unid().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
@@ -1784,7 +1662,7 @@ void Note::SerializeWithCachedSizes(
   }
 
   // optional uint64 noteId = 2;
-  if (has_noteid()) {
+  if (this->noteid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->noteid(), output);
   }
 
@@ -1796,6 +1674,11 @@ void Note::SerializeWithCachedSizes(
       "red.hooks.messages.Note.dbId");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       3, this->dbid(), output);
+  }
+
+  // optional uint32 seqNum = 4;
+  if (this->seqnum() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->seqnum(), output);
   }
 
   // repeated .red.hooks.messages.Item items = 10;
@@ -1812,7 +1695,7 @@ void Note::SerializeWithCachedSizes(
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:red.hooks.messages.Note)
   // optional string unid = 1;
-  if (has_unid()) {
+  if (this->unid().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unid().data(), this->unid().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
@@ -1823,7 +1706,7 @@ void Note::SerializeWithCachedSizes(
   }
 
   // optional uint64 noteId = 2;
-  if (has_noteid()) {
+  if (this->noteid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->noteid(), target);
   }
 
@@ -1836,6 +1719,11 @@ void Note::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->dbid(), target);
+  }
+
+  // optional uint32 seqNum = 4;
+  if (this->seqnum() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->seqnum(), target);
   }
 
   // repeated .red.hooks.messages.Item items = 10;
@@ -1853,11 +1741,32 @@ size_t Note::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:red.hooks.messages.Note)
   size_t total_size = 0;
 
+  // optional string unid = 1;
+  if (this->unid().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->unid());
+  }
+
+  // optional uint64 noteId = 2;
+  if (this->noteid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->noteid());
+  }
+
   // optional string dbId = 3;
   if (this->dbid().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->dbid());
+  }
+
+  // optional uint32 seqNum = 4;
+  if (this->seqnum() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->seqnum());
   }
 
   // repeated .red.hooks.messages.Item items = 10;
@@ -1871,25 +1780,6 @@ size_t Note::ByteSizeLong() const {
     }
   }
 
-  switch (id_case()) {
-    // optional string unid = 1;
-    case kUnid: {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->unid());
-      break;
-    }
-    // optional uint64 noteId = 2;
-    case kNoteId: {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt64Size(
-          this->noteid());
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
-  }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -1924,21 +1814,17 @@ void Note::MergeFrom(const Note& from) {
 void Note::UnsafeMergeFrom(const Note& from) {
   GOOGLE_DCHECK(&from != this);
   items_.MergeFrom(from.items_);
-  switch (from.id_case()) {
-    case kUnid: {
-      set_unid(from.unid());
-      break;
-    }
-    case kNoteId: {
-      set_noteid(from.noteid());
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
+  if (from.unid().size() > 0) {
+    set_unid(from.unid());
+  }
+  if (from.noteid() != 0) {
+    set_noteid(from.noteid());
   }
   if (from.dbid().size() > 0) {
     set_dbid(from.dbid());
+  }
+  if (from.seqnum() != 0) {
+    set_seqnum(from.seqnum());
   }
 }
 
@@ -1978,10 +1864,11 @@ void Note::UnsafeArenaSwap(Note* other) {
   InternalSwap(other);
 }
 void Note::InternalSwap(Note* other) {
+  unid_.Swap(&other->unid_);
+  std::swap(noteid_, other->noteid_);
   dbid_.Swap(&other->dbid_);
+  std::swap(seqnum_, other->seqnum_);
   items_.UnsafeArenaSwap(&other->items_);
-  std::swap(id_, other->id_);
-  std::swap(_oneof_case_[0], other->_oneof_case_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1998,140 +1885,82 @@ void Note::InternalSwap(Note* other) {
 // Note
 
 // optional string unid = 1;
-bool Note::has_unid() const {
-  return id_case() == kUnid;
-}
-void Note::set_has_unid() {
-  _oneof_case_[0] = kUnid;
-}
 void Note::clear_unid() {
-  if (has_unid()) {
-    id_.unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-        GetArenaNoVirtual());
-    clear_has_id();
-  }
+  unid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 const ::std::string& Note::unid() const {
   // @@protoc_insertion_point(field_get:red.hooks.messages.Note.unid)
-  if (has_unid()) {
-    return id_.unid_.Get(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  return *&::google::protobuf::internal::GetEmptyStringAlreadyInited();
+  return unid_.Get(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 void Note::set_unid(const ::std::string& value) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value,
-      GetArenaNoVirtual());
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value, GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set:red.hooks.messages.Note.unid)
 }
 void Note::set_unid(const char* value) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(value), GetArenaNoVirtual());
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_char:red.hooks.messages.Note.unid)
 }
 void Note::set_unid(const char* value,
-                             size_t size) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(
-      reinterpret_cast<const char*>(value), size),
-      GetArenaNoVirtual());
+    size_t size) {
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_pointer:red.hooks.messages.Note.unid)
 }
 ::std::string* Note::mutable_unid() {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  return id_.unid_.Mutable(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      GetArenaNoVirtual());
+  
   // @@protoc_insertion_point(field_mutable:red.hooks.messages.Note.unid)
+  return unid_.Mutable(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 ::std::string* Note::release_unid() {
   // @@protoc_insertion_point(field_release:red.hooks.messages.Note.unid)
-  if (has_unid()) {
-    clear_has_id();
-    return id_.unid_.Release(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-        GetArenaNoVirtual());
-  } else {
-    return NULL;
-  }
+  
+  return unid_.Release(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 ::std::string* Note::unsafe_arena_release_unid() {
   // @@protoc_insertion_point(field_unsafe_arena_release:red.hooks.messages.Note.unid)
   GOOGLE_DCHECK(GetArenaNoVirtual() != NULL);
-  if (has_unid()) {
-    clear_has_id();
-    return id_.unid_.UnsafeArenaRelease(
-        &::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
-  } else {
-    return NULL;
-  }
+  
+  return unid_.UnsafeArenaRelease(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      GetArenaNoVirtual());
 }
 void Note::set_allocated_unid(::std::string* unid) {
-  if (!has_unid()) {
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  clear_id();
   if (unid != NULL) {
-    set_has_unid();
-    id_.unid_.SetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid,
-        GetArenaNoVirtual());
+    
+  } else {
+    
   }
+  unid_.SetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid,
+      GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_allocated:red.hooks.messages.Note.unid)
 }
-void Note::unsafe_arena_set_allocated_unid(::std::string* unid) {
+void Note::unsafe_arena_set_allocated_unid(
+    ::std::string* unid) {
   GOOGLE_DCHECK(GetArenaNoVirtual() != NULL);
-  if (!has_unid()) {
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (unid != NULL) {
+    
+  } else {
+    
   }
-  clear_id();
-  if (unid) {
-    set_has_unid();
-    id_.unid_.UnsafeArenaSetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid, GetArenaNoVirtual());
-  }
+  unid_.UnsafeArenaSetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      unid, GetArenaNoVirtual());
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:red.hooks.messages.Note.unid)
 }
 
 // optional uint64 noteId = 2;
-bool Note::has_noteid() const {
-  return id_case() == kNoteId;
-}
-void Note::set_has_noteid() {
-  _oneof_case_[0] = kNoteId;
-}
 void Note::clear_noteid() {
-  if (has_noteid()) {
-    id_.noteid_ = GOOGLE_ULONGLONG(0);
-    clear_has_id();
-  }
+  noteid_ = GOOGLE_ULONGLONG(0);
 }
 ::google::protobuf::uint64 Note::noteid() const {
   // @@protoc_insertion_point(field_get:red.hooks.messages.Note.noteId)
-  if (has_noteid()) {
-    return id_.noteid_;
-  }
-  return GOOGLE_ULONGLONG(0);
+  return noteid_;
 }
 void Note::set_noteid(::google::protobuf::uint64 value) {
-  if (!has_noteid()) {
-    clear_id();
-    set_has_noteid();
-  }
-  id_.noteid_ = value;
+  
+  noteid_ = value;
   // @@protoc_insertion_point(field_set:red.hooks.messages.Note.noteId)
 }
 
@@ -2201,6 +2030,20 @@ void Note::unsafe_arena_set_allocated_dbid(
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:red.hooks.messages.Note.dbId)
 }
 
+// optional uint32 seqNum = 4;
+void Note::clear_seqnum() {
+  seqnum_ = 0u;
+}
+::google::protobuf::uint32 Note::seqnum() const {
+  // @@protoc_insertion_point(field_get:red.hooks.messages.Note.seqNum)
+  return seqnum_;
+}
+void Note::set_seqnum(::google::protobuf::uint32 value) {
+  
+  seqnum_ = value;
+  // @@protoc_insertion_point(field_set:red.hooks.messages.Note.seqNum)
+}
+
 // repeated .red.hooks.messages.Item items = 10;
 int Note::items_size() const {
   return items_.size();
@@ -2231,15 +2074,6 @@ Note::items() const {
   return items_;
 }
 
-bool Note::has_id() const {
-  return id_case() != ID_NOT_SET;
-}
-void Note::clear_has_id() {
-  _oneof_case_[0] = ID_NOT_SET;
-}
-Note::IdCase Note::id_case() const {
-  return Note::IdCase(_oneof_case_[0]);
-}
 inline const Note* Note::internal_default_instance() {
   return &Note_default_instance_.get();
 }
@@ -3155,8 +2989,6 @@ RequestNoteInfo::RequestNoteInfo(::google::protobuf::Arena* arena)
 }
 
 void RequestNoteInfo::InitAsDefaultInstance() {
-  RequestNoteInfo_default_oneof_instance_->unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  RequestNoteInfo_default_oneof_instance_->noteid_ = GOOGLE_ULONGLONG(0);
 }
 
 RequestNoteInfo::RequestNoteInfo(const RequestNoteInfo& from)
@@ -3168,9 +3000,10 @@ RequestNoteInfo::RequestNoteInfo(const RequestNoteInfo& from)
 }
 
 void RequestNoteInfo::SharedCtor() {
+  unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   dbid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  action_ = 0;
-  clear_has_id();
+  ::memset(&noteid_, 0, reinterpret_cast<char*>(&action_) -
+    reinterpret_cast<char*>(&noteid_) + sizeof(action_));
   _cached_size_ = 0;
 }
 
@@ -3185,10 +3018,8 @@ void RequestNoteInfo::SharedDtor() {
     return;
   }
 
+  unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
   dbid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
-  if (has_id()) {
-    clear_id();
-  }
 }
 
 void RequestNoteInfo::ArenaDtor(void* object) {
@@ -3218,31 +3049,31 @@ RequestNoteInfo* RequestNoteInfo::New(::google::protobuf::Arena* arena) const {
   return ::google::protobuf::Arena::CreateMessage<RequestNoteInfo>(arena);
 }
 
-void RequestNoteInfo::clear_id() {
-// @@protoc_insertion_point(one_of_clear_start:red.hooks.messages.RequestNoteInfo)
-  switch (id_case()) {
-    case kUnid: {
-      id_.unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-          GetArenaNoVirtual());
-      break;
-    }
-    case kNoteId: {
-      // No need to clear
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
-  }
-  _oneof_case_[0] = ID_NOT_SET;
-}
-
-
 void RequestNoteInfo::Clear() {
 // @@protoc_insertion_point(message_clear_start:red.hooks.messages.RequestNoteInfo)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(RequestNoteInfo, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<RequestNoteInfo*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(noteid_, action_);
+  unid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
   dbid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
-  action_ = 0;
-  clear_id();
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
 bool RequestNoteInfo::MergePartialFromCodedStream(
@@ -3267,22 +3098,21 @@ bool RequestNoteInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        goto after_noteid;
+        if (input->ExpectTag(16)) goto parse_noteId;
         break;
       }
 
       // optional uint64 noteId = 2;
       case 2: {
         if (tag == 16) {
-          clear_id();
+         parse_noteId:
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &id_.noteid_)));
-          set_has_noteid();
+                 input, &noteid_)));
         } else {
           goto handle_unusual;
         }
-       after_noteid:
         if (input->ExpectTag(26)) goto parse_dbId;
         break;
       }
@@ -3345,7 +3175,7 @@ void RequestNoteInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:red.hooks.messages.RequestNoteInfo)
   // optional string unid = 1;
-  if (has_unid()) {
+  if (this->unid().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unid().data(), this->unid().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
@@ -3355,7 +3185,7 @@ void RequestNoteInfo::SerializeWithCachedSizes(
   }
 
   // optional uint64 noteId = 2;
-  if (has_noteid()) {
+  if (this->noteid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->noteid(), output);
   }
 
@@ -3383,7 +3213,7 @@ void RequestNoteInfo::SerializeWithCachedSizes(
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:red.hooks.messages.RequestNoteInfo)
   // optional string unid = 1;
-  if (has_unid()) {
+  if (this->unid().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unid().data(), this->unid().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
@@ -3394,7 +3224,7 @@ void RequestNoteInfo::SerializeWithCachedSizes(
   }
 
   // optional uint64 noteId = 2;
-  if (has_noteid()) {
+  if (this->noteid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->noteid(), target);
   }
 
@@ -3423,6 +3253,20 @@ size_t RequestNoteInfo::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:red.hooks.messages.RequestNoteInfo)
   size_t total_size = 0;
 
+  // optional string unid = 1;
+  if (this->unid().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->unid());
+  }
+
+  // optional uint64 noteId = 2;
+  if (this->noteid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->noteid());
+  }
+
   // optional string dbId = 3;
   if (this->dbid().size() > 0) {
     total_size += 1 +
@@ -3436,25 +3280,6 @@ size_t RequestNoteInfo::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->action());
   }
 
-  switch (id_case()) {
-    // optional string unid = 1;
-    case kUnid: {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->unid());
-      break;
-    }
-    // optional uint64 noteId = 2;
-    case kNoteId: {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt64Size(
-          this->noteid());
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
-  }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -3488,18 +3313,11 @@ void RequestNoteInfo::MergeFrom(const RequestNoteInfo& from) {
 
 void RequestNoteInfo::UnsafeMergeFrom(const RequestNoteInfo& from) {
   GOOGLE_DCHECK(&from != this);
-  switch (from.id_case()) {
-    case kUnid: {
-      set_unid(from.unid());
-      break;
-    }
-    case kNoteId: {
-      set_noteid(from.noteid());
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
+  if (from.unid().size() > 0) {
+    set_unid(from.unid());
+  }
+  if (from.noteid() != 0) {
+    set_noteid(from.noteid());
   }
   if (from.dbid().size() > 0) {
     set_dbid(from.dbid());
@@ -3545,10 +3363,10 @@ void RequestNoteInfo::UnsafeArenaSwap(RequestNoteInfo* other) {
   InternalSwap(other);
 }
 void RequestNoteInfo::InternalSwap(RequestNoteInfo* other) {
+  unid_.Swap(&other->unid_);
+  std::swap(noteid_, other->noteid_);
   dbid_.Swap(&other->dbid_);
   std::swap(action_, other->action_);
-  std::swap(id_, other->id_);
-  std::swap(_oneof_case_[0], other->_oneof_case_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -3565,140 +3383,82 @@ void RequestNoteInfo::InternalSwap(RequestNoteInfo* other) {
 // RequestNoteInfo
 
 // optional string unid = 1;
-bool RequestNoteInfo::has_unid() const {
-  return id_case() == kUnid;
-}
-void RequestNoteInfo::set_has_unid() {
-  _oneof_case_[0] = kUnid;
-}
 void RequestNoteInfo::clear_unid() {
-  if (has_unid()) {
-    id_.unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-        GetArenaNoVirtual());
-    clear_has_id();
-  }
+  unid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 const ::std::string& RequestNoteInfo::unid() const {
   // @@protoc_insertion_point(field_get:red.hooks.messages.RequestNoteInfo.unid)
-  if (has_unid()) {
-    return id_.unid_.Get(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  return *&::google::protobuf::internal::GetEmptyStringAlreadyInited();
+  return unid_.Get(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 void RequestNoteInfo::set_unid(const ::std::string& value) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value,
-      GetArenaNoVirtual());
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value, GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set:red.hooks.messages.RequestNoteInfo.unid)
 }
 void RequestNoteInfo::set_unid(const char* value) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(value), GetArenaNoVirtual());
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_char:red.hooks.messages.RequestNoteInfo.unid)
 }
 void RequestNoteInfo::set_unid(const char* value,
-                             size_t size) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(
-      reinterpret_cast<const char*>(value), size),
-      GetArenaNoVirtual());
+    size_t size) {
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_pointer:red.hooks.messages.RequestNoteInfo.unid)
 }
 ::std::string* RequestNoteInfo::mutable_unid() {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  return id_.unid_.Mutable(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      GetArenaNoVirtual());
+  
   // @@protoc_insertion_point(field_mutable:red.hooks.messages.RequestNoteInfo.unid)
+  return unid_.Mutable(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 ::std::string* RequestNoteInfo::release_unid() {
   // @@protoc_insertion_point(field_release:red.hooks.messages.RequestNoteInfo.unid)
-  if (has_unid()) {
-    clear_has_id();
-    return id_.unid_.Release(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-        GetArenaNoVirtual());
-  } else {
-    return NULL;
-  }
+  
+  return unid_.Release(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 ::std::string* RequestNoteInfo::unsafe_arena_release_unid() {
   // @@protoc_insertion_point(field_unsafe_arena_release:red.hooks.messages.RequestNoteInfo.unid)
   GOOGLE_DCHECK(GetArenaNoVirtual() != NULL);
-  if (has_unid()) {
-    clear_has_id();
-    return id_.unid_.UnsafeArenaRelease(
-        &::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
-  } else {
-    return NULL;
-  }
+  
+  return unid_.UnsafeArenaRelease(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      GetArenaNoVirtual());
 }
 void RequestNoteInfo::set_allocated_unid(::std::string* unid) {
-  if (!has_unid()) {
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  clear_id();
   if (unid != NULL) {
-    set_has_unid();
-    id_.unid_.SetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid,
-        GetArenaNoVirtual());
+    
+  } else {
+    
   }
+  unid_.SetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid,
+      GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_allocated:red.hooks.messages.RequestNoteInfo.unid)
 }
-void RequestNoteInfo::unsafe_arena_set_allocated_unid(::std::string* unid) {
+void RequestNoteInfo::unsafe_arena_set_allocated_unid(
+    ::std::string* unid) {
   GOOGLE_DCHECK(GetArenaNoVirtual() != NULL);
-  if (!has_unid()) {
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (unid != NULL) {
+    
+  } else {
+    
   }
-  clear_id();
-  if (unid) {
-    set_has_unid();
-    id_.unid_.UnsafeArenaSetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid, GetArenaNoVirtual());
-  }
+  unid_.UnsafeArenaSetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      unid, GetArenaNoVirtual());
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:red.hooks.messages.RequestNoteInfo.unid)
 }
 
 // optional uint64 noteId = 2;
-bool RequestNoteInfo::has_noteid() const {
-  return id_case() == kNoteId;
-}
-void RequestNoteInfo::set_has_noteid() {
-  _oneof_case_[0] = kNoteId;
-}
 void RequestNoteInfo::clear_noteid() {
-  if (has_noteid()) {
-    id_.noteid_ = GOOGLE_ULONGLONG(0);
-    clear_has_id();
-  }
+  noteid_ = GOOGLE_ULONGLONG(0);
 }
 ::google::protobuf::uint64 RequestNoteInfo::noteid() const {
   // @@protoc_insertion_point(field_get:red.hooks.messages.RequestNoteInfo.noteId)
-  if (has_noteid()) {
-    return id_.noteid_;
-  }
-  return GOOGLE_ULONGLONG(0);
+  return noteid_;
 }
 void RequestNoteInfo::set_noteid(::google::protobuf::uint64 value) {
-  if (!has_noteid()) {
-    clear_id();
-    set_has_noteid();
-  }
-  id_.noteid_ = value;
+  
+  noteid_ = value;
   // @@protoc_insertion_point(field_set:red.hooks.messages.RequestNoteInfo.noteId)
 }
 
@@ -3782,15 +3542,6 @@ void RequestNoteInfo::set_action(::red::hooks::messages::Action value) {
   // @@protoc_insertion_point(field_set:red.hooks.messages.RequestNoteInfo.action)
 }
 
-bool RequestNoteInfo::has_id() const {
-  return id_case() != ID_NOT_SET;
-}
-void RequestNoteInfo::clear_has_id() {
-  _oneof_case_[0] = ID_NOT_SET;
-}
-RequestNoteInfo::IdCase RequestNoteInfo::id_case() const {
-  return RequestNoteInfo::IdCase(_oneof_case_[0]);
-}
 inline const RequestNoteInfo* RequestNoteInfo::internal_default_instance() {
   return &RequestNoteInfo_default_instance_.get();
 }
@@ -3803,6 +3554,8 @@ const int RequestNote::kUnidFieldNumber;
 const int RequestNote::kNoteIdFieldNumber;
 const int RequestNote::kDbIdFieldNumber;
 const int RequestNote::kActionFieldNumber;
+const int RequestNote::kSeqNumFieldNumber;
+const int RequestNote::kFlagsFieldNumber;
 const int RequestNote::kItemsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -3825,8 +3578,6 @@ RequestNote::RequestNote(::google::protobuf::Arena* arena)
 }
 
 void RequestNote::InitAsDefaultInstance() {
-  RequestNote_default_oneof_instance_->unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  RequestNote_default_oneof_instance_->noteid_ = GOOGLE_ULONGLONG(0);
 }
 
 RequestNote::RequestNote(const RequestNote& from)
@@ -3838,9 +3589,10 @@ RequestNote::RequestNote(const RequestNote& from)
 }
 
 void RequestNote::SharedCtor() {
+  unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   dbid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  action_ = 0;
-  clear_has_id();
+  ::memset(&noteid_, 0, reinterpret_cast<char*>(&flags_) -
+    reinterpret_cast<char*>(&noteid_) + sizeof(flags_));
   _cached_size_ = 0;
 }
 
@@ -3855,10 +3607,8 @@ void RequestNote::SharedDtor() {
     return;
   }
 
+  unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
   dbid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), arena);
-  if (has_id()) {
-    clear_id();
-  }
 }
 
 void RequestNote::ArenaDtor(void* object) {
@@ -3888,32 +3638,32 @@ RequestNote* RequestNote::New(::google::protobuf::Arena* arena) const {
   return ::google::protobuf::Arena::CreateMessage<RequestNote>(arena);
 }
 
-void RequestNote::clear_id() {
-// @@protoc_insertion_point(one_of_clear_start:red.hooks.messages.RequestNote)
-  switch (id_case()) {
-    case kUnid: {
-      id_.unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-          GetArenaNoVirtual());
-      break;
-    }
-    case kNoteId: {
-      // No need to clear
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
-  }
-  _oneof_case_[0] = ID_NOT_SET;
-}
-
-
 void RequestNote::Clear() {
 // @@protoc_insertion_point(message_clear_start:red.hooks.messages.RequestNote)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(RequestNote, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<RequestNote*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(noteid_, flags_);
+  unid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
   dbid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
-  action_ = 0;
+
+#undef ZR_HELPER_
+#undef ZR_
+
   items_.Clear();
-  clear_id();
 }
 
 bool RequestNote::MergePartialFromCodedStream(
@@ -3938,22 +3688,21 @@ bool RequestNote::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        goto after_noteid;
+        if (input->ExpectTag(16)) goto parse_noteId;
         break;
       }
 
       // optional uint64 noteId = 2;
       case 2: {
         if (tag == 16) {
-          clear_id();
+         parse_noteId:
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &id_.noteid_)));
-          set_has_noteid();
+                 input, &noteid_)));
         } else {
           goto handle_unusual;
         }
-       after_noteid:
         if (input->ExpectTag(26)) goto parse_dbId;
         break;
       }
@@ -3984,6 +3733,36 @@ bool RequestNote::MergePartialFromCodedStream(
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
           set_action(static_cast< ::red::hooks::messages::Action >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_seqNum;
+        break;
+      }
+
+      // optional uint32 seqNum = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_seqNum:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &seqnum_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_flags;
+        break;
+      }
+
+      // optional uint32 flags = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_flags:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &flags_)));
         } else {
           goto handle_unusual;
         }
@@ -4033,7 +3812,7 @@ void RequestNote::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:red.hooks.messages.RequestNote)
   // optional string unid = 1;
-  if (has_unid()) {
+  if (this->unid().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unid().data(), this->unid().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
@@ -4043,7 +3822,7 @@ void RequestNote::SerializeWithCachedSizes(
   }
 
   // optional uint64 noteId = 2;
-  if (has_noteid()) {
+  if (this->noteid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->noteid(), output);
   }
 
@@ -4063,6 +3842,16 @@ void RequestNote::SerializeWithCachedSizes(
       4, this->action(), output);
   }
 
+  // optional uint32 seqNum = 5;
+  if (this->seqnum() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->seqnum(), output);
+  }
+
+  // optional uint32 flags = 6;
+  if (this->flags() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->flags(), output);
+  }
+
   // repeated .red.hooks.messages.Item items = 10;
   for (unsigned int i = 0, n = this->items_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -4077,7 +3866,7 @@ void RequestNote::SerializeWithCachedSizes(
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:red.hooks.messages.RequestNote)
   // optional string unid = 1;
-  if (has_unid()) {
+  if (this->unid().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unid().data(), this->unid().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
@@ -4088,7 +3877,7 @@ void RequestNote::SerializeWithCachedSizes(
   }
 
   // optional uint64 noteId = 2;
-  if (has_noteid()) {
+  if (this->noteid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->noteid(), target);
   }
 
@@ -4109,6 +3898,16 @@ void RequestNote::SerializeWithCachedSizes(
       4, this->action(), target);
   }
 
+  // optional uint32 seqNum = 5;
+  if (this->seqnum() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->seqnum(), target);
+  }
+
+  // optional uint32 flags = 6;
+  if (this->flags() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->flags(), target);
+  }
+
   // repeated .red.hooks.messages.Item items = 10;
   for (unsigned int i = 0, n = this->items_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -4124,6 +3923,20 @@ size_t RequestNote::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:red.hooks.messages.RequestNote)
   size_t total_size = 0;
 
+  // optional string unid = 1;
+  if (this->unid().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->unid());
+  }
+
+  // optional uint64 noteId = 2;
+  if (this->noteid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->noteid());
+  }
+
   // optional string dbId = 3;
   if (this->dbid().size() > 0) {
     total_size += 1 +
@@ -4137,6 +3950,20 @@ size_t RequestNote::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->action());
   }
 
+  // optional uint32 seqNum = 5;
+  if (this->seqnum() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->seqnum());
+  }
+
+  // optional uint32 flags = 6;
+  if (this->flags() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->flags());
+  }
+
   // repeated .red.hooks.messages.Item items = 10;
   {
     unsigned int count = this->items_size();
@@ -4148,25 +3975,6 @@ size_t RequestNote::ByteSizeLong() const {
     }
   }
 
-  switch (id_case()) {
-    // optional string unid = 1;
-    case kUnid: {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->unid());
-      break;
-    }
-    // optional uint64 noteId = 2;
-    case kNoteId: {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt64Size(
-          this->noteid());
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
-  }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -4201,24 +4009,23 @@ void RequestNote::MergeFrom(const RequestNote& from) {
 void RequestNote::UnsafeMergeFrom(const RequestNote& from) {
   GOOGLE_DCHECK(&from != this);
   items_.MergeFrom(from.items_);
-  switch (from.id_case()) {
-    case kUnid: {
-      set_unid(from.unid());
-      break;
-    }
-    case kNoteId: {
-      set_noteid(from.noteid());
-      break;
-    }
-    case ID_NOT_SET: {
-      break;
-    }
+  if (from.unid().size() > 0) {
+    set_unid(from.unid());
+  }
+  if (from.noteid() != 0) {
+    set_noteid(from.noteid());
   }
   if (from.dbid().size() > 0) {
     set_dbid(from.dbid());
   }
   if (from.action() != 0) {
     set_action(from.action());
+  }
+  if (from.seqnum() != 0) {
+    set_seqnum(from.seqnum());
+  }
+  if (from.flags() != 0) {
+    set_flags(from.flags());
   }
 }
 
@@ -4258,11 +4065,13 @@ void RequestNote::UnsafeArenaSwap(RequestNote* other) {
   InternalSwap(other);
 }
 void RequestNote::InternalSwap(RequestNote* other) {
+  unid_.Swap(&other->unid_);
+  std::swap(noteid_, other->noteid_);
   dbid_.Swap(&other->dbid_);
   std::swap(action_, other->action_);
+  std::swap(seqnum_, other->seqnum_);
+  std::swap(flags_, other->flags_);
   items_.UnsafeArenaSwap(&other->items_);
-  std::swap(id_, other->id_);
-  std::swap(_oneof_case_[0], other->_oneof_case_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -4279,140 +4088,82 @@ void RequestNote::InternalSwap(RequestNote* other) {
 // RequestNote
 
 // optional string unid = 1;
-bool RequestNote::has_unid() const {
-  return id_case() == kUnid;
-}
-void RequestNote::set_has_unid() {
-  _oneof_case_[0] = kUnid;
-}
 void RequestNote::clear_unid() {
-  if (has_unid()) {
-    id_.unid_.Destroy(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-        GetArenaNoVirtual());
-    clear_has_id();
-  }
+  unid_.ClearToEmpty(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 const ::std::string& RequestNote::unid() const {
   // @@protoc_insertion_point(field_get:red.hooks.messages.RequestNote.unid)
-  if (has_unid()) {
-    return id_.unid_.Get(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  return *&::google::protobuf::internal::GetEmptyStringAlreadyInited();
+  return unid_.Get(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 void RequestNote::set_unid(const ::std::string& value) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value,
-      GetArenaNoVirtual());
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value, GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set:red.hooks.messages.RequestNote.unid)
 }
 void RequestNote::set_unid(const char* value) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(value), GetArenaNoVirtual());
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_char:red.hooks.messages.RequestNote.unid)
 }
 void RequestNote::set_unid(const char* value,
-                             size_t size) {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  id_.unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(
-      reinterpret_cast<const char*>(value), size),
-      GetArenaNoVirtual());
+    size_t size) {
+  
+  unid_.Set(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_pointer:red.hooks.messages.RequestNote.unid)
 }
 ::std::string* RequestNote::mutable_unid() {
-  if (!has_unid()) {
-    clear_id();
-    set_has_unid();
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  return id_.unid_.Mutable(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      GetArenaNoVirtual());
+  
   // @@protoc_insertion_point(field_mutable:red.hooks.messages.RequestNote.unid)
+  return unid_.Mutable(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 ::std::string* RequestNote::release_unid() {
   // @@protoc_insertion_point(field_release:red.hooks.messages.RequestNote.unid)
-  if (has_unid()) {
-    clear_has_id();
-    return id_.unid_.Release(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-        GetArenaNoVirtual());
-  } else {
-    return NULL;
-  }
+  
+  return unid_.Release(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
 }
 ::std::string* RequestNote::unsafe_arena_release_unid() {
   // @@protoc_insertion_point(field_unsafe_arena_release:red.hooks.messages.RequestNote.unid)
   GOOGLE_DCHECK(GetArenaNoVirtual() != NULL);
-  if (has_unid()) {
-    clear_has_id();
-    return id_.unid_.UnsafeArenaRelease(
-        &::google::protobuf::internal::GetEmptyStringAlreadyInited(), GetArenaNoVirtual());
-  } else {
-    return NULL;
-  }
+  
+  return unid_.UnsafeArenaRelease(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      GetArenaNoVirtual());
 }
 void RequestNote::set_allocated_unid(::std::string* unid) {
-  if (!has_unid()) {
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  clear_id();
   if (unid != NULL) {
-    set_has_unid();
-    id_.unid_.SetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid,
-        GetArenaNoVirtual());
+    
+  } else {
+    
   }
+  unid_.SetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid,
+      GetArenaNoVirtual());
   // @@protoc_insertion_point(field_set_allocated:red.hooks.messages.RequestNote.unid)
 }
-void RequestNote::unsafe_arena_set_allocated_unid(::std::string* unid) {
+void RequestNote::unsafe_arena_set_allocated_unid(
+    ::std::string* unid) {
   GOOGLE_DCHECK(GetArenaNoVirtual() != NULL);
-  if (!has_unid()) {
-    id_.unid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (unid != NULL) {
+    
+  } else {
+    
   }
-  clear_id();
-  if (unid) {
-    set_has_unid();
-    id_.unid_.UnsafeArenaSetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unid, GetArenaNoVirtual());
-  }
+  unid_.UnsafeArenaSetAllocated(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      unid, GetArenaNoVirtual());
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:red.hooks.messages.RequestNote.unid)
 }
 
 // optional uint64 noteId = 2;
-bool RequestNote::has_noteid() const {
-  return id_case() == kNoteId;
-}
-void RequestNote::set_has_noteid() {
-  _oneof_case_[0] = kNoteId;
-}
 void RequestNote::clear_noteid() {
-  if (has_noteid()) {
-    id_.noteid_ = GOOGLE_ULONGLONG(0);
-    clear_has_id();
-  }
+  noteid_ = GOOGLE_ULONGLONG(0);
 }
 ::google::protobuf::uint64 RequestNote::noteid() const {
   // @@protoc_insertion_point(field_get:red.hooks.messages.RequestNote.noteId)
-  if (has_noteid()) {
-    return id_.noteid_;
-  }
-  return GOOGLE_ULONGLONG(0);
+  return noteid_;
 }
 void RequestNote::set_noteid(::google::protobuf::uint64 value) {
-  if (!has_noteid()) {
-    clear_id();
-    set_has_noteid();
-  }
-  id_.noteid_ = value;
+  
+  noteid_ = value;
   // @@protoc_insertion_point(field_set:red.hooks.messages.RequestNote.noteId)
 }
 
@@ -4496,6 +4247,34 @@ void RequestNote::set_action(::red::hooks::messages::Action value) {
   // @@protoc_insertion_point(field_set:red.hooks.messages.RequestNote.action)
 }
 
+// optional uint32 seqNum = 5;
+void RequestNote::clear_seqnum() {
+  seqnum_ = 0u;
+}
+::google::protobuf::uint32 RequestNote::seqnum() const {
+  // @@protoc_insertion_point(field_get:red.hooks.messages.RequestNote.seqNum)
+  return seqnum_;
+}
+void RequestNote::set_seqnum(::google::protobuf::uint32 value) {
+  
+  seqnum_ = value;
+  // @@protoc_insertion_point(field_set:red.hooks.messages.RequestNote.seqNum)
+}
+
+// optional uint32 flags = 6;
+void RequestNote::clear_flags() {
+  flags_ = 0u;
+}
+::google::protobuf::uint32 RequestNote::flags() const {
+  // @@protoc_insertion_point(field_get:red.hooks.messages.RequestNote.flags)
+  return flags_;
+}
+void RequestNote::set_flags(::google::protobuf::uint32 value) {
+  
+  flags_ = value;
+  // @@protoc_insertion_point(field_set:red.hooks.messages.RequestNote.flags)
+}
+
 // repeated .red.hooks.messages.Item items = 10;
 int RequestNote::items_size() const {
   return items_.size();
@@ -4526,15 +4305,6 @@ RequestNote::items() const {
   return items_;
 }
 
-bool RequestNote::has_id() const {
-  return id_case() != ID_NOT_SET;
-}
-void RequestNote::clear_has_id() {
-  _oneof_case_[0] = ID_NOT_SET;
-}
-RequestNote::IdCase RequestNote::id_case() const {
-  return RequestNote::IdCase(_oneof_case_[0]);
-}
 inline const RequestNote* RequestNote::internal_default_instance() {
   return &RequestNote_default_instance_.get();
 }

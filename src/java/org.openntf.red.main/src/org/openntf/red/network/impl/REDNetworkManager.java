@@ -18,21 +18,41 @@ import org.openntf.red.network.NetworkManagerException;
 import javolution.util.FastMap;
 
 /**
+ * Default implementation of the Network Manager.
+ * 
  * @author Vladimir Kornienko
- *
+ * @see INetworkManager
+ * @since 0.4.0
  */
 public class REDNetworkManager implements INetworkManager {
-	
-	private static Logger log = Logger.getLogger(REDNetworkManager.class.getName());
-	
-	private static REDNetworkManager _instance = null;
 
-	private ServerSocketFactory sofactory;//, sslsofactory;
+	/** Logger object. */
+	private static final Logger log = Logger.getLogger(REDNetworkManager.class.getName());
+	/**
+	 * Instance of this Network Manager (only one such object should exist in a
+	 * runtime).
+	 */
+	private static REDNetworkManager _instance = null;
+	/** Server socket factory. */
+	private ServerSocketFactory sofactory;// , sslsofactory;
+	/** SSL server socket factory */
 	private SSLServerSocketFactory sslsofactory;
+	/** A map of occupied network ports and tasks that are bound to them. */
 	private FastMap<Integer, IServerTask> claimedPorts;
+	/**
+	 * A map of occupied network ports and server sockets that are listening to
+	 * them.
+	 */
 	private FastMap<Integer, ServerSocket> openSockets;
+	/** Indicator whether the service is running. */
 	private boolean _started;
-	
+
+	/**
+	 * Default function to create a Network Manager instance.
+	 * 
+	 * @return Instance of a Network Manager.
+	 * @since 0.4.0
+	 */
 	public static REDNetworkManager getInstance() {
 		synchronized (REDNetworkManager.class) {
 			if (null == _instance) {
@@ -41,18 +61,17 @@ public class REDNetworkManager implements INetworkManager {
 		}
 		return _instance;
 	}
-	
+
 	/**
+	 * Default constructor.
 	 * 
+	 * @since 0.4.0
 	 */
 	private REDNetworkManager() {
 		// TODO Auto-generated constructor stub
 		_started = false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.core.IREDService#startup()
-	 */
 	@Override
 	public void startup() {
 		log.info("Network Manager: Starting...");
@@ -68,9 +87,6 @@ public class REDNetworkManager implements INetworkManager {
 		log.info("Network Manager: Started.");
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.core.IREDService#shutdown()
-	 */
 	@Override
 	public void shutdown() {
 		log.info("Network Manager: Stopping...");
@@ -78,21 +94,16 @@ public class REDNetworkManager implements INetworkManager {
 		if (!_started)
 			throw new NetworkManagerException("Network Manager is not running");
 		claimedPorts.clear();
+		// TODO close all server sockets
 		_started = false;
 		log.info("Network Manager: Stopped.");
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.core.IREDService#isStarted()
-	 */
 	@Override
 	public boolean isStarted() {
 		return _started;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.network.INetworkManager#claimPort(java.lang.Runnable, int)
-	 */
 	@Override
 	public ServerSocket claimPort(IServerTask task, int port) {
 		if (!_started)
@@ -105,19 +116,16 @@ public class REDNetworkManager implements INetworkManager {
 		log.finer("Network Manager: Reserving port number " + port + " for task: " + task.getClass().getName());
 		try {
 			socket = sofactory.createServerSocket(port);
-			//socket = new ServerSocket(port);
+			// socket = new ServerSocket(port);
 			openSockets.put(oport, socket);
 		} catch (IOException e) {
 			log.throwing(REDNetworkManager.class.getName(), "claimPort(IServerTask, int)", e);
 		}
 		log.finer("Network Manager: Reserved port number " + port + " for task: " + task.getClass().getName());
-		
+
 		return socket;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.network.INetworkManager#claimPort(java.lang.Runnable, int, int)
-	 */
 	@Override
 	public ServerSocket claimPort(IServerTask task, int port, int backlog) {
 		if (!_started)
@@ -126,9 +134,6 @@ public class REDNetworkManager implements INetworkManager {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.network.INetworkManager#claimPort(java.lang.Runnable, int, int, java.net.InetAddress)
-	 */
 	@Override
 	public ServerSocket claimPort(IServerTask task, int port, int backlog, InetAddress addr) {
 		if (!_started)
@@ -137,9 +142,6 @@ public class REDNetworkManager implements INetworkManager {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.network.INetworkManager#releasePort(java.net.ServerSocket)
-	 */
 	@Override
 	public void releasePort(ServerSocket socket) {
 		if (!_started)
@@ -148,9 +150,6 @@ public class REDNetworkManager implements INetworkManager {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.network.INetworkManager#releasePort(int)
-	 */
 	@Override
 	public void releasePort(int port) {
 		if (!_started)
@@ -160,7 +159,7 @@ public class REDNetworkManager implements INetworkManager {
 		ServerSocket socket = openSockets.get(oport);
 		if (null != socket) {
 			log.fine("Network Manager: Releasing port " + port + ".");
-			if(!socket.isClosed())
+			if (!socket.isClosed())
 				try {
 					socket.close();
 				} catch (IOException e) {
@@ -170,8 +169,8 @@ public class REDNetworkManager implements INetworkManager {
 		openSockets.remove(oport);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.network.INetworkManager#isPortFree(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isPortFree(int port) {
@@ -181,9 +180,6 @@ public class REDNetworkManager implements INetworkManager {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.network.INetworkManager#isPortUnclaimed(int)
-	 */
 	@Override
 	public boolean isPortUnclaimed(int port) {
 		if (!_started)
@@ -191,9 +187,6 @@ public class REDNetworkManager implements INetworkManager {
 		return !claimedPorts.containsKey(Integer.valueOf(port));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.network.INetworkManager#isPortAvailable(int)
-	 */
 	@Override
 	public boolean isPortAvailable(int port) {
 		if (!_started)

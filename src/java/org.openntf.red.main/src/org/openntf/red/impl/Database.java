@@ -33,6 +33,7 @@ import org.openntf.red.design.DatabaseDesign;
 import org.openntf.red.events.EnumEvent;
 import org.openntf.red.events.IDominoEvent;
 import org.openntf.red.events.IDominoEventFactory;
+import org.openntf.red.nsf.endpoint.Note;
 //import org.openntf.red.events.IDominoListener;
 import org.openntf.red.schema.IDatabaseSchema;
 import org.openntf.red.transactions.IDatabaseTransaction;
@@ -43,22 +44,36 @@ import org.openntf.red.util.HexConverter;
 import lotus.notes.addins.DominoServer;
 
 /**
+ * Entity representing a database.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see org.openntf.red.Database
  */
 public class Database extends Base<org.openntf.red.Session> implements org.openntf.red.Database {
-	
-	private static Logger log = Logger.getLogger(Database.class.getName());
 
+	/** Logger object. */
+	private static final Logger log = Logger.getLogger(Database.class.getName());
+	/** Back-end object. */
 	@SuppressWarnings("rawtypes")
 	private org.openntf.red.nsf.endpoint.Database beObject;
+	/** Path to the database (relative to "server data root"). */
 	private String dbPath;
-	
+
 	/**
+	 * Default constructor.
 	 * 
+	 * @param _parent
+	 *            Parent session.
+	 * @param dbpath
+	 *            Path to the database.
+	 * @param _beObject
+	 *            Back-end object used to manipulate data.
+	 * @since 0.4.0
 	 */
 	@SuppressWarnings("rawtypes")
-	protected Database(org.openntf.red.impl.Session _parent, String dbpath, org.openntf.red.nsf.endpoint.Database _beObject) {
+	protected Database(org.openntf.red.impl.Session _parent, String dbpath,
+			org.openntf.red.nsf.endpoint.Database _beObject) {
 		// TODO Auto-generated constructor stub
 		super(_parent, Base.NOTES_DATABASE);
 		dbPath = dbpath;
@@ -66,8 +81,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		log.finest("API Database finished init...");
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Base#isDead()
+	/**
+	 * Unused. Under consideration.
 	 */
 	@Override
 	public boolean isDead() {
@@ -75,17 +90,19 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.SessionDescendant#getAncestorSession()
+	/**
+	 * Returns the ancestor session.
+	 * 
+	 * @return Ancestor session
+	 * @since 0.4.0
 	 */
 	@Override
 	public Session getAncestorSession() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ExceptionDetails#fillExceptionDetails(java.util.List)
+	/**
+	 * Unused. Under consideration.
 	 */
 	@Override
 	public void fillExceptionDetails(List<Entry> result) {
@@ -93,8 +110,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
+	/**
+	 * Unused. Under consideration.
 	 */
 	@Override
 	public void readExternal(ObjectInput arg0) throws IOException, ClassNotFoundException {
@@ -102,8 +119,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
+	/**
+	 * Unused. Under consideration.
 	 */
 	@Override
 	public void writeExternal(ObjectOutput arg0) throws IOException {
@@ -111,8 +128,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getACLActivityLog()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getACLActivityLog() {
@@ -120,8 +137,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#compact()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int compact() {
@@ -129,8 +146,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#compactWithOptions(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int compactWithOptions(int options) {
@@ -138,8 +155,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#compactWithOptions(int, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int compactWithOptions(int options, String spaceThreshold) {
@@ -147,8 +164,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#compactWithOptions(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int compactWithOptions(String options) {
@@ -156,8 +173,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createCopy(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Database createCopy(String server, String dbFile) {
@@ -165,8 +182,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createCopy(java.lang.String, java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Database createCopy(String server, String dbFile, int maxSize) {
@@ -174,17 +191,25 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createDocument()
+	/**
+	 * Creates a new document within this database.
+	 * 
+	 * @return New document
+	 * @since 0.4.0
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Document createDocument() {
+		Note note = beObject.createNote(false);
+		if (null == note)
+			return null;
+
 		// TODO Auto-generated method stub
-		return null;
+		return new org.openntf.red.impl.Document(this, note);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createDocumentCollection()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection createDocumentCollection() {
@@ -192,8 +217,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createFromTemplate(java.lang.String, java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Database createFromTemplate(String server, String dbFile, boolean inherit) {
@@ -201,8 +226,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createFromTemplate(java.lang.String, java.lang.String, boolean, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Database createFromTemplate(String server, String dbFile, boolean inherit, int maxSize) {
@@ -210,8 +235,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createFTIndex(int, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void createFTIndex(int options, boolean recreate) {
@@ -219,8 +244,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createNoteCollection(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public NoteCollection createNoteCollection(boolean selectAllFlag) {
@@ -228,8 +253,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createOutline(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Outline createOutline(String name) {
@@ -237,8 +262,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createOutline(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Outline createOutline(String name, boolean defaultOutline) {
@@ -246,8 +271,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createQueryView(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View createQueryView(String viewName, String query) {
@@ -255,8 +280,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createQueryView(java.lang.String, java.lang.String, lotus.domino.View)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View createQueryView(String viewName, String query, lotus.domino.View templateView) {
@@ -264,8 +289,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createQueryView(java.lang.String, java.lang.String, lotus.domino.View, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View createQueryView(String viewName, String query, lotus.domino.View templateView,
@@ -274,8 +299,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createReplica(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Database createReplica(String server, String dbFile) {
@@ -283,8 +308,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createView()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View createView() {
@@ -292,8 +317,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createView(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View createView(String viewName) {
@@ -301,8 +326,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createView(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View createView(String viewName, String selectionFormula) {
@@ -310,8 +335,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createView(java.lang.String, java.lang.String, lotus.domino.View)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View createView(String viewName, String selectionFormula, lotus.domino.View templateView) {
@@ -319,8 +344,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createView(java.lang.String, java.lang.String, lotus.domino.View, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View createView(String viewName, String selectionFormula, lotus.domino.View templateView,
@@ -329,8 +354,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#enableFolder(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void enableFolder(String folder) {
@@ -338,8 +363,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#fixup()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void fixup() {
@@ -347,8 +372,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#fixup(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void fixup(int options) {
@@ -356,8 +381,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTDomainSearch(java.lang.String, int, int, int, int, int, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document FTDomainSearch(String query, int maxDocs, int sortOpt, int otherOpt, int start, int count,
@@ -366,8 +391,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTSearch(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection FTSearch(String query) {
@@ -375,8 +400,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTSearch(java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection FTSearch(String query, int maxDocs) {
@@ -384,8 +409,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTSearch(java.lang.String, int, int, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection FTSearch(String query, int maxDocs, int sortOpt, int otherOpt) {
@@ -393,8 +418,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTSearch(java.lang.String, int, org.openntf.red.Database.FTSortOption, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection FTSearch(String query, int maxDocs, FTSortOption sortOpt, int otherOpt) {
@@ -402,8 +427,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTSearchRange(java.lang.String, int, int, int, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection FTSearchRange(String query, int maxDocs, int sortOpt, int otherOpt, int start) {
@@ -411,8 +436,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTSearchRange(java.lang.String, int, org.openntf.red.Database.FTSortOption, int, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection FTSearchRange(String query, int maxDocs, FTSortOption sortOpt, int otherOpt, int start) {
@@ -420,8 +445,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getACL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ACL getACL() {
@@ -429,8 +454,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getAgent(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Agent getAgent(String name) {
@@ -438,8 +463,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getAgents()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Agent> getAgents() {
@@ -447,8 +472,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getAllDocuments()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getAllDocuments() {
@@ -456,8 +481,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getAllReadDocuments()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getAllReadDocuments() {
@@ -465,8 +490,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getAllReadDocuments(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getAllReadDocuments(String userName) {
@@ -474,8 +499,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getAllUnreadDocuments()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getAllUnreadDocuments() {
@@ -483,8 +508,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getAllUnreadDocuments(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getAllUnreadDocuments(String userName) {
@@ -492,8 +517,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getCategories()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getCategories() {
@@ -501,8 +526,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getCreated()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getCreated() {
@@ -510,8 +535,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getCurrentAccessLevel()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getCurrentAccessLevel() {
@@ -519,8 +544,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDB2Schema()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getDB2Schema() {
@@ -528,8 +553,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDesignTemplateName()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getDesignTemplateName() {
@@ -537,21 +562,32 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentByID(java.lang.String)
+	/**
+	 * Returns a document by Note ID.
+	 * 
+	 * @param noteid
+	 *            Note ID
+	 * @return Existing document or <code>NULL</code>
+	 * @since 0.4.0
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getDocumentByID(String noteid) {
 		org.openntf.red.nsf.endpoint.View view = beObject.getIDTableView();
-		org.openntf.red.nsf.endpoint.ViewEntryCollection vecoll = view.getAllEntriesByKey(HexConverter.toInteger(noteid), true);
+		org.openntf.red.nsf.endpoint.ViewEntryCollection vecoll = view
+				.getAllEntriesByKey(HexConverter.toInteger(noteid), true);
 		org.openntf.red.nsf.endpoint.ViewEntry entry = vecoll.getFirstEntry();
 		String unid = entry.getDocumentUNID();
 		return getDocumentByUNID(unid);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentByUNID(java.lang.String)
+	/**
+	 * Returns a document by UNID.
+	 * 
+	 * @param unid
+	 *            UNID
+	 * @return Existing document or <code>NULL</code>
+	 * @since 0.4.0
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -561,12 +597,12 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		org.openntf.red.nsf.endpoint.Note note = beObject.getNoteByUNID(unid);
 		if (null == note)
 			return null;
-		
+
 		return new org.openntf.red.impl.Document(this, note);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentByURL(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getDocumentByURL(String url, boolean reload) {
@@ -574,8 +610,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentByURL(java.lang.String, boolean, boolean, boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getDocumentByURL(String url, boolean reload, boolean reloadIfModified, boolean urlList,
@@ -585,8 +621,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getFileFormat()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getFileFormat() {
@@ -594,8 +630,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getFileName()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getFileName() {
@@ -603,8 +639,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getFilePath()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getFilePath() {
@@ -612,8 +648,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getFolderReferencesEnabled()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean getFolderReferencesEnabled() {
@@ -621,8 +657,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getForm(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Form getForm(String name) {
@@ -630,8 +666,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getForms()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Form> getForms() {
@@ -639,8 +675,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getFTIndexFrequency()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getFTIndexFrequency() {
@@ -648,8 +684,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getHttpURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getHttpURL() {
@@ -657,8 +693,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getLastFixup()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getLastFixup() {
@@ -666,8 +702,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getLastFTIndexed()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getLastFTIndexed() {
@@ -675,8 +711,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getLastModified()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getLastModified() {
@@ -684,8 +720,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getLimitRevisions()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public double getLimitRevisions() {
@@ -693,8 +729,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getLimitUpdatedBy()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public double getLimitUpdatedBy() {
@@ -702,8 +738,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getListInDbCatalog()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean getListInDbCatalog() {
@@ -711,8 +747,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getManagers()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getManagers() {
@@ -720,8 +756,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getMaxSize()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public long getMaxSize() {
@@ -729,8 +765,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getModifiedDocuments()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getModifiedDocuments() {
@@ -738,8 +774,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getModifiedDocuments(lotus.domino.DateTime)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getModifiedDocuments(lotus.domino.DateTime since) {
@@ -747,8 +783,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getModifiedDocuments(lotus.domino.DateTime, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getModifiedDocuments(lotus.domino.DateTime since, int noteClass) {
@@ -756,8 +792,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getNotesURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getNotesURL() {
@@ -765,8 +801,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getOption(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean getOption(int optionName) {
@@ -774,8 +810,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getOutline(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Outline getOutline(String outlineName) {
@@ -783,16 +819,19 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getParent()
+	/**
+	 * Returns the parent (Session).
+	 * 
+	 * @return Parent session
+	 * @since 0.4.0
 	 */
 	@Override
 	public Session getParent() {
 		return parent;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getPercentUsed()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public double getPercentUsed() {
@@ -800,8 +839,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getProfileDocCollection(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getProfileDocCollection(String profileName) {
@@ -809,8 +848,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getProfileDocument(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getProfileDocument(String profileName, String profileKey) {
@@ -818,8 +857,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getReplicaID()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getReplicaID() {
@@ -827,8 +866,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getReplicationInfo()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Replication getReplicationInfo() {
@@ -836,8 +875,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getServer()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getServer() {
@@ -845,8 +884,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getSize()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public double getSize() {
@@ -854,8 +893,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getSizeQuota()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getSizeQuota() {
@@ -863,8 +902,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getSizeWarning()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public long getSizeWarning() {
@@ -872,8 +911,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getTemplateName()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getTemplateName() {
@@ -881,8 +920,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getTitle()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getTitle() {
@@ -890,8 +929,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getType()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getType() {
@@ -899,8 +938,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getUndeleteExpireTime()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getUndeleteExpireTime() {
@@ -908,8 +947,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getURL() {
@@ -917,8 +956,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getURLHeaderInfo(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getURLHeaderInfo(String url, String header, String webUser, String webPassword, String proxyUser,
@@ -927,8 +966,13 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getView(java.lang.String)
+	/**
+	 * Returns a view handler object for a view name.
+	 * 
+	 * @param name
+	 *            View name
+	 * @return View handler object
+	 * @since 0.4.0
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -936,12 +980,12 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		org.openntf.red.nsf.endpoint.View view = beObject.getView(name);
 		if (null == view)
 			return null;
-		
+
 		return new org.openntf.red.impl.View(this, name, view);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getViews()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<View> getViews() {
@@ -949,8 +993,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#grantAccess(java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void grantAccess(String name, int level) {
@@ -958,8 +1002,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isAllowOpenSoftDeleted()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isAllowOpenSoftDeleted() {
@@ -967,8 +1011,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isClusterReplication()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isClusterReplication() {
@@ -976,8 +1020,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isConfigurationDirectory()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isConfigurationDirectory() {
@@ -985,8 +1029,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isCurrentAccessPublicReader()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isCurrentAccessPublicReader() {
@@ -994,8 +1038,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isCurrentAccessPublicWriter()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isCurrentAccessPublicWriter() {
@@ -1003,8 +1047,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isDB2()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDB2() {
@@ -1012,8 +1056,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isDelayUpdates()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDelayUpdates() {
@@ -1021,8 +1065,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isDesignLockingEnabled()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDesignLockingEnabled() {
@@ -1030,8 +1074,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isDirectoryCatalog()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDirectoryCatalog() {
@@ -1039,8 +1083,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isDocumentLockingEnabled()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDocumentLockingEnabled() {
@@ -1048,8 +1092,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isFTIndexed()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isFTIndexed() {
@@ -1057,8 +1101,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isInMultiDbIndexing()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isInMultiDbIndexing() {
@@ -1066,8 +1110,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isInService()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isInService() {
@@ -1075,8 +1119,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isLink()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isLink() {
@@ -1084,8 +1128,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isMultiDbSearch()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isMultiDbSearch() {
@@ -1093,8 +1137,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isOpen()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isOpen() {
@@ -1102,8 +1146,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isPendingDelete()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isPendingDelete() {
@@ -1111,8 +1155,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isPrivateAddressBook()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isPrivateAddressBook() {
@@ -1120,8 +1164,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isPublicAddressBook()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isPublicAddressBook() {
@@ -1129,8 +1173,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#markForDelete()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markForDelete() {
@@ -1138,8 +1182,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#open()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean open() {
@@ -1147,8 +1191,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#openByReplicaID(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean openByReplicaID(String server, String replicaId) {
@@ -1156,8 +1200,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#openIfModified(java.lang.String, java.lang.String, lotus.domino.DateTime)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean openIfModified(String server, String dbFile, lotus.domino.DateTime modifiedSince) {
@@ -1165,8 +1209,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#openWithFailover(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean openWithFailover(String server, String dbFile) {
@@ -1174,8 +1218,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#queryAccess(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int queryAccess(String name) {
@@ -1183,8 +1227,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#queryAccessPrivileges(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int queryAccessPrivileges(String name) {
@@ -1192,8 +1236,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#queryAccessRoles(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> queryAccessRoles(String name) {
@@ -1201,8 +1245,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#remove()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void remove() {
@@ -1210,8 +1254,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#removeFTIndex()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void removeFTIndex() {
@@ -1219,8 +1263,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#replicate(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean replicate(String server) {
@@ -1228,8 +1272,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#revokeAccess(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void revokeAccess(String name) {
@@ -1237,8 +1281,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#search(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection search(String formula) {
@@ -1246,8 +1290,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#search(java.lang.String, lotus.domino.DateTime)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection search(String formula, lotus.domino.DateTime startDate) {
@@ -1255,8 +1299,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#search(java.lang.String, lotus.domino.DateTime, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection search(String formula, lotus.domino.DateTime startDate, int maxDocs) {
@@ -1264,8 +1308,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setAllowOpenSoftDeleted(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setAllowOpenSoftDeleted(boolean flag) {
@@ -1273,8 +1317,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setCategories(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setCategories(String categories) {
@@ -1282,8 +1326,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setDelayUpdates(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setDelayUpdates(boolean flag) {
@@ -1291,8 +1335,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setDesignLockingEnabled(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setDesignLockingEnabled(boolean flag) {
@@ -1300,8 +1344,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setDocumentLockingEnabled(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setDocumentLockingEnabled(boolean flag) {
@@ -1309,8 +1353,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setFolderReferencesEnabled(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setFolderReferencesEnabled(boolean flag) {
@@ -1318,8 +1362,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setFTIndexFrequency(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setFTIndexFrequency(int frequency) {
@@ -1327,8 +1371,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setInMultiDbIndexing(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setInMultiDbIndexing(boolean flag) {
@@ -1336,8 +1380,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setInService(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setInService(boolean flag) {
@@ -1345,8 +1389,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setLimitRevisions(double)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setLimitRevisions(double revisions) {
@@ -1354,8 +1398,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setLimitUpdatedBy(double)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setLimitUpdatedBy(double updatedBys) {
@@ -1363,8 +1407,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setListInDbCatalog(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setListInDbCatalog(boolean flag) {
@@ -1372,8 +1416,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setOption(int, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setOption(int optionName, boolean flag) {
@@ -1381,8 +1425,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setSizeQuota(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setSizeQuota(int quota) {
@@ -1390,8 +1434,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setSizeWarning(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setSizeWarning(int warning) {
@@ -1399,8 +1443,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setTitle(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setTitle(String title) {
@@ -1408,8 +1452,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setUndeleteExpireTime(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setUndeleteExpireTime(int hours) {
@@ -1417,8 +1461,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#sign()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign() {
@@ -1426,8 +1470,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#sign(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign(int documentType) {
@@ -1435,8 +1479,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#sign(int, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign(int documentType, boolean existingSigsOnly) {
@@ -1444,8 +1488,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#sign(int, boolean, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign(int documentType, boolean existingSigsOnly, String name) {
@@ -1453,8 +1497,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#sign(int, boolean, java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign(int documentType, boolean existingSigsOnly, String name, boolean nameIsNoteid) {
@@ -1462,8 +1506,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#updateFTIndex(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void updateFTIndex(boolean create) {
@@ -1471,8 +1515,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getEventFactory()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public IDominoEventFactory getEventFactory() {
@@ -1480,8 +1524,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setEventFactory(org.openntf.red.events.IDominoEventFactory)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setEventFactory(IDominoEventFactory factory) {
@@ -1489,8 +1533,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#generateEvent(org.openntf.red.events.EnumEvent, org.openntf.red.Base, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public IDominoEvent generateEvent(EnumEvent event, org.openntf.red.Base source, Object payload) {
@@ -1498,8 +1542,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createMergeableDocumentCollection()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection createMergeableDocumentCollection() {
@@ -1507,8 +1551,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getApiPath()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getApiPath() {
@@ -1516,8 +1560,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#compactWithOptions(java.util.Set)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int compactWithOptions(Set<CompactOption> options) {
@@ -1525,8 +1569,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#compactWithOptions(java.util.Set, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int compactWithOptions(Set<CompactOption> options, String spaceThreshold) {
@@ -1534,8 +1578,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createDocument(java.lang.Object[])
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document createDocument(Object... keyValuePairs) {
@@ -1543,8 +1587,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#createFTIndex(java.util.Set, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void createFTIndex(Set<FTIndexOption> options, boolean recreate) {
@@ -1552,8 +1596,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#fixup(java.util.Set)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void fixup(Set<FixupOption> options) {
@@ -1561,8 +1605,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTDomainSearch(java.lang.String, int, org.openntf.red.Database.FTDomainSortOption, java.util.Set, int, int, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document FTDomainSearch(String query, int maxDocs, FTDomainSortOption sortOpt,
@@ -1571,8 +1615,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTDomainSearch(java.lang.String, int, org.openntf.red.Database.FTDomainSortOption, int, int, int, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document FTDomainSearch(String query, int maxDocs, FTDomainSortOption sortOpt, int otherOpt, int start,
@@ -1581,8 +1625,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTSearch(java.lang.String, int, org.openntf.red.Database.FTSortOption, java.util.Set)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection FTSearch(String query, int maxDocs, FTSortOption sortOpt, Set<FTSearchOption> otherOpt) {
@@ -1590,8 +1634,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#FTSearchRange(java.lang.String, int, org.openntf.red.Database.FTSortOption, java.util.Set, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection FTSearchRange(String query, int maxDocs, FTSortOption sortOpt,
@@ -1600,8 +1644,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDesign()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DatabaseDesign getDesign() {
@@ -1609,8 +1653,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getXPageSharedDesignTemplate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Database getXPageSharedDesignTemplate() throws FileNotFoundException {
@@ -1618,8 +1662,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentWithKey(java.io.Serializable)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getDocumentWithKey(Serializable key) {
@@ -1627,8 +1671,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentByKey(java.io.Serializable)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getDocumentByKey(Serializable key) {
@@ -1636,8 +1680,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentByKey(java.io.Serializable, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getDocumentByKey(Serializable key, boolean createOnFail) {
@@ -1645,8 +1689,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentWithKey(java.io.Serializable, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Document getDocumentWithKey(Serializable key, boolean createOnFail) {
@@ -1654,8 +1698,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getModifiedDocuments(lotus.domino.DateTime, org.openntf.red.Database.ModifiedDocClass)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getModifiedDocuments(lotus.domino.DateTime since, ModifiedDocClass noteClass) {
@@ -1663,8 +1707,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getModifiedDocuments(java.util.Date, org.openntf.red.Database.ModifiedDocClass)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getModifiedDocuments(Date since, ModifiedDocClass noteClass) {
@@ -1672,8 +1716,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getModifiedDocuments(java.util.Date)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getModifiedDocuments(Date since) {
@@ -1681,8 +1725,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getModifiedNoteCount(java.util.Date, java.util.Set)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getModifiedNoteCount(Date since, Set<SelectOption> noteClass) {
@@ -1690,8 +1734,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getModifiedNoteCount(java.util.Date)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getModifiedNoteCount(Date since) {
@@ -1699,8 +1743,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getLastModifiedDate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Date getLastModifiedDate() {
@@ -1708,8 +1752,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getLastFixupDate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Date getLastFixupDate() {
@@ -1717,8 +1761,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getLastFTIndexedDate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Date getLastFTIndexedDate() {
@@ -1726,8 +1770,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getOption(org.openntf.red.Database.DBOption)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean getOption(DBOption optionName) {
@@ -1735,8 +1779,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#grantAccess(java.lang.String, org.openntf.red.ACL.Level)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void grantAccess(String name, Level level) {
@@ -1744,8 +1788,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setFTIndexFrequency(org.openntf.red.Database.FTIndexFrequency)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setFTIndexFrequency(FTIndexFrequency frequency) {
@@ -1753,8 +1797,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setOption(org.openntf.red.Database.DBOption, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setOption(DBOption optionName, boolean flag) {
@@ -1762,8 +1806,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#sign(org.openntf.red.Database.SignDocType)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign(SignDocType documentType) {
@@ -1771,8 +1815,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#sign(org.openntf.red.Database.SignDocType, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign(SignDocType documentType, boolean existingSigsOnly) {
@@ -1780,8 +1824,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#sign(org.openntf.red.Database.SignDocType, boolean, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign(SignDocType documentType, boolean existingSigsOnly, String name) {
@@ -1789,8 +1833,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#sign(org.openntf.red.Database.SignDocType, boolean, java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign(SignDocType documentType, boolean existingSigsOnly, String name, boolean nameIsNoteid) {
@@ -1798,8 +1842,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#startTransaction()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public IDatabaseTransaction startTransaction() {
@@ -1807,8 +1851,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#closeTransaction()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void closeTransaction() {
@@ -1816,8 +1860,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getTransaction()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public IDatabaseTransaction getTransaction() {
@@ -1825,8 +1869,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getUNID(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getUNID(String noteid) {
@@ -1834,8 +1878,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getUNID(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getUNID(int noteid) {
@@ -1843,27 +1887,32 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentByID(int, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Document getDocumentByID(int noteid) {
 		log.finest("Database: looking for noteid " + noteid);
 		org.openntf.red.nsf.endpoint.View view = beObject.getIDTableView();
-		if (null == view) return null;
-		org.openntf.red.nsf.endpoint.ViewEntryCollection vecoll = view.getAllEntriesByKey(Integer.valueOf(noteid), true);
-		if (null == vecoll) return null;
+		if (null == view)
+			return null;
+		org.openntf.red.nsf.endpoint.ViewEntryCollection vecoll = view.getAllEntriesByKey(Integer.valueOf(noteid),
+				true);
+		if (null == vecoll)
+			return null;
 		org.openntf.red.nsf.endpoint.ViewEntry entry = vecoll.getFirstEntry();
-		if (null == entry) return null;
+		if (null == entry)
+			return null;
 		String unid = entry.getDocumentUNID();
-		// TODO add exception throws around here, because it's the core views impacted
+		// TODO add exception throws around here, because it's the core views
+		// impacted
 		log.finest("Got UNID: " + unid);
 		return getDocumentByUNID(unid);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setTransaction(org.openntf.red.transactions.IDatabaseTransaction)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setTransaction(IDatabaseTransaction txn) {
@@ -1871,8 +1920,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDominoServer()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DominoServer getDominoServer() {
@@ -1880,8 +1929,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#refreshDesign()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void refreshDesign() {
@@ -1889,8 +1938,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#openMail()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void openMail() {
@@ -1898,8 +1947,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getMail()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Database getMail() {
@@ -1907,8 +1956,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getDocumentMap()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Map<Serializable, Document> getDocumentMap() {
@@ -1916,8 +1965,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getSchema()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public IDatabaseSchema getSchema() {
@@ -1925,8 +1974,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setSchema(org.openntf.red.schema.IDatabaseSchema)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setSchema(IDatabaseSchema schema) {
@@ -1934,8 +1983,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#isReplicationDisabled()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isReplicationDisabled() {
@@ -1943,8 +1992,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getHttpURL(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getHttpURL(boolean usePath) {
@@ -1952,8 +2001,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getAutoMime()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public AutoMime getAutoMime() {
@@ -1961,8 +2010,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#setAutoMime(org.openntf.red.util.AutoMime)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setAutoMime(AutoMime autoMime) {
@@ -1970,8 +2019,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getLocale()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Locale getLocale() {
@@ -1979,8 +2028,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getMetaReplicaID()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getMetaReplicaID() {
@@ -1988,8 +2037,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getTypeEx()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Type getTypeEx() {
@@ -1997,8 +2046,8 @@ public class Database extends Base<org.openntf.red.Session> implements org.openn
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Database#getView(org.openntf.red.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View getView(Document viewDocument) {

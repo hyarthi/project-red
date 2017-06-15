@@ -16,24 +16,37 @@ import org.openntf.red.View;
 import org.openntf.red.ViewEntryCollection;
 
 /**
+ * Entity representing a view entry.
+ * 
  * @author Vladimir Kornienko
- *
+ * @see org.openntf.red.ViewEntry
+ * @since 0.4.0
  */
 public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> implements org.openntf.red.ViewEntry {
-	
-	private static Logger log = Logger.getLogger(ViewEntry.class.getName());
-	
+
+	/** Logger object. */
+	private static final Logger log = Logger.getLogger(ViewEntry.class.getName());
+	/** Back-end object used to manipulate data. */
 	@SuppressWarnings("rawtypes")
 	private org.openntf.red.nsf.endpoint.ViewEntry beObject;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param prnt
+	 *            Parent ViewEntryCollection
+	 * @param _beObject
+	 *            Back-end object
+	 * @since 0.4.0
+	 */
 	@SuppressWarnings("rawtypes")
 	protected ViewEntry(ViewEntryCollection prnt, org.openntf.red.nsf.endpoint.ViewEntry _beObject) {
 		super(prnt, Base.NOTES_VIEWENTRY);
 		beObject = _beObject;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Base#isDead()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDead() {
@@ -41,24 +54,30 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.DatabaseDescendant#getAncestorDatabase()
+	/**
+	 * Returns the ancestor database.
+	 * 
+	 * @return Ancestor database
+	 * @since 0.4.0
 	 */
 	@Override
 	public Database getAncestorDatabase() {
 		return parent.getAncestorDatabase();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.SessionDescendant#getAncestorSession()
+	/**
+	 * Returns the ancestor session.
+	 * 
+	 * @return Ancestor session.
+	 * @since 0.4.0
 	 */
 	@Override
 	public Session getAncestorSession() {
 		return parent.getAncestorSession();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#clear()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void clear() {
@@ -66,8 +85,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#containsKey(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsKey(Object key) {
@@ -75,8 +94,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#containsValue(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsValue(Object value) {
@@ -84,8 +103,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#entrySet()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Set<java.util.Map.Entry<String, Object>> entrySet() {
@@ -93,8 +112,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#equals(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean equals(Object o) {
@@ -102,8 +121,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#get(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object get(Object key) {
@@ -111,8 +130,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#hashCode()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int hashCode() {
@@ -120,8 +139,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#isEmpty()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -129,8 +148,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#keySet()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Set<String> keySet() {
@@ -138,8 +157,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#put(java.lang.Object, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object put(String key, Object value) {
@@ -147,8 +166,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#putAll(java.util.Map)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void putAll(Map<? extends String, ? extends Object> m) {
@@ -156,8 +175,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#remove(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object remove(Object key) {
@@ -165,8 +184,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#size()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int size() {
@@ -174,8 +193,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#values()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Collection<Object> values() {
@@ -183,8 +202,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getChildCount()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getChildCount() {
@@ -192,8 +211,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getColumnIndentLevel()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getColumnIndentLevel() {
@@ -201,8 +220,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getColumnValues()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Object> getColumnValues() {
@@ -210,8 +229,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getDescendantCount()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getDescendantCount() {
@@ -219,8 +238,12 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getDocument()
+	/**
+	 * Returns the document represented by this view entry.
+	 * 
+	 * @return Document represented by this view entry. Null if the entry does
+	 *         not represent a document.
+	 * @since 0.4.0
 	 */
 	@Override
 	public Document getDocument() {
@@ -228,8 +251,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return getAncestorDatabase().getDocumentByUNID(unid);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getFTSearchScore()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getFTSearchScore() {
@@ -237,8 +260,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getIndentLevel()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getIndentLevel() {
@@ -246,8 +269,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getNoteID()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getNoteID() {
@@ -255,8 +278,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getNoteIDAsInt()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getNoteIDAsInt() {
@@ -264,8 +287,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getParent()
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -274,8 +297,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getPosition(char)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getPosition(char separator) {
@@ -283,8 +306,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getRead()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean getRead() {
@@ -292,8 +315,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getRead(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean getRead(String userName) {
@@ -301,8 +324,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getSiblingCount()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getSiblingCount() {
@@ -310,8 +333,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getUniversalID()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getUniversalID() {
@@ -319,8 +342,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#isCategory()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isCategory() {
@@ -328,8 +351,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#isConflict()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isConflict() {
@@ -337,8 +360,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#isDocument()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDocument() {
@@ -346,8 +369,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#isPreferJavaDates()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isPreferJavaDates() {
@@ -355,8 +378,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#isTotal()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isTotal() {
@@ -364,8 +387,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#isValid()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isValid() {
@@ -373,8 +396,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#setPreferJavaDates(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setPreferJavaDates(boolean flag) {
@@ -382,17 +405,24 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getParentView()
+	/**
+	 * Returns the view that contains this view entry.
+	 * 
+	 * @return View that contains this view entry.
+	 * @since 0.4.0
 	 */
 	@Override
 	public View getParentView() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent.getParent();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getColumnValue(java.lang.String)
+	/**
+	 * Returns the value stored in the specified column of this entry.
+	 * 
+	 * @param columnName
+	 *            Name of the column
+	 * @return Value in the column
+	 * @since 0.4.0
 	 */
 	@Override
 	public Object getColumnValue(String columnName) {
@@ -400,8 +430,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return beObject.getColumnValue(columnName);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getColumnValuesMap()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Map<String, Object> getColumnValuesMap() {
@@ -409,8 +439,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getColumnValuesEx()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Collection<Object> getColumnValuesEx() {
@@ -418,8 +448,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getColumnValue(java.lang.String, java.lang.Class)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public <T> T getColumnValue(String columnName, Class<T> type) {
@@ -427,8 +457,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getPosition()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getPosition() {
@@ -436,8 +466,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getMetaversalID()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getMetaversalID() {
@@ -445,8 +475,8 @@ public class ViewEntry extends Base<org.openntf.red.ViewEntryCollection> impleme
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntry#getCategoryValue()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object getCategoryValue() {

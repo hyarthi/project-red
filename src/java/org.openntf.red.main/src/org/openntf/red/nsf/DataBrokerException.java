@@ -4,8 +4,10 @@
 package org.openntf.red.nsf;
 
 /**
+ * Exception produced by the Data Broker.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
  */
 public class DataBrokerException extends RuntimeException {
 
@@ -15,46 +17,49 @@ public class DataBrokerException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * Default constructor
 	 */
 	public DataBrokerException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @param arg0
+	 * Default constructor with message text
+	 * @param msg Message text
+	 * @since 0.4.0
 	 */
-	public DataBrokerException(String arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
+	public DataBrokerException(String msg) {
+		super(msg);
 	}
 
 	/**
-	 * @param arg0
+	 * Default constructor with error cause.
+	 * @param e Error cause
+	 * @since 0.4.0
 	 */
-	public DataBrokerException(Throwable arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
+	public DataBrokerException(Throwable e) {
+		super(e);
 	}
 
 	/**
-	 * @param arg0
-	 * @param arg1
+	 * Default constructor with message text & error cause.
+	 * @param msg Message text
+	 * @param e Error cause
+	 * @since 0.4.0
 	 */
-	public DataBrokerException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
+	public DataBrokerException(String msg, Throwable e) {
+		super(msg, e);
 	}
 
 	/**
-	 * @param arg0
-	 * @param arg1
-	 * @param arg2
-	 * @param arg3
+	 * Default constructor with message text, error cause, and flags: enable suppression and writable stack trace.
+	 * @param msg Message text
+	 * @param e Error cause
+	 * @param suppression Flag - enable suppression
+	 * @param writest Flag - writable stack trace
+	 * @since 0.4.0
 	 */
-	public DataBrokerException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
-		// TODO Auto-generated constructor stub
+	public DataBrokerException(String msg, Throwable e, boolean suppression, boolean writest) {
+		super(msg, e, suppression, writest);
 	}
 
 }

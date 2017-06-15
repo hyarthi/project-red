@@ -22,25 +22,53 @@ import org.openntf.red.nsf.impl.notes.NotesEndpointFactory;
 import org.openntf.red.nsf.impl.notes.remote.NotesRemoteEndpointFactory;
 
 /**
+ * Default data broker implementation.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see IDataBroker
  */
 public class NSFBroker implements IDataBroker {
+	/** Flag indicating that NSFBroker is initialized. */
 	private boolean _started;
+	/** Logger object. */
 	private static Logger log = Logger.getLogger(NSFBroker.class.getName());
+	/**
+	 * Object instance reference. Only 1 NSFBroker should exist in the runtime.
+	 */
 	private static NSFBroker _instance = null;
+	/** Registered endpoint factory map. */
 	private FastMap<String, EndpointFactory> factories = null;
+	/** Map of endpoint configs specified on the server. */
 	private FastMap<String, EndpointConfig> endpoints = null;
+	/** Endpoint cache. */
 	@SuppressWarnings("rawtypes")
 	private FastMap<String, Endpoint> epcache = null;
+	/**
+	 * Cache controllers (used to find out expired endpoints and candidates for
+	 * throwing out).
+	 */
 	private FastMap<String, Date> epcChrono = null;
+	/** Cache expiration period (ms). */
 	private long epcExpiration = -1;
+	/** Default endpoint name. */
 	private String defaultEndpoint = null;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @since 0.4.0
+	 */
 	private NSFBroker() {// TODO more logs everywhere... and comments too.
 		_started = false;
 	}
 
+	/**
+	 * Static function to get object reference.
+	 * 
+	 * @return NSFBroker instance.
+	 * @since 0.4.0
+	 */
 	public static NSFBroker getInstance() {
 		synchronized (NSFBroker.class) {
 			if (null == _instance) {
@@ -88,6 +116,11 @@ public class NSFBroker implements IDataBroker {
 		}
 	}
 
+	/**
+	 * Returns whether the NSFBroker is up and running.
+	 * 
+	 * @since 0.4.0
+	 */
 	public boolean isStarted() {
 		return _started;
 	}
@@ -120,6 +153,12 @@ public class NSFBroker implements IDataBroker {
 		}
 	}
 
+	/**
+	 * (Under consideration)
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public boolean hasEndpointFactory(String name) {
 		if (!_started)
 			return false;
@@ -186,6 +225,11 @@ public class NSFBroker implements IDataBroker {
 		return epcache.get(epcfg.name());
 	}
 
+	/**
+	 * (Under consideration)
+	 * 
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
 	private Endpoint getRemoteEndpoint() {
 		// for now only 1 remote endpoint config (& factory) is allowed
@@ -208,6 +252,11 @@ public class NSFBroker implements IDataBroker {
 		return factory.getEndpoint(null, epcfg);
 	}
 
+	/**
+	 * Initializes and registers all default endpoint factories.
+	 * 
+	 * @since 0.4.0
+	 */
 	private void initCoreFactories() {
 		// CouchDB endpoint factory
 		log.finest("NSF Broker: Registering CouchDB endpoint factory.");
@@ -220,6 +269,11 @@ public class NSFBroker implements IDataBroker {
 		this.registerEndpointFactory(ConfigProperties.REPOSITORY_TYPE_NSF_REMOTE, NotesRemoteEndpointFactory.class);
 	}
 
+	/**
+	 * Reads and records all endpoint configs defined on the server.
+	 * 
+	 * @since 0.4.0
+	 */
 	private void readEndpointConfigs() {
 		log.finest("NSF Broker: Getting list of endpoints registered locally.");
 		// get a list of available endpoints
@@ -255,6 +309,9 @@ public class NSFBroker implements IDataBroker {
 		log.fine("NSF Broker: Default local endpoint is " + defaultEndpoint + ".");
 	}
 
+	/**
+	 * (Under consideration)
+	 */
 	private void cleanEPCache() {
 		Date now = new Date();
 		for (String key : epcChrono.keySet()) {
@@ -266,6 +323,9 @@ public class NSFBroker implements IDataBroker {
 		}
 	}
 
+	/**
+	 * (Under consideration)
+	 */
 	synchronized void update() {
 		log.fine("NSF Broker: Running maintenance.");
 		log.fine("NSF Broker: Cleaning endpoint cache.");

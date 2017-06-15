@@ -10,6 +10,8 @@ import java.util.Vector;
 
 import org.openntf.red.exceptions.DataNotCompatibleException;
 import org.openntf.red.exceptions.ItemNotFoundException;
+import org.openntf.red.ext.HasBEObject;
+import org.openntf.red.nsf.endpoint.Field.Flags;
 import org.openntf.red.types.DatabaseDescendant;
 import org.openntf.red.util.AutoMime;
 import org.openntf.red.util.NoteClass;
@@ -20,8 +22,8 @@ import lotus.domino.NotesException;
  * <i>Initial code borrowed from OpenNTF Domino API.</i><br>
  * The Interface Document.
  */
-public interface Document
-		extends Base, lotus.domino.Document, DatabaseDescendant, Map<String, Object>, AsDocMap, ExceptionDetails {
+public interface Document extends Base, lotus.domino.Document, DatabaseDescendant, Map<String, Object>, AsDocMap,
+		ExceptionDetails, HasBEObject<org.openntf.red.nsf.endpoint.Note<?, ?, ?>> {
 
 	/*
 	 * (non-Javadoc)
@@ -322,7 +324,7 @@ public interface Document
 	// @SuppressWarnings("unchecked")
 	@Override
 	public Vector<Item> getItems();
-	
+
 	public List<Item> getItemsEx();
 
 	/*
@@ -332,7 +334,7 @@ public interface Document
 	 */
 	@Override
 	public Vector<Object> getItemValue(final String name);
-	
+
 	public List<Object> getItemValueEx(final String name);
 
 	/*
@@ -872,6 +874,10 @@ public interface Document
 	@Override
 	public Item replaceItemValueCustomData(final String itemName, final String dataTypeName, final Object userObj)
 			throws IOException;
+	
+	public Item replaceItemValueCustomData(final String itemName, final int dataTypeCode, final long flags, final Object value);
+	
+	public Item replaceItemValueCustomData(final String itemName, final int dataTypeCode, final List<Flags> flags, final Object value);
 
 	/*
 	 * (non-Javadoc)
@@ -1420,4 +1426,14 @@ public interface Document
 	 */
 	public void makeResponse(final lotus.domino.Document doc, String itemName);
 
+	/**
+	 * Sets the Note ID system value. This is a restricted function, since it modifies one of the primary note lookup params.
+	 * <p>
+	 * Implementations may vary, but the general principle is as follows: <br>
+	 * 1) If a Note ID coincides with an existing Note ID, the system attempts to overwrite the note with this one.<br>
+	 * 2) If a Note ID is set to 0, a new Note is created.
+	 * 
+	 * @param id Note ID value
+	 */
+	public void setNoteID(long id);
 }

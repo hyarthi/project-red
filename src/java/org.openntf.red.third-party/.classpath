@@ -118,5 +118,10 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="BundleContent/lucene-core-6.4.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/BundleContent"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

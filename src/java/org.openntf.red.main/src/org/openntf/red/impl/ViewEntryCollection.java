@@ -17,20 +17,30 @@ import org.openntf.red.ViewEntry;
  *
  */
 public class ViewEntryCollection extends Base<org.openntf.red.View> implements org.openntf.red.ViewEntryCollection {
-	
-	private static Logger log = Logger.getLogger(ViewEntryCollection.class.getName());
-	
+
+	/** Logger object. */
+	private static final Logger log = Logger.getLogger(ViewEntryCollection.class.getName());
+	/** Back-end object used to manipulate data. */
 	@SuppressWarnings("rawtypes")
 	private org.openntf.red.nsf.endpoint.ViewEntryCollection beObject;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param prnt
+	 *            Parent view.
+	 * @param _beObject
+	 *            Back-end object.
+	 * @since 0.4.0
+	 */
 	@SuppressWarnings("rawtypes")
 	protected ViewEntryCollection(View prnt, org.openntf.red.nsf.endpoint.ViewEntryCollection _beObject) {
 		super(prnt, Base.NOTES_VECOLL);
 		beObject = _beObject;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Base#isDead()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDead() {
@@ -38,8 +48,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Iterable#iterator()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Iterator<ViewEntry> iterator() {
@@ -47,24 +57,30 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.DatabaseDescendant#getAncestorDatabase()
+	/**
+	 * Returns the ancestor database.
+	 * 
+	 * @return Ancestor database.
+	 * @since 0.4.0
 	 */
 	@Override
 	public Database getAncestorDatabase() {
 		return parent.getAncestorDatabase();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.SessionDescendant#getAncestorSession()
+	/**
+	 * Returns the ancestor session.
+	 * 
+	 * @return Ancestor session
+	 * @since 0.4.0
 	 */
 	@Override
 	public Session getAncestorSession() {
 		return parent.getAncestorSession();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#addEntry(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void addEntry(Object obh) {
@@ -72,8 +88,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#addEntry(java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void addEntry(Object obj, boolean checkDups) {
@@ -81,8 +97,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#cloneCollection()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.ViewEntryCollection cloneCollection() {
@@ -90,8 +106,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#contains(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean contains(int noteid) {
@@ -99,8 +115,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#contains(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean contains(String noteid) {
@@ -108,8 +124,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#deleteEntry(lotus.domino.ViewEntry)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void deleteEntry(lotus.domino.ViewEntry entry) {
@@ -117,8 +133,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#FTSearch(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void FTSearch(String query) {
@@ -126,8 +142,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#FTSearch(java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void FTSearch(String query, int maxDocs) {
@@ -135,8 +151,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getCount()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getCount() {
@@ -144,8 +160,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getEntry(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getEntry(Object entry) {
@@ -153,22 +169,22 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getFirstEntry()
+	/**
+	 * Not implemented yet.
 	 */
-	@SuppressWarnings("unused")
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry getFirstEntry() {
 		org.openntf.red.nsf.endpoint.ViewEntry entry = beObject.getFirstEntry();
-		
-		if(null == entry)
+
+		if (null == entry)
 			return null;
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getLastEntry()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getLastEntry() {
@@ -176,8 +192,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getNextEntry()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getNextEntry() {
@@ -185,8 +201,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getNextEntry(lotus.domino.ViewEntry)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getNextEntry(lotus.domino.ViewEntry entry) {
@@ -194,8 +210,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getNthEntry(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getNthEntry(int n) {
@@ -203,8 +219,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getParent()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View getParent() {
@@ -212,8 +228,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getPrevEntry()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getPrevEntry() {
@@ -221,8 +237,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getPrevEntry(lotus.domino.ViewEntry)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public ViewEntry getPrevEntry(lotus.domino.ViewEntry entry) {
@@ -230,8 +246,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#getQuery()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getQuery() {
@@ -239,8 +255,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#intersect(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void intersect(int noteid) {
@@ -248,8 +264,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#intersect(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void intersect(String noteid) {
@@ -257,8 +273,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#markAllRead()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markAllRead() {
@@ -266,8 +282,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#markAllRead(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markAllRead(String userName) {
@@ -275,8 +291,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#markAllUnread()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markAllUnread() {
@@ -284,8 +300,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#markAllUnread(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markAllUnread(String userName) {
@@ -293,8 +309,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#merge(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void merge(int noteid) {
@@ -302,8 +318,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#merge(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void merge(String noteid) {
@@ -311,8 +327,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#putAllInFolder(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void putAllInFolder(String folderName) {
@@ -320,8 +336,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#putAllInFolder(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void putAllInFolder(String folderName, boolean createOnFail) {
@@ -329,8 +345,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#removeAll(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void removeAll(boolean force) {
@@ -338,8 +354,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#removeAllFromFolder(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void removeAllFromFolder(String folderName) {
@@ -347,8 +363,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#stampAll(java.lang.String, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void stampAll(String itemName, Object value) {
@@ -356,8 +372,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#subtract(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void subtract(int noteid) {
@@ -365,8 +381,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#subtract(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void subtract(String noteid) {
@@ -374,8 +390,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#updateAll()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void updateAll() {
@@ -383,8 +399,8 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ViewEntryCollection#stampAll(java.util.Map)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void stampAll(Map<String, Object> map) {
@@ -392,28 +408,40 @@ public class ViewEntryCollection extends Base<org.openntf.red.View> implements o
 
 	}
 
+	/**
+	 * Not implemented yet.
+	 */
 	@Override
 	public boolean contains(lotus.domino.Base obj) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/**
+	 * Not implemented yet.
+	 */
 	@Override
 	public void intersect(lotus.domino.Base obj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	/**
+	 * Not implemented yet.
+	 */
 	@Override
 	public void merge(lotus.domino.Base obj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	/**
+	 * Not implemented yet.
+	 */
 	@Override
 	public void subtract(lotus.domino.Base obj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

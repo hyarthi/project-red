@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option cc_enable_arenas = true;
-option java_package="org.openntf.red.network.messages";
+option java_package="org.openntf.red.network.rrpc.messages";
 
 package red.hooks.messages;
 

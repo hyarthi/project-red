@@ -11,8 +11,6 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.client.ClientBuilder;
 
-import org.glassfish.jersey.jackson.JacksonFeature;
-//import org.glassfish.jersey.jackson.JacksonFeature;
 import org.openntf.red.core.config.ConfigManager.ConfigProperties;
 import org.openntf.red.nsf.endpoint.Endpoint;
 import org.openntf.red.nsf.endpoint.EndpointConfig;
@@ -32,22 +30,38 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import javolution.util.FastMap;
 
 /**
+ * Endpoint factory implementation for CouchDB.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see EndpointFactory
  */
 public class CouchEndpointFactory implements EndpointFactory {
+	/** Indicator whether the factory is initialized. */
 	private boolean _started = false;
+	/**
+	 * Flag - whether the factory should break on custom converter exceptions
+	 * (<code>true</code>), or try to fall back to default converters
+	 * (<code>false</code>).
+	 */
 	private boolean _bocce = true;
+	/** HTTP Client builder (Jersey). */
 	private ClientBuilder builder = null;
-	//private Builder builder = null;
+	// private Builder builder = null;
+	/** List of registered custom converters. */
 	private FastMap<Integer, RawDataConverter> customConverters = null;
+	/** List of default converters. */
 	private FastMap<Integer, RawDataConverter> coreConverters = null;
+	/** Logger object. */
 	private static Logger log = Logger.getLogger(CouchEndpointFactory.class.getName());
 
 	/**
+	 * Default constructor.
 	 * 
+	 * @since 0.4.0
 	 */
-	public CouchEndpointFactory() {}
+	public CouchEndpointFactory() {
+	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -60,7 +74,7 @@ public class CouchEndpointFactory implements EndpointFactory {
 
 		return endpoint;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Endpoint getEndpoint(String server, EndpointConfig config) {
@@ -73,10 +87,11 @@ public class CouchEndpointFactory implements EndpointFactory {
 		if (_started)
 			throw new EndpointException("Couch Endpoint Factory: Factory is already running.");
 		log.fine("Couch Endpoint Factory: starting...");
-		builder = ClientBuilder.newBuilder();//.register(JacksonFeature.class);
+		builder = ClientBuilder.newBuilder();// .register(JacksonFeature.class);
 		builder.register(new JacksonJaxbJsonProvider());
-		//builder = org.glassfish.jersey.client.JerseyClientBuilder.newBuilder();
-		//RestClient builder;
+		// builder =
+		// org.glassfish.jersey.client.JerseyClientBuilder.newBuilder();
+		// RestClient builder;
 		initCoreConverters();
 		_started = true;
 		log.fine("Couch Endpoint Factory: started.");
@@ -90,7 +105,7 @@ public class CouchEndpointFactory implements EndpointFactory {
 		} else {
 			if (null != customConverters)
 				customConverters.clear();
-			//coreConverters.clear();
+			// coreConverters.clear();
 			_started = false;
 			log.fine("Couch Endpoint Factory: shut down.");
 		}
@@ -101,6 +116,12 @@ public class CouchEndpointFactory implements EndpointFactory {
 		return _started;
 	}
 
+	/**
+	 * Returns the client builder object.
+	 * 
+	 * @return Client builder object.
+	 * @since 0.4.0
+	 */
 	ClientBuilder getBuilder() {
 		return builder;
 	}
@@ -111,7 +132,8 @@ public class CouchEndpointFactory implements EndpointFactory {
 			log.finest("Couch Endpoint Factory: Initializing custom converter container.");
 			customConverters = new FastMap<Integer, RawDataConverter>().atomic();
 		}
-		log.finest("Couch Endpoint Factory: Adding a custom converter " + converter.getClass().getName() + " for type " + converter.getType() + ".");
+		log.finest("Couch Endpoint Factory: Adding a custom converter " + converter.getClass().getName() + " for type "
+				+ converter.getType() + ".");
 		customConverters.put(Integer.valueOf(converter.getType()), converter);
 	}
 
@@ -187,7 +209,12 @@ public class CouchEndpointFactory implements EndpointFactory {
 	public void setBreakOnCustomConverterExceptions(boolean flag) {
 		_bocce = flag;
 	}
-	
+
+	/**
+	 * Initializes default converters.
+	 * 
+	 * @since 0.4.0
+	 */
 	private void initCoreConverters() {
 		log.finest("Couch Endpoint Factory: started initializing core converters.");
 		coreConverters = new FastMap<Integer, RawDataConverter>();
@@ -261,7 +288,8 @@ public class CouchEndpointFactory implements EndpointFactory {
 	public int closestTypeMatch(Object data, int recursion) {
 		if (data instanceof String)
 			return Type.TEXT;
-		if (data instanceof Integer || data instanceof Long || data instanceof Float || data instanceof Double || data instanceof BigDecimal)
+		if (data instanceof Integer || data instanceof Long || data instanceof Float || data instanceof Double
+				|| data instanceof BigDecimal)
 			return Type.NUMBERS;
 		if (data instanceof Date || data instanceof Calendar)
 			return Type.DATETIMES;
@@ -291,5 +319,21 @@ public class CouchEndpointFactory implements EndpointFactory {
 		}
 		// TODO continue
 		return Type.UNKNOWN;
+	}
+
+	/**
+	 * Some defaults specified by CouchDB.
+	 * 
+	 * @author Vladimir Kornienko
+	 * @since 0.4.0
+	 */
+	public static class DefaultResponseFields {
+		public static final String OK = "ok";
+		public static final String ID = "id";
+		public static final String REVISION = "rev";
+		public static final String UUIDS = "uuids";
+		public static final String ERROR = "error";
+		public static final String ERROR_VALUE_CONFLICT = "conflict";
+		public static final String ERROR_REASON = "reason";
 	}
 }

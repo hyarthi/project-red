@@ -3,26 +3,16 @@
  */
 package org.openntf.red.network.rrpc;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.net.URLEncoder;
-//import java.nio.ByteBuffer;
-import java.util.List;
 import java.util.logging.Logger;
 
-import org.openntf.red.Database;
-import org.openntf.red.Document;
 import org.openntf.red.Session;
-import org.openntf.red.View;
 import org.openntf.red.core.config.ConfigManager;
 import org.openntf.red.core.config.ConfigManager.ConfigProperties;
 import org.openntf.red.core.modules.ModuleManager;
@@ -30,13 +20,12 @@ import org.openntf.red.core.thread.IServerTask;
 import org.openntf.red.core.thread.ThreadManager;
 import org.openntf.red.network.INetworkManager.Defaults;
 import org.openntf.red.network.exceptions.REDServerException;
+import org.openntf.red.network.rrpc.handlers.NoteCollectionRequestHandler;
+import org.openntf.red.network.rrpc.handlers.NoteInfoRequestHandler;
+import org.openntf.red.network.rrpc.handlers.NoteRequestHandler;
+import org.openntf.red.network.rrpc.handlers.NullRequestHandler;
 import org.openntf.red.network.rrpc.messages.Base.Request;
 import org.openntf.red.network.rrpc.messages.Base.Response;
-import org.openntf.red.network.rrpc.messages.Notes.Action;
-import org.openntf.red.network.rrpc.messages.Notes.Item;
-import org.openntf.red.network.rrpc.messages.Notes.Note;
-import org.openntf.red.network.rrpc.messages.Notes.RequestNote;
-import org.openntf.red.network.rrpc.messages.Notes.RequestNote.IdCase;
 import org.openntf.red.security.session.impl.SessionOptions;
 import org.openntf.red.network.rrpc.messages.Base.Request.PayloadCase;
 
@@ -44,26 +33,55 @@ import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
 
 import javolution.util.FastMap;
-//import javolution.util.FastTable;
 import javolution.util.FastTable;
 
 /**
+ * Server task that services the RRPC protocol.
+ * 
  * @author Vladimir Kornienko
- *
+ * @see IServerTask
+ * @since 0.4.0
  */
 public class REDServer implements IServerTask {
 
-	private static Logger log = Logger.getLogger(REDServer.class.getName());
-
+	/** Logger object. */
+	private static final Logger log = Logger.getLogger(REDServer.class.getName());
+	/**
+	 * Instance of this RED Server (only one such object should exist in a
+	 * runtime).
+	 */
 	private static REDServer _instance = null;
-
+	/** Server socket that the task is listening to. */
 	private ServerSocket socket;
+	/** Task status. */
 	private Status _status;
+	/** Port number the task is listening to. */
 	private int port;
+	/**
+	 * Timeout between arrival of packages when getting a request from the
+	 * client.
+	 */
 	private int requestTimeout;
+	/**
+	 * Session timeout. When a session expires, all resources associated with it
+	 * are recycled.
+	 */
 	private int sessionTimeout;
+	/**
+	 * A list of connections from clients that are currently being processed.
+	 */
 	private FastTable<Connection> connections = null;
+	/** A map of default request handlers for RRPC protocol. */
+	private FastMap<Integer, RequestHandler<?, ?>> defaultHandlers;
+	// TODO implement custom request handlers.
 
+	/**
+	 * Returns the task instance. the only method that should be used to get the
+	 * instance.
+	 * 
+	 * @return RED Server instance.
+	 * @since 0.4.0
+	 */
 	public static REDServer getInstance() {
 		synchronized (REDServer.class) {
 			if (null == _instance)
@@ -73,7 +91,7 @@ public class REDServer implements IServerTask {
 	}
 
 	/**
-	 * 
+	 * Default constructor.
 	 */
 	private REDServer() {
 		// TODO Auto-generated constructor stub
@@ -81,20 +99,17 @@ public class REDServer implements IServerTask {
 		setStatus(Status.STOPPED);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		log.info("RED Server: Starting...");
 		if (_status == Status.ERROR)
 			throw new REDServerException("RED Server is in error state.");
 		if (_status != Status.STOPPED)
 			throw new REDServerException("RED Server is already running.");
 		setStatus(Status.STARTING);
+		log.finest("RED Server: Initializing default request handlers.");
+		initDefaultHandlers();
+		log.finest("RED Server: Default request handlers initialized.");
 		// FIXME change this to dynamic settings
 		requestTimeout = 10000;
 		sessionTimeout = 1800000;
@@ -164,6 +179,14 @@ public class REDServer implements IServerTask {
 		return _status;
 	}
 
+	/**
+	 * Changes the state of the task.
+	 * 
+	 * @param s
+	 *            New task state.
+	 * @see Status
+	 * @since 0.4.0
+	 */
 	protected synchronized void setStatus(Status s) {
 		_status = s;
 	}
@@ -183,6 +206,7 @@ public class REDServer implements IServerTask {
 		}
 		port = 0;
 		setStatus(Status.STOPPED);
+		// TODO restart task
 		log.info("RED Server: Reset complete.");
 	}
 
@@ -202,7 +226,15 @@ public class REDServer implements IServerTask {
 		// setStatus(Status.STOPPED);
 	}
 
-	private String parseDatabaseId(String dbid) {
+	/**
+	 * Parses the database id, so that it's consistent with the internal format.
+	 * 
+	 * @param dbid
+	 *            Database id.
+	 * @return Parsed database id.
+	 * @since 0.4.0
+	 */
+	public String parseDatabaseId(String dbid) {
 		// FIXME temporary stub - replace with proper parsing once encoding db
 		// names is decided upon
 		return dbid.replaceAll("^[\\\\/]", "") // remove the starting \ or /
@@ -219,24 +251,98 @@ public class REDServer implements IServerTask {
 		// folder%2Fdb.nsf)
 	}
 
-	private String parseValueToString(Object value) {
+	/**
+	 * STUB
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public String parseValueToString(Object value) {
 		// FIXME temporary stub
 		return value.toString();
 	}
 
-	private int parseValueToNumber(Object value) {
+	/**
+	 * STUB
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public int parseValueToNumber(Object value) {
 		return 0;
 	}
 
-	public class Connection implements Runnable {
+	/**
+	 * Initializes default RRPC request handlers.
+	 * 
+	 * @since 0.4.0
+	 */
+	private void initDefaultHandlers() {
+		defaultHandlers = new FastMap<Integer, RequestHandler<?, ?>>().atomic();
+		// null
+		defaultHandlers.put(Integer.valueOf(Payloads.PAYLOAD_NOT_SET), new NullRequestHandler());
+		// RequestNote
+		defaultHandlers.put(Integer.valueOf(Payloads.PAYLOAD_NOTE), new NoteRequestHandler(this));
+		// RequestNoteInfo
+		defaultHandlers.put(Integer.valueOf(Payloads.PAYLOAD_NOTEINFO), new NoteInfoRequestHandler(this));
+		// RequestNoteCollection
+		defaultHandlers.put(Integer.valueOf(Payloads.PAYLOAD_NCOLLECTION), new NoteCollectionRequestHandler());
+		// TODO continue for other types
+	}
 
+	/**
+	 * Gets a default request handler associated with a specific request type.
+	 * 
+	 * @param type
+	 *            Request type.
+	 * @return Request handler.
+	 * @since 0.4.0
+	 */
+	public RequestHandler<?, ?> getRequestHandler(int type) {
+		// TODO do custom handlers
+		if (defaultHandlers.containsKey(Integer.valueOf(type)))
+			return defaultHandlers.get(Integer.valueOf(type));
+		return null;
+	}
+
+	/**
+	 * Class representing a single interaction with the client over RRPC.
+	 * 
+	 * @author Vladimir Kornienko
+	 * @see Runnable
+	 * @since 0.4.0
+	 */
+	public class Connection implements Runnable {
+		/** Socket to communicate with the client. */
 		private Socket socket;
+		/**
+		 * Timeout between arrival of packages when getting a request from the
+		 * client.
+		 */
 		private int requestTimeout;
+		/**
+		 * Session timeout. When a session expires, all resources associated
+		 * with it are recycled.
+		 */
 		private int sessionTimeout;
+		/** List of sessions used by the current connection. */
 		private FastMap<String, FastMap<Session.Type, Session>> dbsessions;
+		/** (Currently unused) Authenticated user name. Needed for security. */
 		private String authUserName;
+		/** Keep the connection open until the session expires. */
 		private boolean keepOpen;
 
+		/**
+		 * Default constructor.
+		 * 
+		 * @param _socket
+		 *            Socket to communicate with the client.
+		 * @param stimeout
+		 *            Session timeout.
+		 * @param rtimeout
+		 *            Request timeout.
+		 * @since 0.4.0
+		 */
 		Connection(Socket _socket, int stimeout, int rtimeout) {
 			socket = _socket;
 			requestTimeout = rtimeout;
@@ -253,7 +359,7 @@ public class REDServer implements IServerTask {
 			log.info("RED Server: Received RRPC connection from " + socket.getRemoteSocketAddress().toString() + ".");
 			try {
 				socket.setSoTimeout(sessionTimeout);
-				//InputStream in = socket.getInputStream();
+				// InputStream in = socket.getInputStream();
 				InputStream in = socket.getInputStream();
 				OutputStream out = socket.getOutputStream();
 				CodedInputStream cin;
@@ -351,13 +457,13 @@ public class REDServer implements IServerTask {
 							e.printStackTrace();
 							// flush inputstream
 							in.skip(in.available());
-							//socket.setSoTimeout(sessionTimeout);
+							// socket.setSoTimeout(sessionTimeout);
 							continue;
 						}
 						if (in.available() > 0)
 							continue;
 						keepOpen = false;
-						//socket.setSoTimeout(sessionTimeout);
+						// socket.setSoTimeout(sessionTimeout);
 					}
 				}
 			} catch (IOException e) {
@@ -384,6 +490,11 @@ public class REDServer implements IServerTask {
 			}
 		}
 
+		/**
+		 * Terminates the connection, closes socket and releases all resources.
+		 * 
+		 * @since 0.4.0
+		 */
 		public synchronized void terminate() {
 			keepOpen = false;
 			try {
@@ -394,115 +505,149 @@ public class REDServer implements IServerTask {
 			}
 		}
 
+		/**
+		 * Processes the RRPC request.
+		 * 
+		 * @param request
+		 *            RRPC request object.
+		 * @return RRPC response object.
+		 * @since 0.4.0
+		 */
 		private Response processRequest(Request request) {
 			PayloadCase msgcontenttype = request.getPayloadCase();
 			Response.Builder respbuilder = Response.newBuilder();
 			// TODO expand this section
-			switch (msgcontenttype.getNumber()) {
-			case (Payloads.PAYLOAD_NOTE):
-				log.finest("RED Connection: Processing Note request...");
-				RequestNote note = request.getNote();
-				Note respnote;
-				try {
-					respnote = processNoteRequest(note);
-					respbuilder.setNote(respnote);
-					respbuilder.setStatus(ServerStates.OK);
-				} catch (REDServerException rse) {
-					respbuilder.setStatus(rse.getStatus());
-					rse.printStackTrace();
-				}
-				break;
-			case (Payloads.PAYLOAD_NOTEINFO):
-				respbuilder.setStatus(ServerStates.NOT_IMPLEMENTED);
-				break;
-			case (Payloads.PAYLOAD_NCOLLECTION):
-				respbuilder.setStatus(ServerStates.NOT_IMPLEMENTED);
-				break;
-			case (Payloads.PAYLOAD_NOT_SET):
-				respbuilder.setStatus(ServerStates.NOT_IMPLEMENTED);
-				break;
-			default:
-				respbuilder.setStatus(ServerStates.NOT_IMPLEMENTED);
-				break;
+			int msgtype = msgcontenttype.getNumber();
+			RequestHandler<?, ?> handler = getRequestHandler(msgtype);
+			if (null == handler) {
+				log.severe("RED Server: Could not find handler for request of type " + msgtype + ".");
+				respbuilder.setStatus(ServerStates.INTERNAL_SERVER_ERROR);
+				return respbuilder.build();
+			}
+			try {
+				handler.processRequest(request, this, respbuilder);
+				// respbuilder.setStatus(ServerStates.OK);
+			} catch (REDServerException rse) {
+				respbuilder.setStatus(rse.getStatus());
+				log.severe("CUCKOOO!");
+				rse.printStackTrace();
+			} catch (Exception e) {
+				respbuilder.setStatus(ServerStates.INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
 			}
 
-			return respbuilder.build();
+			Response resp = respbuilder.build();
+			log.finest("Returning: " + resp + ", status: " + resp.getStatus() + ".");
+
+			return resp;
 		}
 
-		private Note processNoteRequest(RequestNote request) throws REDServerException {
-			SessionOptions soptions = new SessionOptions(null, Session.Type._REMOTE);
-			Session session;
-			String dbid = parseDatabaseId(request.getDbId());
+		/**
+		 * Gets (or instantiates) a session to work with data.
+		 * 
+		 * @param dbid
+		 *            Database id.
+		 * @param type
+		 *            Session type.
+		 * @return RED session.
+		 * @since 0.4.0
+		 * @see Session.Type
+		 */
+		public Session getSession(String dbid, Session.Type type) {
+			Session session = null;
 			if (!dbsessions.containsKey(dbid)) {
 				FastMap<Session.Type, Session> sessions = new FastMap<Session.Type, Session>();
 				dbsessions.put(dbid, sessions);
 			}
 			if (!dbsessions.get(dbid).containsKey(Session.Type._REMOTE)) {
+				SessionOptions soptions = new SessionOptions(null, Session.Type._REMOTE);
 				session = org.openntf.red.impl.Session.createSession(soptions);
 				dbsessions.get(dbid).put(session.getSessionType(), session);
 			} else
 				session = dbsessions.get(dbid).get(Session.Type._REMOTE);
-			Database db = session.getDatabase("", dbid, false);
-			log.finest("RED Server: Database is " + db);
-			if (null == db) {
-				throw new REDServerException("Database not found.", ServerStates.NOT_FOUND);
-			}
-			log.finest("Getting ID case");
-			IdCase idtype = request.getIdCase();
-			Document doc = null;
-			Note.Builder nbuilder = Note.newBuilder();
-			log.finest("ID case is: " + idtype.getNumber());
-			switch (idtype.getNumber()) {
-			case (Payloads.PAYLOAD_NOTE_ID_UNID):
-				doc = db.getDocumentByUNID(request.getUnid());
-				nbuilder.setUnid(request.getUnid());
-				break;
-			case (Payloads.PAYLOAD_NOTE_ID_NOTEID):
-				log.finest("Doing NoteID...");
-				doc = db.getDocumentByID((int) request.getNoteId());
-				nbuilder.setNoteId(request.getNoteId());
-				break;
-			case (Payloads.PAYLOAD_NOT_SET):
-				// TODO
-				break;
-			default:
-				// TODO
-				break;
-			}
-			if (null == doc)
-				throw new REDServerException("Document not found.", ServerStates.NOT_FOUND);
-
-			switch (request.getActionValue()) {
-			case (Action.READ_VALUE):
-				List<org.openntf.red.Item> items = doc.getItemsEx();
-				Item.Builder ibuilder;
-				for (org.openntf.red.Item item : items) {
-					// TODO check on flags (stub) + deprecated
-					ibuilder = Item.newBuilder().setName(item.getName()).setType(item.getType()).setFlags(0x0000);
-					List<Object> vals = item.getValuesEx();
-					for (Object val : vals) {
-						// FIXME temporary stub
-						ibuilder.addTvalue(parseValueToString(val));
-					}
-					nbuilder.addItems(ibuilder.build());
-				}
-				break;
-			case (Action.UPDATE_VALUE):
-				// TODO
-				break;
-			case (Action.REMOVE_VALUE):
-				// TODO
-				break;
-			default:
-				// TODO
-				break;
-			}
-
-			return nbuilder.build();
+			return session;
 		}
+
+		/*
+		 * This is done by handlers now.
+		 * 
+		 * private Note processNoteRequest(RequestNote request) throws
+		 * REDServerException { SessionOptions soptions = new
+		 * SessionOptions(null, Session.Type._REMOTE); Session session; String
+		 * dbid = parseDatabaseId(request.getDbId()); if
+		 * (!dbsessions.containsKey(dbid)) { FastMap<Session.Type, Session>
+		 * sessions = new FastMap<Session.Type, Session>(); dbsessions.put(dbid,
+		 * sessions); } if
+		 * (!dbsessions.get(dbid).containsKey(Session.Type._REMOTE)) { session =
+		 * org.openntf.red.impl.Session.createSession(soptions);
+		 * dbsessions.get(dbid).put(session.getSessionType(), session); } else
+		 * session = dbsessions.get(dbid).get(Session.Type._REMOTE); Database db
+		 * = session.getDatabase("", dbid, false);
+		 * log.finest("RED Server: Database is " + db); if (null == db) { throw
+		 * new REDServerException("Database not found.",
+		 * ServerStates.NOT_FOUND); } log.finest("Getting ID case"); IdCase
+		 * idtype = request.getIdCase(); Document doc = null; // TODO also need
+		 * Note for design notes Note.Builder nbuilder = Note.newBuilder();
+		 * log.finest("ID case is: " + idtype.getNumber()); switch
+		 * (idtype.getNumber()) { case (Payloads.PAYLOAD_NOTE_ID_UNID): doc =
+		 * db.getDocumentByUNID(request.getUnid());
+		 * nbuilder.setUnid(request.getUnid()); break; case
+		 * (Payloads.PAYLOAD_NOTE_ID_NOTEID): log.finest("Doing NoteID..."); doc
+		 * = db.getDocumentByID((int) request.getNoteId());
+		 * nbuilder.setNoteId(request.getNoteId()); break; case
+		 * (Payloads.PAYLOAD_NOT_SET): // TODO if (Action.UPDATE_VALUE ==
+		 * request.getActionValue()) { // it's a new document/note save request
+		 * -> spawn document/note stub } break; default: // TODO break; } if
+		 * (null == doc) // TODO also need Note for design notes throw new
+		 * REDServerException("Document not found.", ServerStates.NOT_FOUND);
+		 * 
+		 * switch (request.getActionValue()) { case (Action.READ_VALUE):
+		 * List<org.openntf.red.Item> items = doc.getItemsEx(); Item.Builder
+		 * ibuilder; for (org.openntf.red.Item item : items) { // TODO check on
+		 * flags (stub) + deprecated ibuilder =
+		 * Item.newBuilder().setName(item.getName()).setType(item.getType()).
+		 * setFlags(0x0000); List<Object> vals = item.getValuesEx(); for (Object
+		 * val : vals) { // FIXME temporary stub
+		 * ibuilder.addTvalue(parseValueToString(val)); }
+		 * nbuilder.addItems(ibuilder.build()); } break; case
+		 * (Action.UPDATE_VALUE): if (null != doc) { // TODO also need Note for
+		 * design notes boolean result = updateDocument(doc, request); if
+		 * (!result) { // TODO } } // TODO break; case (Action.REMOVE_VALUE): //
+		 * TODO break; default: // TODO break; }
+		 * 
+		 * return nbuilder.build(); }
+		 * 
+		 * private boolean updateDocument(Document doc, RequestNote request) {
+		 * if (doc.isNewNote()) { // set up system fields // TODO }
+		 * 
+		 * // FIXME TEMP - ignore attachments for now List<Item> items =
+		 * request.getItemsList(); List<String> itemsexist = new
+		 * FastTable<String>(); org.openntf.red.Item docitem; for (Item item :
+		 * items) { itemsexist.add(item.getName());
+		 * 
+		 * switch(item.getType()) { case Type.NUMBERS: docitem =
+		 * doc.replaceItemValueCustomData(item.getName(), item.getType(),
+		 * item.getFlags(), item.getNvalueList()); if (null == docitem) return
+		 * false; break; case Type.TEXT: default: docitem =
+		 * doc.replaceItemValueCustomData(item.getName(), item.getType(),
+		 * item.getFlags(), item.getTvalueList()); if (null == docitem) return
+		 * false; break; } } // clean up removed items for (String iname :
+		 * doc.keySet()) { if (!itemsexist.contains(iname))
+		 * doc.removeItem(iname); }
+		 * 
+		 * return doc.save(true, false, false); }
+		 * 
+		 * private boolean updateNote() { return false; }
+		 */
 
 	}
 
+	/**
+	 * List of ids and codes for processing RRPC payloads.
+	 * 
+	 * @author Vladimir Kornienko
+	 * @since 0.4.0
+	 */
 	public static class Payloads {
 		// request payloads
 		public static final int PAYLOAD_NOT_SET = 0;
@@ -519,7 +664,7 @@ public class REDServer implements IServerTask {
 	 * the most part).
 	 * 
 	 * @author Vladimir Kornienko
-	 *
+	 * @since 0.4.0
 	 */
 	public static class ServerStates {
 		// normal response status

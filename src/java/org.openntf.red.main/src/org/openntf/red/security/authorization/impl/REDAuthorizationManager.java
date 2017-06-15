@@ -8,13 +8,19 @@ import org.openntf.red.Session;
 import org.openntf.red.security.authorization.IAuthorizationManager;
 
 /**
+ * Default implementation of the Authorization Manager.<br>
+ * (Under construction)
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see IAuthorizationManager
  */
 public class REDAuthorizationManager implements IAuthorizationManager {
 
 	/**
+	 * Default constructor.
 	 * 
+	 * @since 0.4.0
 	 */
 	private REDAuthorizationManager() {
 		// TODO Auto-generated constructor stub

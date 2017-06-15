@@ -21,6 +21,11 @@
 		<feature>beanValidation-1.1</feature>
 		<feature>jaxrsClient-2.0</feature>
 		<feature>jaxrs-2.0</feature>
+		<feature>jms-2.0</feature>
+		<feature>wasJmsClient-2.0</feature>
+		<feature>wasJmsServer-1.0</feature>
+		<feature>wasJmsSecurity-1.0</feature>
+		<feature>jmsMdb-3.2</feature>
 	</featureManager>
 
 	<!-- To access this server from a remote client add a host attribute to 
@@ -47,10 +52,6 @@
 	<administrator-role>
 		<group>LocalDomainAdmins</group>
 	</administrator-role>
-	<!-- <couchdb password="passw0rd" username="admin" id="couchService" -->
-	<!-- jndiName="couch/service" url="http://lotuslocal:5984" -->
-	<!-- relaxedSSLSettings="true" libraryRef="ektorpConnector"> -->
-	<!-- </couchdb> -->
 	<jndiEntry id="notes_ini_location" jndiName="notes_ini_location"
 		value="${server.config.dir}/resources" />
 
@@ -70,4 +71,9 @@
 	<jndiEntry value="${server.config.dir}/resources" jndiName="module_definition_location" id="module_definition_location"></jndiEntry>
 	<logging traceSpecification="org.openntf.*=finest"></logging>
 	<keyStore password="passw0rd" id="redKeyStore"></keyStore>
+	
+	<messagingEngine>
+		<fileStore></fileStore>
+		<topicSpace id="ENQManagerSpace" maintainStrictOrder="true"></topicSpace>
+	</messagingEngine>
 </server>

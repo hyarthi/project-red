@@ -23,21 +23,39 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import javolution.util.FastTable;
 
 /**
+ * View implementation for CouchDB.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see View
  */
 public class CouchView implements View<CouchEndpoint, CouchEndpointFactory, CouchDatabase> {
 
+	/** Logger object. */
 	private static Logger log = Logger.getLogger(CouchView.class.getName());
-
-	private WebTarget designTarget, viewTarget;
+	/** Web target for view design note. */
+	private WebTarget designTarget;
+	/** Web target for view query. */
+	private WebTarget viewTarget;
+	/** Raw design representation of the view design note. */
 	private final ObjectNode rawdesign;
+	/** Parent database. */
 	private final CouchDatabase parent;
+	/** View designs stored within the view design note. */
 	private FastTable<ObjectNode> viewFacets;
+	/** Object mapper (for JSON manipulation). */
 	private ObjectMapper mapper;
 
 	/**
+	 * Default constructor.
 	 * 
+	 * @param target
+	 *            View design note web target.
+	 * @param _rawdesign
+	 *            Raw representation of the view design note.
+	 * @param _parent
+	 *            Parent database
+	 * @since 0.4.0
 	 */
 	CouchView(WebTarget target, ObjectNode _rawdesign, CouchDatabase _parent) {
 		designTarget = target;
@@ -58,52 +76,29 @@ public class CouchView implements View<CouchEndpoint, CouchEndpointFactory, Couc
 		mapper = new ObjectMapper();
 		// get view target
 		viewTarget = parent.getTarget().path(DbPaths.VIEW_SEARCH);
-				//.path(((ObjectNode) rawdesign.get(Defaults.NAME)).get(Defaults.NAME_PROGRAMMATIC).asText());
+		// .path(((ObjectNode)
+		// rawdesign.get(Defaults.NAME)).get(Defaults.NAME_PROGRAMMATIC).asText());
 		// TODO may require an additional branch for regular views (non-Mango)
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.openntf.red.nsf.endpoint.HasProperties#getProperty(java.lang.String)
-	 */
 	@Override
 	public Object getProperty(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.openntf.red.nsf.endpoint.HasProperties#setProperty(java.lang.String,
-	 * java.lang.Object)
-	 */
 	@Override
 	public void setProperty(String name, Object value) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openntf.red.nsf.endpoint.HasProperties#removeProperty(java.lang.
-	 * String)
-	 */
 	@Override
 	public Object removeProperty(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openntf.red.nsf.endpoint.View#removeEntry(long)
-	 */
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ViewEntry removeEntry(long position) {
@@ -111,13 +106,6 @@ public class CouchView implements View<CouchEndpoint, CouchEndpointFactory, Couc
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.openntf.red.nsf.endpoint.View#setEntry(org.openntf.red.nsf.endpoint.
-	 * ViewEntry, long)
-	 */
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void setEntry(ViewEntry entry, long position) {
@@ -125,13 +113,6 @@ public class CouchView implements View<CouchEndpoint, CouchEndpointFactory, Couc
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.openntf.red.nsf.endpoint.View#addEntry(org.openntf.red.nsf.endpoint.
-	 * ViewEntry)
-	 */
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void addEntry(ViewEntry entry) {
@@ -154,6 +135,12 @@ public class CouchView implements View<CouchEndpoint, CouchEndpointFactory, Couc
 		return parent;
 	}
 
+	/**
+	 * CouchDB-specific view defaults.
+	 * 
+	 * @author Vladimir Kornienko
+	 * @since 0.4.0
+	 */
 	public static class Defaults {
 		public static final String SORTINGS = "sortings";
 		public static final String NAME = "name";
@@ -168,6 +155,12 @@ public class CouchView implements View<CouchEndpoint, CouchEndpointFactory, Couc
 		public static final String COLUMN_NAME_UNID = "_id";
 	}
 
+	/**
+	 * List of Mango operators
+	 * 
+	 * @author Vladimir Kornienko
+	 * @since 0.4.0
+	 */
 	public static class MangoOperators {
 		public static final String AND = "$and";
 		public static final String NOT = "$not";
@@ -267,6 +260,15 @@ public class CouchView implements View<CouchEndpoint, CouchEndpointFactory, Couc
 		return new CouchViewEntryCollection(viewTarget, sorting, this);
 	}
 
+	/**
+	 * Add selection criteria guaranteed to return 0 entries.
+	 * 
+	 * @param selector
+	 *            Selector to insert the criteria into.
+	 * @param anyColumnName
+	 *            Any column of the view.
+	 * @since 0.4.0
+	 */
 	private void setNullSelector(ObjectNode selector, String anyColumnName) {
 		ArrayNode lvl1 = selector.removeAll().putArray(MangoOperators.AND);
 		ObjectNode lvl2 = lvl1.addObject();

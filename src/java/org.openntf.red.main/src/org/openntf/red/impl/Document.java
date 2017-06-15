@@ -28,6 +28,8 @@ import org.openntf.red.Session;
 import org.openntf.red.View;
 import org.openntf.red.exceptions.DataNotCompatibleException;
 import org.openntf.red.exceptions.ItemNotFoundException;
+import org.openntf.red.nsf.endpoint.Field;
+import org.openntf.red.nsf.endpoint.Note;
 import org.openntf.red.util.AutoMime;
 import org.openntf.red.util.NoteClass;
 
@@ -36,18 +38,30 @@ import lotus.domino.NotesException;
 import lotus.domino.XSLTResultTarget;
 
 /**
+ * Entity representing a document.
+ * 
  * @author Vladimir Kornienko
+ * @since 0.4.0
+ * @see org.openntf.red.Document
  *
  */
 public class Document extends Base<org.openntf.red.Database> implements org.openntf.red.Document {
-	
-	private static Logger log = Logger.getLogger(Document.class.getName());
-	
+
+	/** Logger object. */
+	private static final Logger log = Logger.getLogger(Document.class.getName());
+
+	/** Back-end object. */
 	@SuppressWarnings("rawtypes")
 	private org.openntf.red.nsf.endpoint.Note beObject;
 
 	/**
+	 * Default constructor.
 	 * 
+	 * @param _parent
+	 *            Parent database
+	 * @param _beObject
+	 *            Back-end object for data manipulation
+	 * @since 0.4.0
 	 */
 	@SuppressWarnings("rawtypes")
 	Document(Database _parent, org.openntf.red.nsf.endpoint.Note _beObject) {
@@ -57,6 +71,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 	}
 
 	/**
+	 * Under consideration. Not sure if needed.
+	 * 
 	 * @param classId
 	 */
 	public Document(int classId) {
@@ -64,8 +80,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see lotus.domino.Document#getItemValueDateTimeArray(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
@@ -74,26 +90,30 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.DatabaseDescendant#getAncestorDatabase()
+	/**
+	 * Gets the ancestor database.
+	 * 
+	 * @return The ancestor database.
+	 * @since 0.4.0
 	 */
 	@Override
 	public Database getAncestorDatabase() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.types.SessionDescendant#getAncestorSession()
+	/**
+	 * Gets the ancestor session.
+	 * 
+	 * @return Ancestor session
+	 * @since 0.4.0
 	 */
 	@Override
 	public Session getAncestorSession() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent.getAncestorSession();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#clear()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void clear() {
@@ -101,8 +121,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#containsKey(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsKey(Object arg0) {
@@ -110,8 +130,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#containsValue(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsValue(Object arg0) {
@@ -119,8 +139,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#entrySet()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Set<java.util.Map.Entry<String, Object>> entrySet() {
@@ -128,18 +148,25 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#get(java.lang.Object)
+	/**
+	 * Gets the value of a field with a name <code>key</code>.
+	 * 
+	 * @param key
+	 *            Field name. Should be a String.
+	 * @return Field value. If the field is multi-value, returns a
+	 *         <code>List</code> of values.
+	 * @since 0.4.0
+	 * @see java.util.List
 	 */
 	@Override
 	public Object get(Object key) {
 		if (!(key instanceof String))
 			return null;
-		return beObject.getField((String)key).getValue();
+		return beObject.getField((String) key).getValue();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#isEmpty()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -147,8 +174,11 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#keySet()
+	/**
+	 * Returns a {@link Set} of field names of a document.
+	 * 
+	 * @return A {@link Set} of field names of a document.
+	 * @since 0.4.0
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -156,8 +186,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return beObject.keySet();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#put(java.lang.Object, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object put(String arg0, Object arg1) {
@@ -165,8 +195,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#putAll(java.util.Map)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void putAll(Map<? extends String, ? extends Object> arg0) {
@@ -174,8 +204,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#remove(java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object remove(Object arg0) {
@@ -183,16 +213,19 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#size()
+	/**
+	 * Returns a number of named fields in a document.
+	 * 
+	 * @return Number of named fields in a document.
+	 * @since 0.4.0
 	 */
 	@Override
 	public int size() {
 		return beObject.getAllFieldNames().size();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Map#values()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Collection<Object> values() {
@@ -200,8 +233,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.AsDocMap#asDocMap()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Map<String, Object> asDocMap() {
@@ -209,8 +242,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.ExceptionDetails#fillExceptionDetails(java.util.List)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void fillExceptionDetails(List<org.openntf.red.ExceptionDetails.Entry> result) {
@@ -218,8 +251,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#appendItemValue(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item appendItemValue(String name) {
@@ -227,8 +260,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#appendItemValue(java.lang.String, double)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item appendItemValue(String name, double value) {
@@ -236,8 +269,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#appendItemValue(java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item appendItemValue(String name, int value) {
@@ -245,8 +278,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#appendItemValue(java.lang.String, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item appendItemValue(String name, Object value) {
@@ -254,8 +287,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#attachVCard(lotus.domino.Base)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void attachVCard(lotus.domino.Base document) {
@@ -263,8 +296,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#attachVCard(lotus.domino.Base, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void attachVCard(lotus.domino.Base document, String arg1) {
@@ -272,8 +305,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#closeMIMEEntities()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean closeMIMEEntities() {
@@ -281,8 +314,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#closeMIMEEntities(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean closeMIMEEntities(boolean savechanges) {
@@ -290,8 +323,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#closeMIMEEntities(boolean, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean closeMIMEEntities(boolean savechanges, String entityitemname) {
@@ -299,8 +332,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#computeWithForm(boolean, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean computeWithForm(boolean dodatatypes, boolean raiseerror) {
@@ -308,8 +341,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#convertToMIME()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void convertToMIME() {
@@ -317,8 +350,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#convertToMIME(int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void convertToMIME(int conversiontype) {
@@ -326,8 +359,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#convertToMIME(int, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void convertToMIME(int conversiontype, int options) {
@@ -335,8 +368,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#copyAllItems(lotus.domino.Document, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void copyAllItems(lotus.domino.Document doc, boolean replace) {
@@ -344,8 +377,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#copyItem(lotus.domino.Item)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item copyItem(lotus.domino.Item item) {
@@ -353,8 +386,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#copyItem(lotus.domino.Item, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item copyItem(lotus.domino.Item item, String newName) {
@@ -362,8 +395,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#copyToDatabase(lotus.domino.Database)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Document copyToDatabase(lotus.domino.Database db) {
@@ -371,8 +404,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#createMIMEEntity()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public MIMEEntity createMIMEEntity() {
@@ -380,8 +413,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#createMIMEEntity(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public MIMEEntity createMIMEEntity(String itemName) {
@@ -389,8 +422,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#createReplyMessage(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Document createReplyMessage(boolean toall) {
@@ -398,8 +431,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#createRichTextItem(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public RichTextItem createRichTextItem(String name) {
@@ -407,8 +440,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#encrypt()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void encrypt() {
@@ -416,8 +449,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#generateXML()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String generateXML() {
@@ -425,8 +458,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#generateXML(java.lang.Object, lotus.domino.XSLTResultTarget)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void generateXML(Object style, XSLTResultTarget target) throws IOException {
@@ -434,8 +467,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#generateXML(java.io.Writer)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void generateXML(Writer w) throws IOException {
@@ -443,8 +476,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getAttachment(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public EmbeddedObject getAttachment(String fileName) {
@@ -452,8 +485,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getAuthors()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getAuthors() {
@@ -461,8 +494,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getColumnValues()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Object> getColumnValues() {
@@ -470,8 +503,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getCreated()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getCreated() {
@@ -479,8 +512,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getEmbeddedObjects()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<EmbeddedObject> getEmbeddedObjects() {
@@ -488,8 +521,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getEncryptionKeys()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getEncryptionKeys() {
@@ -497,8 +530,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getFirstItem(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item getFirstItem(String name) {
@@ -506,8 +539,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getFolderReferences()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getFolderReferences() {
@@ -515,8 +548,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getFTSearchScore()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getFTSearchScore() {
@@ -524,8 +557,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getHttpURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getHttpURL() {
@@ -533,8 +566,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getInitiallyModified()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getInitiallyModified() {
@@ -542,33 +575,41 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItems()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Item> getItems() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	/**
+	 * Returns all document items as a {@link List}.<br>
+	 * Should be more efficient than a {@link Vector}.<br>
+	 * Current implementation uses a {@link FastTable}.
+	 * 
+	 * @return All document items as a {@link List}.
+	 * @since 0.4.0
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Item> getItemsEx() {
 		FastTable<Item> items = new FastTable<Item>();
 		List<String> itemNames = beObject.getAllFieldNames();
 		Item item;
-		
+
 		for (String itemName : itemNames) {
 			// TODO add to children
 			item = new org.openntf.red.impl.Item(this, beObject.getField(itemName));
 			items.add(item);
 		}
-		
+
 		return items;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValue(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<Object> getItemValue(String name) {
@@ -576,8 +617,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValueCustomData(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object getItemValueCustomData(String itemName) throws IOException, ClassNotFoundException {
@@ -585,8 +626,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValueCustomData(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Object getItemValueCustomData(String itemName, String dataTypeName)
@@ -595,8 +636,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValueCustomDataBytes(java.lang.String, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public byte[] getItemValueCustomDataBytes(String itemName, String dataTypeName) throws IOException {
@@ -604,8 +645,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValueDouble(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public double getItemValueDouble(String name) {
@@ -613,8 +654,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValueInteger(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getItemValueInteger(String name) {
@@ -622,8 +663,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValueString(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getItemValueString(String name) {
@@ -631,8 +672,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getKey()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getKey() {
@@ -640,8 +681,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getLastAccessed()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getLastAccessed() {
@@ -649,8 +690,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getLastModified()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DateTime getLastModified() {
@@ -658,8 +699,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getLockHolders()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getLockHolders() {
@@ -667,8 +708,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getMIMEEntity()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public MIMEEntity getMIMEEntity() {
@@ -676,8 +717,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getMIMEEntity(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public MIMEEntity getMIMEEntity(String itemName) {
@@ -685,8 +726,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getNameOfProfile()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getNameOfProfile() {
@@ -694,17 +735,23 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getNoteID()
+	/**
+	 * Returns a document's Note ID formatted as a String.
+	 * 
+	 * @return A document's Note ID.
+	 * @since 0.4.0
 	 */
 	@Override
 	public String getNoteID() {
-		// TODO Auto-generated method stub
-		return null;
+		long noteid = beObject.getNoteID();
+		if (0 == noteid)
+			return null;
+
+		return String.format("%1$X", noteid);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getNotesURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getNotesURL() {
@@ -712,17 +759,20 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getParentDatabase()
+	/**
+	 * Returns a parent database. Acts similar to {@link getAncestorDatabase()}
+	 * in this instance.
+	 * 
+	 * @return Parent database.
+	 * @since 0.4.0
 	 */
 	@Override
 	public Database getParentDatabase() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getParentDocumentUNID()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getParentDocumentUNID() {
@@ -730,8 +780,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getParentView()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public View getParentView() {
@@ -739,8 +789,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getRead()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean getRead() {
@@ -748,8 +798,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getRead(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean getRead(String username) {
@@ -757,8 +807,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getReceivedItemText()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Vector<String> getReceivedItemText() {
@@ -766,8 +816,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getResponses()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public DocumentCollection getResponses() {
@@ -775,8 +825,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getSigner()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getSigner() {
@@ -784,8 +834,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getSize()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public int getSize() {
@@ -793,17 +843,19 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getUniversalID()
+	/**
+	 * Returns the document's UNID.
+	 * 
+	 * @return Document's UNID.
+	 * @since 0.4.0
 	 */
 	@Override
 	public String getUniversalID() {
-		// TODO Auto-generated method stub
-		return null;
+		return beObject.getUniversalID();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getURL()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getURL() {
@@ -811,8 +863,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getVerifier()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getVerifier() {
@@ -820,8 +872,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#hasEmbedded()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean hasEmbedded() {
@@ -829,8 +881,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#hasItem(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean hasItem(String name) {
@@ -838,8 +890,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isDeleted()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDeleted() {
@@ -847,8 +899,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isEncrypted()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isEncrypted() {
@@ -856,8 +908,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isEncryptOnSend()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isEncryptOnSend() {
@@ -865,17 +917,23 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isNewNote()
+	/**
+	 * Determines whether this document has just been created, or it's an
+	 * existing document.<br>
+	 * New documents do not have a Note ID set, but may have a UNID. However,
+	 * this UNID will not be registered anywhere, since the document has not
+	 * been saved yet.
+	 * 
+	 * @return Whether it's a new document
+	 * @since 0.4.0
 	 */
 	@Override
 	public boolean isNewNote() {
-		// TODO Auto-generated method stub
-		return false;
+		return beObject.isNewNote();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isPreferJavaDates()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isPreferJavaDates() {
@@ -883,8 +941,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isProfile()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isProfile() {
@@ -892,8 +950,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isResponse()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isResponse() {
@@ -901,8 +959,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isSaveMessageOnSend()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isSaveMessageOnSend() {
@@ -910,8 +968,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isSentByAgent()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isSentByAgent() {
@@ -919,8 +977,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isSigned()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isSigned() {
@@ -928,8 +986,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isSignOnSend()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isSignOnSend() {
@@ -937,8 +995,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isValid()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isValid() {
@@ -946,8 +1004,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#lock()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lock() {
@@ -955,8 +1013,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#lock(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lock(boolean provisionalok) {
@@ -964,8 +1022,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#lock(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lock(String name) {
@@ -973,8 +1031,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#lock(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lock(String name, boolean provisionalok) {
@@ -982,8 +1040,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#lock(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -992,8 +1050,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#lock(java.util.Vector, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -1002,8 +1060,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#lockProvisional()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lockProvisional() {
@@ -1011,8 +1069,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#lockProvisional(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean lockProvisional(String name) {
@@ -1020,8 +1078,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#lockProvisional(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -1030,8 +1088,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#makeResponse(lotus.domino.Document)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void makeResponse(lotus.domino.Document doc) {
@@ -1039,8 +1097,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#markRead()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markRead() {
@@ -1048,8 +1106,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#markRead(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markRead(String username) {
@@ -1057,8 +1115,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#markUnread()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markUnread() {
@@ -1066,8 +1124,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#markUnread(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markUnread(String username) {
@@ -1075,8 +1133,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#putInFolder(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void putInFolder(String name) {
@@ -1084,8 +1142,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#putInFolder(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void putInFolder(String name, boolean createonfail) {
@@ -1093,8 +1151,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#remove(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean remove(boolean force) {
@@ -1102,8 +1160,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#removeFromFolder(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void removeFromFolder(String name) {
@@ -1111,26 +1169,34 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#removeItem(java.lang.String)
+	/**
+	 * Removes an item from a document.
+	 * 
+	 * @param name
+	 *            Name of the item to remove
+	 * @since 0.4.0
 	 */
 	@Override
 	public void removeItem(String name) {
-		// TODO Auto-generated method stub
-
+		beObject.removeField(name);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#removePermanently(boolean)
+	/**
+	 * Hard-deletes a document from the back-end database.
+	 * 
+	 * @param force
+	 *            Whether the delete should be forced (i.e. ignore conflicts,
+	 *            etc.)
+	 * @return Whether the delete was successful
+	 * @since 0.4.0
 	 */
 	@Override
 	public boolean removePermanently(boolean force) {
-		// TODO Auto-generated method stub
-		return false;
+		return beObject.deleteNote(force);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#renderToRTItem(lotus.domino.RichTextItem)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean renderToRTItem(lotus.domino.RichTextItem rtitem) {
@@ -1138,17 +1204,33 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#replaceItemValue(java.lang.String, java.lang.Object)
+	/**
+	 * Replaces the item value with the data specified.
+	 * <p>
+	 * The item's type will be set/reset in the process. So if you're willing to
+	 * preserve the old item type, use one of the
+	 * <code>replaceItemValueCustomData(...)</code> functions instead.
+	 * <p>
+	 * If an item does not exist, it's created.
+	 * 
+	 * @param itemName
+	 *            Name of the item to replace
+	 * @param value
+	 *            New value of the item. May be a collection.
+	 * @since 0.4.0
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Item replaceItemValue(String itemName, Object value) {
-		// TODO Auto-generated method stub
-		return null;
+		Field field = beObject.createField(itemName, value);
+		if (null == field)
+			return null;
+
+		return new org.openntf.red.impl.Item(this, field);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#replaceItemValueCustomData(java.lang.String, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item replaceItemValueCustomData(String itemName, Object userObj) throws IOException {
@@ -1156,8 +1238,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#replaceItemValueCustomData(java.lang.String, java.lang.String, java.lang.Object)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item replaceItemValueCustomData(String itemName, String dataTypeName, Object userObj) throws IOException {
@@ -1165,8 +1247,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#replaceItemValueCustomDataBytes(java.lang.String, java.lang.String, byte[])
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item replaceItemValueCustomDataBytes(String itemName, String dataTypeName, byte[] byteArray)
@@ -1175,44 +1257,82 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#save()
+	/**
+	 * Submits the document for a save.
+	 * 
+	 * @return Whether the save was successful.
+	 * @since 0.4.0
 	 */
 	@Override
 	public boolean save() {
-		// TODO Auto-generated method stub
-		return false;
+		return save(false, false, false);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#save(boolean)
+	/**
+	 * Submits the document for a save.
+	 * 
+	 * @param force
+	 *            Whether the save should be forced (i.e. ignores conflicts,
+	 *            etc.).
+	 * @return Whether the save was successful.
+	 * @since 0.4.0
 	 */
 	@Override
 	public boolean save(boolean force) {
-		// TODO Auto-generated method stub
-		return false;
+		return save(force, false, false);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#save(boolean, boolean)
+	/**
+	 * Submits the document for a save.
+	 * 
+	 * @param force
+	 *            Whether the save should be forced (i.e. ignores conflicts,
+	 *            etc.).
+	 * @param makeresponse
+	 *            Whether the document should be saved as a response if there is
+	 *            a conflict.
+	 * @return Whether the save was successful.
+	 * @since 0.4.0
 	 */
 	@Override
 	public boolean save(boolean force, boolean makeresponse) {
-		// TODO Auto-generated method stub
-		return false;
+		return save(force, makeresponse, false);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#save(boolean, boolean, boolean)
+	/**
+	 * Submits the document for a save.
+	 * 
+	 * @param force
+	 *            Whether the save should be forced (i.e. ignores conflicts,
+	 *            etc.).
+	 * @param makeresponse
+	 *            Whether the document should be saved as a response if there is
+	 *            a conflict.
+	 * @param markread
+	 *            Whether the document should be marked as read after it's been
+	 *            saved.
+	 * @return Whether the save was successful.
+	 * @since 0.4.0
 	 */
 	@Override
 	public boolean save(boolean force, boolean makeresponse, boolean markread) {
-		// TODO Auto-generated method stub
-		return false;
+		if (beObject.updateNote(force)) {
+
+		} else {
+			if (makeresponse) {
+				// TODO make the note a response doc
+			} else
+				return false;
+		}
+		if (markread) {
+			// TODO mark the note as read - need to figure out a mechanism for
+			// that
+		}
+		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#send()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void send() {
@@ -1220,8 +1340,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#send(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void send(boolean attachform) {
@@ -1229,8 +1349,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#send(boolean, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void send(boolean attachform, String recipient) {
@@ -1238,8 +1358,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#send(boolean, java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -1248,8 +1368,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#send(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void send(String recipient) {
@@ -1257,8 +1377,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#send(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -1267,8 +1387,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#setEncryptionKeys(java.util.Vector)
+	/**
+	 * Not implemented yet.
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -1277,8 +1397,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#setEncryptOnSend(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setEncryptOnSend(boolean flag) {
@@ -1286,8 +1406,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#setPreferJavaDates(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setPreferJavaDates(boolean flag) {
@@ -1295,8 +1415,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#setSaveMessageOnSend(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setSaveMessageOnSend(boolean flag) {
@@ -1304,8 +1424,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#setSignOnSend(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setSignOnSend(boolean flag) {
@@ -1313,8 +1433,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#setUniversalID(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setUniversalID(String unid) {
@@ -1322,8 +1442,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#sign()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void sign() {
@@ -1331,8 +1451,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#unlock()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void unlock() {
@@ -1340,8 +1460,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#appendItemValue(java.lang.String, java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item appendItemValue(String name, Object value, boolean unique) {
@@ -1349,8 +1469,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#toJson(boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String toJson(boolean compact) {
@@ -1358,8 +1478,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getCreatedDate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Date getCreatedDate() {
@@ -1367,8 +1487,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getAttachments()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public List<EmbeddedObject> getAttachments() {
@@ -1376,8 +1496,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getFormName()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public String getFormName() {
@@ -1385,8 +1505,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#hasReaders()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean hasReaders() {
@@ -1394,8 +1514,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getForm()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Form getForm() {
@@ -1403,8 +1523,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getInitiallyModifiedDate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Date getInitiallyModifiedDate() {
@@ -1412,8 +1532,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getLastAccessedDate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Date getLastAccessedDate() {
@@ -1421,8 +1541,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getLastModifiedDate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Date getLastModifiedDate() {
@@ -1430,8 +1550,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getParentDocument()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public org.openntf.red.Document getParentDocument() {
@@ -1439,8 +1559,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isDirty()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDirty() {
@@ -1448,8 +1568,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#testMIMEEntity(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public MIMEEntity testMIMEEntity(String name) {
@@ -1457,8 +1577,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValue(java.lang.String, java.lang.Class)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public <T> T getItemValue(String name, Class<T> type) throws ItemNotFoundException, DataNotCompatibleException {
@@ -1466,8 +1586,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValues(java.lang.String, java.lang.Class)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public <T> List<T> getItemValues(String name, Class<T> type)
@@ -1476,8 +1596,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#replaceItemValue(java.lang.String, java.lang.Object, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item replaceItemValue(String name, Object value, boolean isSummary) {
@@ -1485,8 +1605,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#containsValue(java.lang.Object, java.lang.String[])
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsValue(Object value, String[] itemnames) {
@@ -1494,8 +1614,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#containsValue(java.lang.Object, java.util.Collection)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsValue(Object value, Collection<String> itemnames) {
@@ -1503,8 +1623,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#containsValues(java.util.Map)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean containsValues(Map<String, Object> filterMap) {
@@ -1512,8 +1632,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getMetaversalID()
+	/**
+	 * Not implemented yet. Under consideration. Not sure if needed.
 	 */
 	@Override
 	public String getMetaversalID() {
@@ -1521,8 +1641,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getMetaversalID(java.lang.String)
+	/**
+	 * Not implemented yet. Under consideration. Not sure if needed.
 	 */
 	@Override
 	public String getMetaversalID(String serverName) {
@@ -1530,8 +1650,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#forceDelegateRemove()
+	/**
+	 * Not implemented yet. Under consideration. Not sure if needed.
 	 */
 	@Override
 	public boolean forceDelegateRemove() {
@@ -1539,8 +1659,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#rollback()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void rollback() {
@@ -1548,8 +1668,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItems(org.openntf.red.Item.Type)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public List<Item> getItems(Type type) {
@@ -1557,8 +1677,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItems(org.openntf.red.Item.Flags)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public List<Item> getItems(Flags flags) {
@@ -1566,8 +1686,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#replaceItemValue(java.lang.String, java.lang.Object, java.lang.Boolean, boolean, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item replaceItemValue(String itemName, Object value, Boolean isSummary, boolean boxCompatibleOnly,
@@ -1576,8 +1696,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getAutoMime()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public AutoMime getAutoMime() {
@@ -1585,8 +1705,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#setAutoMime(org.openntf.red.util.AutoMime)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setAutoMime(AutoMime value) {
@@ -1594,8 +1714,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#markDirty()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void markDirty() {
@@ -1603,8 +1723,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getFirstItem(java.lang.String, boolean)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Item getFirstItem(String name, boolean returnMime) {
@@ -1612,8 +1732,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#writeBinary(java.lang.String, byte[], int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void writeBinary(String name, byte[] data, int chunkSize) {
@@ -1621,8 +1741,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#readBinaryChunk(java.lang.String, int)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public byte[] readBinaryChunk(String name, int chunk) {
@@ -1630,8 +1750,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#readBinary(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public byte[] readBinary(String name) {
@@ -1639,8 +1759,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemSeriesValues(java.lang.CharSequence)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public List<?> getItemSeriesValues(CharSequence name) {
@@ -1648,8 +1768,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemSeriesValues(java.lang.CharSequence, java.lang.Class)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public <T> T getItemSeriesValues(CharSequence name, Class<T> type) {
@@ -1657,8 +1777,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemTable(java.lang.CharSequence[])
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Map<String, List<Object>> getItemTable(CharSequence... itemnames) {
@@ -1666,8 +1786,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemTablePivot(java.lang.CharSequence[])
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public List<Map<String, Object>> getItemTablePivot(CharSequence... itemnames) {
@@ -1675,8 +1795,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#setItemTable(java.util.Map)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setItemTable(Map<String, List<Object>> table) {
@@ -1684,8 +1804,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#setItemTablePivot(java.util.List)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void setItemTablePivot(List<Map<String, Object>> pivot) {
@@ -1693,8 +1813,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getItemValueName(java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public Name getItemValueName(String itemName) {
@@ -1702,8 +1822,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#getNoteClass()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public NoteClass getNoteClass() {
@@ -1711,8 +1831,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isDefault()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isDefault() {
@@ -1720,8 +1840,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#isPrivate()
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public boolean isPrivate() {
@@ -1729,8 +1849,8 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.Document#makeResponse(lotus.domino.Document, java.lang.String)
+	/**
+	 * Not implemented yet.
 	 */
 	@Override
 	public void makeResponse(lotus.domino.Document doc, String itemName) {
@@ -1738,11 +1858,100 @@ public class Document extends Base<org.openntf.red.Database> implements org.open
 
 	}
 
+	/**
+	 * Gets item value as a {@link List}.<br>
+	 * Currently uses {@link FastTable}.<br>
+	 * Should be more effective than {@link Vector}.
+	 * 
+	 * @param name
+	 *            Item name
+	 * @return Item value as a {@link List}
+	 * @since 0.4.0
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object> getItemValueEx(String name) {
 		// TODO implement lighter version
 		return beObject.getField(name).getValue();
+	}
+
+	/**
+	 * Returns a back-end object that manipulates data. Restricted function.
+	 * 
+	 * @return Back-end object
+	 * @since 0.4.0
+	 */
+	@Override
+	public Note<?, ?, ?> getBEObject() {
+		// TODO security check
+		return beObject;
+	}
+
+	/**
+	 * Resets the document item and sets it's value to the specified.
+	 * 
+	 * @param itemName
+	 *            Item name
+	 * @param dataTypeCode
+	 *            Code of the data type. Corresponds to Notes data types (e.g.
+	 *            1280 - TEXT).
+	 * @param flags
+	 *            Item flags (bitwise union). Correspond to Notes item flags.
+	 * @param value
+	 *            New value of the item.
+	 * @return The item that was reset.
+	 * @since 0.4.0
+	 */
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Item replaceItemValueCustomData(String itemName, int dataTypeCode, long flags, Object value) {
+		Field field = beObject.createField(itemName, dataTypeCode, flags, value);
+		if (null == field)
+			return null;
+
+		return new org.openntf.red.impl.Item(this, field);
+	}
+
+	/**
+	 * Resets the document item and sets it's value to the specified.
+	 * 
+	 * @param itemName
+	 *            Item name
+	 * @param dataTypeCode
+	 *            Code of the data type. Corresponds to Notes data types (e.g.
+	 *            1280 - TEXT).
+	 * @param flags
+	 *            Item flags (list of enums).
+	 * @param value
+	 *            New value of the item.
+	 * @return The item that was reset.
+	 * @since 0.4.0
+	 * @see org.openntf.red.nsf.endpoint.Field.Flags
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public Item replaceItemValueCustomData(String itemName, int dataTypeCode,
+			List<org.openntf.red.nsf.endpoint.Field.Flags> flags, Object value) {
+		Field field = beObject.createField(itemName, dataTypeCode, flags, value);
+		if (null == field)
+			return null;
+
+		return new org.openntf.red.impl.Item(this, field);
+	}
+
+	/**
+	 * Sets the Note ID. Implementations may vary, but in general, a Note ID of
+	 * 0 would mean a new document will be created.
+	 * <p>
+	 * Not finished yet.
+	 * 
+	 * @param id
+	 *            The new value of a Note ID
+	 * @since 0.4.0
+	 */
+	@Override
+	public void setNoteID(long id) {
+		beObject.setNoteID(id);
 	}
 
 }

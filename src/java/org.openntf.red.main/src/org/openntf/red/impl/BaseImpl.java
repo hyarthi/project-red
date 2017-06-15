@@ -18,7 +18,7 @@ import javolution.util.FastTable;
 
 /**
  * <i>Initial code borrowed from OpenNTF Domino API.</i><br>
- * Common class for ODA extension where no lotus wrapper exists (WrapperFactory, DocumentList)
+ * Common class for ODA extension where no lotus wrapper exists (Session)
  * 
  * @author Roland Praml, FOCONIS AG; modified by Vladimir Kornienko
  * 

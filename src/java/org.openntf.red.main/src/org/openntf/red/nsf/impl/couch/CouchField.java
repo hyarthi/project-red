@@ -6,6 +6,7 @@ package org.openntf.red.nsf.impl.couch;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.openntf.red.nsf.endpoint.Field;
@@ -19,16 +20,32 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import javolution.util.FastTable;
 
 /**
+ * Field implementation for CouchDB.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see Field
  */
 public class CouchField implements Field<CouchEndpoint, CouchEndpointFactory, CouchNote> {
+	/** Raw representation of the field (JSON wrapped in Jackson). */
 	private ObjectNode raw;
+	/** Parent note object. */
 	private CouchNote parent;
+	/** Field name. */
 	private String name;
+	/** Logger object. */
 	private final static Logger log = Logger.getLogger(CouchField.class.getName());
+
 	/**
+	 * Default constructor.
 	 * 
+	 * @param _raw
+	 *            Field raw representation.
+	 * @param _name
+	 *            Field name.
+	 * @param _parent
+	 *            Parent note.
+	 * @since 0.4.0
 	 */
 	CouchField(ObjectNode _raw, String _name, CouchNote _parent) {
 		raw = _raw;
@@ -36,9 +53,6 @@ public class CouchField implements Field<CouchEndpoint, CouchEndpointFactory, Co
 		parent = _parent;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.openntf.red.nsf.endpoint.HasProperties#getProperty(java.lang.String)
-	 */
 	@Override
 	public Object getProperty(String name) {
 		if (!raw.has(name))
@@ -131,25 +145,25 @@ public class CouchField implements Field<CouchEndpoint, CouchEndpointFactory, Co
 				val = iterator.next();
 				if (val instanceof String)
 					arr.add((String) val);
-				if (val instanceof Integer) 
+				if (val instanceof Integer)
 					arr.add((Integer) val);
-				if (val instanceof Long) 
+				if (val instanceof Long)
 					arr.add((Long) val);
-				if (val instanceof Float) 
+				if (val instanceof Float)
 					arr.add((Float) val);
-				if (val instanceof Double) 
+				if (val instanceof Double)
 					arr.add((Double) val);
-				if (val instanceof BigDecimal) 
+				if (val instanceof BigDecimal)
 					arr.add((BigDecimal) val);
-				if (val instanceof Byte) 
+				if (val instanceof Byte)
 					arr.add((Byte) val);
 			}
-			//raw.put(name, arr);
+			// raw.put(name, arr);
 			raw.set(name, arr);
 			return;
 		}
 		if (value instanceof JsonNode) {
-			//raw.put(name, (JsonNode) value);
+			// raw.put(name, (JsonNode) value);
 			raw.set(name, (JsonNode) value);
 		}
 	}
@@ -190,7 +204,7 @@ public class CouchField implements Field<CouchEndpoint, CouchEndpointFactory, Co
 	public void setValue(Object value) {
 		setValue(value, true);
 	}
-	
+
 	@Override
 	public void setValue(Object value, boolean changeType) {
 		int type = -1;
@@ -205,9 +219,10 @@ public class CouchField implements Field<CouchEndpoint, CouchEndpointFactory, Co
 			JsonNode node = (JsonNode) result;
 			raw.put(SysNames.SUB_TYPE, type);
 			raw.set(SysNames.SUB_VALUE, node);
-			//raw.put(SysNames.SUB_VALUE, node);
+			// raw.put(SysNames.SUB_VALUE, node);
 		} else
-			throw new EndpointException("Couch Endpoint Converter produced an unsupported result type - " + result.getClass().getName() + ".");
+			throw new EndpointException("Couch Endpoint Converter produced an unsupported result type - "
+					+ result.getClass().getName() + ".");
 	}
 
 	@Override
@@ -224,12 +239,12 @@ public class CouchField implements Field<CouchEndpoint, CouchEndpointFactory, Co
 	public CouchNote getParent() {
 		return parent;
 	}
-	
+
 	@Override
 	public int getType() {
 		if (raw.has(SysNames.SUB_TYPE))
 			return raw.get(SysNames.SUB_TYPE).asInt();
-		
+
 		return Type.UNKNOWN;
 	}
 
@@ -237,21 +252,34 @@ public class CouchField implements Field<CouchEndpoint, CouchEndpointFactory, Co
 	public void setType(int type) {
 		raw.put(SysNames.SUB_TYPE, type);
 	}
-	
+
+	/**
+	 * CouchDB-specific system names.
+	 * 
+	 * @author Vladimir Kornienko
+	 * @since 0.4.0
+	 */
 	public static class SysNames {
 		public static final String FIELD_UNID = "_id";
 		public static final String FIELD_REVISION = "_rev";
 		public static final String FIELD_VALUE = "value";
 		public static final String FIELD_KEY = "key";
 		public static final String FIELD_NOTEID = "RED_noteid";
-		
+
 		public static final String SUB_TYPE = "_type";
 		public static final String SUB_VALUE = "_value";
+		public static final String SUB_FLAGS = "_flags";
 	}
 
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public Set<org.openntf.red.nsf.endpoint.Field.Flags> getFlags() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -17,17 +17,25 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import javolution.util.FastTable;
 
 /**
+ * Numbers converter for CouchDB.
+ * 
  * @author Vladimir Kornienko
- *
+ * @since 0.4.0
+ * @see RawDataConverter
  */
 public class CouchNumbersConverter extends RawDataConverter {
 
+	/** Logger object. */
 	private static Logger log = Logger.getLogger(CouchNumbersConverter.class.getName());
-
+	/** JSON node factory (for JSON manipulation). */
 	private JsonNodeFactory factory;
-	
+
 	/**
+	 * Default constructor.
+	 * 
 	 * @param type
+	 *            Data type code.
+	 * @since 0.4.0
 	 */
 	public CouchNumbersConverter(int type) {
 		super(type);
@@ -152,6 +160,14 @@ public class CouchNumbersConverter extends RawDataConverter {
 				"Couch Text Converter: Unsupported data type - " + data.getClass().getName() + ".");
 	}
 
+	/**
+	 * Casts JSON node to number.
+	 * 
+	 * @param node
+	 *            JSON node to cast.
+	 * @return Parsed data.
+	 * @since 0.4.0
+	 */
 	private Number toNumber(JsonNode node) {
 		if (node.isInt())
 			return Integer.valueOf(node.asInt());
@@ -165,6 +181,14 @@ public class CouchNumbersConverter extends RawDataConverter {
 		return null;
 	}
 
+	/**
+	 * Casts a number to JSON node.
+	 * 
+	 * @param n
+	 *            Number to cast.
+	 * @return Resulting JSON node.
+	 * @since 0.4.0
+	 */
 	private JsonNode toNode(Number n) {
 		if (n instanceof Integer)
 			return factory.numberNode((Integer) n);
